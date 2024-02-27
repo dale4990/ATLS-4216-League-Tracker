@@ -30,12 +30,6 @@ app.post("/createUser", async (req, res) =>{
     res.json(user);
 });
 
-const CONNECTION_STRING = "mongodb+srv://admin:Z2yhUWFDze37O2Hh@cluster0.m54yfvr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-const DATABASE_NAME = "valorantdb";
-const COLLECTION_NAME = "users"; 
-var database;
-
 app.listen(5069, () => {
     console.log("Server Connection Successful!");
 });

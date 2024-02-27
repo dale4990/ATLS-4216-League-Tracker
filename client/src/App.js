@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 
 function App() {
-  const [listOfUsers, setListOfUsers] = useState([]); // state for Users
-  const [name, setName] = useState(""); // state for name
-  const [username, setUsername] = useState(""); // state for username
-
+  const [listOfUsers, setListOfUsers] = useState([]);
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState(null);
 
   useEffect(() =>{
     Axios.get("http://localhost:5069/getUsers").then((response) => {
@@ -14,20 +14,23 @@ function App() {
     });
   }, []);
 
-  const createUser = () => {
-    Axios.post("http://localhost:5069/createUser", {
-      name : name, 
-      username: username,
-    }).then((response) => {
-      setListOfUsers([...listOfUsers, {
-        name: name,
+  const createUser = async () => {
+    try {
+      const response = await Axios.post("http://localhost:5069/createUser", {
+        name : name, 
         username: username,
-      }]); // add user to end of listOfUsers list
-    })
+      });
+      setListOfUsers([...listOfUsers, response.data]);
+      setName("");
+      setUsername("");
+    } catch (error) {
+      setError(error.response.data.error);
+    }
   }
 
   return (
     <div className="App">
+      {error && <div>Error: {error}</div>}
       <div className="displayUsers">
         {listOfUsers.map((user, index) => (
           <div key={index}>
@@ -41,6 +44,7 @@ function App() {
         <input 
           type="text" 
           placeholder='Name' 
+          value={name}
           onChange={(event) => {
             setName(event.target.value)
           }}
@@ -48,6 +52,7 @@ function App() {
         <input 
           type="text" 
           placeholder='Username' 
+          value={username}
           onChange={(event) => {
             setUsername(event.target.value)
           }}
