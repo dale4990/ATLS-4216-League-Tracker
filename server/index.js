@@ -1,13 +1,34 @@
 const Express = require("express");
-const MongoClient = require("mongodb").MongoClient;
 const mongoose = require("mongoose");
 const cors = require("cors");
-// const multer = require("multer");
+const UserModel =  require('./models/Users');
 
-mongoose.connect("mongodb+srv://admin:Z2yhUWFDze37O2Hh@cluster0.m54yfvr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+mongoose.connect("mongodb+srv://admin:fA3zmaeCoNxg3BsI@cluster0.m54yfvr.mongodb.net/valorantdb?retryWrites=true&w=majority&appName=Cluster0");
 
 const app = Express();
+app.use(Express.json());
 app.use(cors());
+
+// GET request to show all users
+app.get("/getUsers", (req, res) => {
+    UserModel.find({})
+        .then(result => {
+            res.json(result);
+        })
+        .catch(error => {
+            console.error("Error retrieving users:", error);
+            res.status(500).json({ error: "An error occurred while retrieving users." });
+        });
+});
+
+// POST request to create a user
+app.post("/createUser", async (req, res) =>{
+    const user = req.body;
+    const newUser = new UserModel(user);
+    await newUser.save();
+
+    res.json(user);
+});
 
 const CONNECTION_STRING = "mongodb+srv://admin:Z2yhUWFDze37O2Hh@cluster0.m54yfvr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -16,12 +37,5 @@ const COLLECTION_NAME = "users";
 var database;
 
 app.listen(5069, () => {
-    MongoClient.connect(CONNECTION_STRING, (error, client) => {
-        if (error) {
-            console.error("Error connecting to MongoDB:", error);
-            return;
-        }
-        database = client.db(DATABASE_NAME);
-        console.log("MongoDB Connection Successful!");
-    });
+    console.log("Server Connection Successful!");
 });
