@@ -2,7 +2,7 @@ const Express = require("express");
 const MongoClient = require("mongodb").MongoClient;
 const mongoose = require("mongoose");
 const cors = require("cors");
-const multer = require("multer");
+// const multer = require("multer");
 
 mongoose.connect("mongodb+srv://admin:Z2yhUWFDze37O2Hh@cluster0.m54yfvr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 
