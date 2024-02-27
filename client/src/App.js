@@ -28,6 +28,18 @@ function App() {
     }
   }
 
+  const deleteUser = async (userId) => {
+    try {
+      const response = await Axios.post("http://localhost:5069/deleteUser", {
+        userId: userId, 
+      });
+      alert("User deleted successfully:", response.data);
+      setListOfUsers(listOfUsers.filter(user => user.userId !== userId));
+    } catch (error){
+      setError(error.response.data.error);
+    }
+  }
+
   return (
     <div className="App">
       {error && <div>Error: {error}</div>}
@@ -36,6 +48,7 @@ function App() {
           <div key={index}>
             <h1>Name : {user.name}</h1>
             <h1>Username: {user.username}</h1>
+            <button onClick={() => deleteUser(user.userId)}> Delete User</button>
           </div>
         ))}
       </div>
