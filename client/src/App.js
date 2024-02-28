@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import Axios from "axios";
+import { StyledInput, StyledButton } from './StyledComponents';
 
 function App() {
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -16,24 +17,34 @@ function App() {
 
   const createUser = async () => {
     try {
-      const response = await Axios.post("http://localhost:5069/createUser", {
-        name : name, 
-        username: username,
-      });
-      setListOfUsers([...listOfUsers, response.data]);
-      setName("");
-      setUsername("");
+        // Check if the username already exists
+        const usernameExists = listOfUsers.some(user => user.username === username);
+        if (usernameExists) {
+            setError("Username already exists. Please choose a different username.");
+            return;
+        }
+
+        // If the username is unique, proceed to create the user
+        const response = await Axios.post("http://localhost:5069/createUser", {
+            name: name, 
+            username: username,
+        });
+        setListOfUsers([...listOfUsers, response.data]);
+        setName("");
+        setUsername("");
+        setError(null);
     } catch (error) {
-      setError(error.response.data.error);
+        setError(error.response.data.error);
     }
   }
+
 
   const deleteUser = async (userId) => {
     try {
       const response = await Axios.post("http://localhost:5069/deleteUser", {
         userId: userId, 
       });
-      alert("User deleted successfully:", response.data);
+      console.log("User deleted successfully:", response.data);
       setListOfUsers(listOfUsers.filter(user => user.userId !== userId));
     } catch (error){
       setError(error.response.data.error);
@@ -46,31 +57,30 @@ function App() {
       <div className="displayUsers">
         {listOfUsers.map((user, index) => (
           <div key={index}>
-            <h1>Name : {user.name}</h1>
-            <h1>Username: {user.username}</h1>
-            <button onClick={() => deleteUser(user.userId)}> Delete User</button>
+            <h1>Hi {user.name}@{user.username}!</h1>
+            <StyledButton onClick={() => deleteUser(user.userId)}> Delete User</StyledButton>
           </div>
         ))}
       </div>
 
-      <div>
-        <input 
-          type="text" 
-          placeholder='Name' 
+      <div className="input-container">
+        <StyledInput
+          type="text"
+          placeholder='Name'
           value={name}
           onChange={(event) => {
             setName(event.target.value)
           }}
         />
-        <input 
-          type="text" 
-          placeholder='Username' 
+        <StyledInput
+          type="text"
+          placeholder='Username'
           value={username}
           onChange={(event) => {
             setUsername(event.target.value)
           }}
         />
-        <button onClick={createUser}> Create User</button>
+        <StyledButton onClick={createUser}>Create User</StyledButton>
       </div>
     </div>
   );
