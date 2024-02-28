@@ -1,10 +1,11 @@
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #000; /* Black background */
-  color: #ff4654; /* Red text color */
+  background: linear-gradient(to bottom, #091428, #0A1428); /* Gradient background */
+  color: #c89b3c; /* Yellow text color */
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
 }
+
 
 .App {
   text-align: left;

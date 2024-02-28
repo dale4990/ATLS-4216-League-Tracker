@@ -1,13 +1,16 @@
 const Express = require("express");
 const mongoose = require("mongoose");
+const axios = require('axios');
 const cors = require("cors");
 const UserModel =  require('./models/Users');
+const RiotUser =  require('./models/RiotUsers');
 
 mongoose.connect("mongodb+srv://admin:fA3zmaeCoNxg3BsI@cluster0.m54yfvr.mongodb.net/valorantdb?retryWrites=true&w=majority&appName=Cluster0");
 
 const app = Express();
 app.use(Express.json());
 app.use(cors());
+
 
 // Function to generate a random 7-digit number
 function generateRandomUserId() {
@@ -25,15 +28,6 @@ app.get("/getUsers", (req, res) => {
             res.status(500).json({ error: "An error occurred while retrieving users." });
         });
 });
-
-// POST request to create a user
-// app.post("/createUser", async (req, res) =>{
-//     const user = req.body;
-//     const newUser = new UserModel(user);
-//     await newUser.save();
-
-//     res.json(user);
-// });
 
 // POST request to create a user
 app.post("/createUser", async (req, res) =>{
@@ -73,6 +67,69 @@ app.post("/deleteUser", async (req, res) => {
         res.status(500).json({ error: "An error occurred while deleting the user." });
     }
 });
+
+// POST request to find Riot user
+app.post("/findRiotUser", async (req, res) => {
+    const { riotId, tagline } = req.body;
+    
+    try {
+        // Check if the Riot user already exists in the database
+        const existingRiotUser = await RiotUser.findOne({ riotId, tagline });
+
+        if (existingRiotUser) {
+            // If the user exists in the database, use their information directly
+            res.json({ puuid: existingRiotUser.puuid, riotId, tagline });
+            return;
+        }
+
+        // If the user does not exist in the database, make the API call to Riot
+        const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326"; 
+        const url = `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${riotId}/${tagline}?api_key=${apiKey}`; // can customize region via dropdown later
+        
+        const response = await axios.get(url);
+        
+        const { puuid, gameName, tagLine } = response.data; 
+        // Create a new RiotUser instance
+        const newRiotUser = new RiotUser({
+            puuid,
+            riotId: gameName, 
+            tagline: tagLine 
+        });
+        
+        await newRiotUser.save();
+        
+        res.json({ puuid, riotId: gameName, tagline: tagLine }); 
+    } catch (error) {
+        if (error.response && error.response.data) {
+            console.error("Error:", error.response.data);
+        } else {
+            console.error("Error:", error);
+        }
+        res.status(500).json({ error: "Failed to find Riot user" });
+    }
+});
+
+
+
+// POST request to find match data by puuid
+app.post("/findMatchData", async (req, res) => {
+    const { puuid } = req.body;
+    const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326"; 
+    const url = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${apiKey}`; // can customize region via dropdown later
+    
+    try {
+        const response = await axios.get(url);
+        
+        const matchIds = response.data;
+        
+        res.json(matchIds);
+    } catch (error) {
+        // Handle errors
+        console.error("Error:", error.response.data);
+        res.status(500).json({ error: "Failed to fetch match data" });
+    }
+});
+
 
 
 

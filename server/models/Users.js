@@ -1,4 +1,3 @@
-const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
@@ -17,6 +16,9 @@ const UserSchema = new mongoose.Schema({
         unique: true
     },
 });
+
+
+  
 
 const UserModel = mongoose.model("users", UserSchema);
 module.exports = UserModel;
