@@ -4,13 +4,13 @@ const axios = require('axios');
 const cors = require("cors");
 const UserModel =  require('./models/Users');
 const RiotUser =  require('./models/RiotUsers');
+const MatchData = require('./models/Match');
 
 mongoose.connect("mongodb+srv://admin:fA3zmaeCoNxg3BsI@cluster0.m54yfvr.mongodb.net/valorantdb?retryWrites=true&w=majority&appName=Cluster0");
 
 const app = Express();
 app.use(Express.json());
 app.use(cors());
-
 
 // Function to generate a random 7-digit number
 function generateRandomUserId() {
@@ -109,10 +109,8 @@ app.post("/findRiotUser", async (req, res) => {
     }
 });
 
-
-
 // POST request to find match data by puuid
-app.post("/findMatchData", async (req, res) => {
+app.post("/findMatches", async (req, res) => {
     const { puuid } = req.body;
     const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326"; 
     const url = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${apiKey}`; // can customize region via dropdown later
@@ -124,13 +122,92 @@ app.post("/findMatchData", async (req, res) => {
         
         res.json(matchIds);
     } catch (error) {
-        // Handle errors
         console.error("Error:", error.response.data);
-        res.status(500).json({ error: "Failed to fetch match data" });
+        res.status(500).json({ error: "Failed to fetch matches" });
     }
 });
 
+app.post("/findMatchData", async (req, res) => {
+    const { matchId } = req.body;
 
+    try {
+        const existingMatch = await MatchData.findOne({ matchId }); 
+
+        if (existingMatch) {
+            // Extract and return specific participant data
+            const participants = existingMatch.info.participants.map((participant) => ({
+                summonerName: participant.summonerName,
+                championName: participant.championId,
+                summonerLevel: participant.summonerLevel,
+                kills: participant.kills,
+                deaths: participant.deaths,
+                assists: participant.assists,
+                championLevel: participant.championLevel,
+                itemsPurchased: participant.itemsPurchased,
+                goldEarned: participant.goldEarned,
+                totalDamageDealt: participant.totalDamageDealt,
+                totalDamageTaken: participant.totalDamageTaken,
+                wardsPlaced: participant.wardsPlaced,
+                wardsDestroyed: participant.wardsDestroyed,
+                visionScore: participant.visionScore,
+                creepScore: participant.creepScore,
+                role: participant.role,
+            }));
+
+            res.json({ matchId, participants });
+            return;
+        }
+
+        const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326";
+        const url = `https://americas.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${apiKey}`;
+
+        const response = await axios.get(url);
+
+        try {
+            const { data: { metadata, info } } = response; // Destructure response data
+
+            const newMatch = new MatchData({
+                matchId,
+                metadata,
+                info,
+            });
+
+            await newMatch.save();
+
+            // Extract and return specific participant data from response
+            const participants = info.participants.map((participant) => ({
+                summonerName: participant.summonerName,
+                championName: participant.championId, 
+                summonerLevel: participant.summonerLevel,
+                kills: participant.kills,
+                deaths: participant.deaths,
+                assists: participant.assists,
+                championLevel: participant.championLevel,
+                itemsPurchased: participant.itemsPurchased,
+                goldEarned: participant.goldEarned,
+                totalDamageDealt: participant.totalDamageDealt,
+                totalDamageTaken: participant.totalDamageTaken,
+                wardsPlaced: participant.wardsPlaced,
+                wardsDestroyed: participant.wardsDestroyed,
+                visionScore: participant.visionScore,
+                creepScore: participant.creepScore,
+                role: participant.role,
+            }));
+
+            res.json({ matchId, participants });
+        } catch (error) {
+            console.error("Error saving match data:", error.message);
+            res.status(500).json({ error: "Failed to save match data" });
+        }
+    } catch (error) {
+        if (error.response) {
+            console.error("Error fetching match data:", error.response.data);
+        } else {
+            console.error("Error:", error.message);
+        }
+        res.status(500).json({ error: "Failed to fetch match data" });
+    }
+});
 
 
 app.listen(5069, () => {

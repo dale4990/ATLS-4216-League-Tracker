@@ -63,15 +63,38 @@ function App() {
 
         const puuid = findUserResponse.data.puuid;
 
-        const findMatchDataResponse = await Axios.post("http://localhost:5069/findMatchData", {
+        const findMatchesResponse = await Axios.post("http://localhost:5069/findMatches", {
             puuid: puuid,
         });
 
-        // Assuming findMatchDataResponse.data is an array of match IDs
-        const matchIds = findMatchDataResponse.data;
+        const matchIds = findMatchesResponse.data;
+
+        // Iterate over match IDs and fetch data concurrently for better performance
+        const matchDataPromises = matchIds.map(async (matchId) => {
+          const response = await Axios.post("http://localhost:5069/findMatchData", {
+              matchId,
+          });
+          return response.data; // Return only the data
+      });
+
+      // Wait for all requests to finish and retrieve their data
+      const matchData = await Promise.all(matchDataPromises);
+
+      // Display only the requested participant data
+      console.log("Match data:");
+      for (const data of matchData) {
+          const participants = data.participants;
+          for (const participant of participants) {
+              console.log(`  Summoner Name: ${participant.summonerName}`);
+              console.log(`  Champion Name/ID: ${participant.championName}`); // Assuming you have champion names
+              console.log(`  Summoner Level: ${participant.summonerLevel}`);
+              // ... 
+          }
+      }
+      
 
         // Display the list of match data
-        alert("Match data:\n" + matchIds.map(matchId => "- " + matchId).join("\n"));
+        //console.log("Match data:\n" + matchIds.map(matchId => "- " + matchId).join("\n"));
 
         // Reset input fields and errors
         setRiotId("");
