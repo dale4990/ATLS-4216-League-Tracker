@@ -24,7 +24,28 @@ const ParticipantSchema = new mongoose.Schema({
     type: Number,
   },
   itemsPurchased: {
-    type: [Number], // Array of item IDs
+    type: Number, // number of items
+  },
+  item0: {
+    type: Number,
+  },
+  item1: {
+    type: Number,
+  },
+  item2: {
+    type: Number,
+  },
+  item3: {
+    type: Number,
+  },
+  item4 : {
+    type: Number,
+  },
+  item5 : {
+    type: Number,
+  },
+  item6: {
+    type: Number,
   },
   goldEarned: {
     type: Number,
