@@ -4,12 +4,16 @@ body {
   color: #c89b3c; /* Yellow text color */
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
+  text-align: center;
 }
 
 
 .App {
-  text-align: left;
   min-height: 100vh; /* Ensure the background covers the entire viewport */
+}
+
+.App-name{
+  margin-top: 250px;
 }
 
 .App-header {
@@ -27,6 +31,28 @@ body {
 
 .input-container {
   margin-top: 30px; /* Add margin between the button and the inputs */
+}
+
+.StyledInput{
+  padding: 10px;
+  border: 2px solid #091428; /* Gold border */
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #5B5A56; /* Grey text color */
+  background-color: #fff; /* White background */
+  margin-bottom: 10px;
+}
+
+.StyledButton{
+  padding: 10px 20px;
+  background-color: #c89b3c; /* Gold background */
+  font-family: 'Montserrat', sans-serif;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff; /* White text color */
+  cursor: pointer;
 }
 
 /* Remove the logo animation */

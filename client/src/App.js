@@ -1,15 +1,16 @@
-import './App.css';
+import './styles/App.css';
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import { StyledInput, StyledButton } from './StyledComponents';
+// import { StyledInput, StyledButton } from './StyledComponents';
 
 function App() {
   // states
   const [listOfUsers, setListOfUsers] = useState([]);
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
-  const[riotId, setRiotId] = useState("");
-  const[tagline, setTagline] = useState("");
+  const [riotId, setRiotId] = useState("");
+  const [tagline, setTagline] = useState("");
+  const [sumNames, setSumNames] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() =>{
@@ -74,11 +75,21 @@ function App() {
           const response = await Axios.post("http://localhost:5069/findMatchData", {
               matchId,
           });
-          return response.data; // Return only the data
+          return response.data; 
       });
 
       // Wait for all requests to finish and retrieve their data
       const matchData = await Promise.all(matchDataPromises);
+
+      // Extract summoner names from each match and update the state
+      const summonerNames = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.summonerName),
+        ];
+      }, []);
+
+      setSumNames(summonerNames);
 
       // Display only the requested participant data
       console.log("Match data:");
@@ -86,7 +97,7 @@ function App() {
           const participants = data.participants;
           for (const participant of participants) {
               console.log(`  Summoner Name: ${participant.summonerName}`);
-              console.log(`  Champion Name/ID: ${participant.championName}`); // Assuming you have champion names
+              console.log(`  Champion Name/ID: ${participant.championId}`); 
               console.log(`  Summoner Level: ${participant.summonerLevel}`);
               // ... 
           }
@@ -111,7 +122,8 @@ function App() {
   return (
     <div className="App">
       {error && <div>Error: {error}</div>}
-      <div className="displayUsers">
+
+      {/*<div className="displayUsers">
         {listOfUsers.map((user, index) => (
           <div key={index}>
             <h1>Hi {user.name}@{user.username}!</h1>
@@ -142,14 +154,15 @@ function App() {
           }}
         />
         <StyledButton onClick={createUser}>Create User</StyledButton>
-      </div>
+        </div>*/}
 
-      <div>
-        <h1> Summoner Search </h1>
+      <div className='App-name'>
+        <h1> LOL.GG </h1>
       </div>
 
       <div className="input-container">
-        <StyledInput
+        <input
+          className='StyledInput'
           type="text"
           placeholder='Riot ID'
           value={riotId}
@@ -157,7 +170,8 @@ function App() {
             setRiotId(event.target.value)
           }}
         />
-        <StyledInput
+        <input
+          className='StyledInput'
           type="text"
           placeholder='Tagline'
           value={tagline}
@@ -165,8 +179,17 @@ function App() {
             setTagline(event.target.value)
           }}
         />
-        <StyledButton onClick={() => displayMatchHistory(riotId, tagline)}>Search</StyledButton>
+        <button className="StyledButton" onClick={() => displayMatchHistory(riotId, tagline)}>Search</button>
       </div>
+
+      <div className="displaySummonerNames">
+        <l>
+            {sumNames.map((sumName, index) => (
+                <div key={index}>{sumName}</div>
+            ))}
+        </l>
+    </div>
+    
     </div>
   );
 }

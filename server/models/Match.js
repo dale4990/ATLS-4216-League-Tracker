@@ -5,7 +5,13 @@ const ParticipantSchema = new mongoose.Schema({
   summonerName: {
     type: String,
   },
+  profileIcon:{
+    type: Number,
+  },
   championId: {
+    type: Number,
+  },
+  champLevel: {
     type: Number,
   },
   summonerLevel: {
@@ -47,6 +53,12 @@ const ParticipantSchema = new mongoose.Schema({
   item6: {
     type: Number,
   },
+  summoner1Id : {
+    type: Number,
+  },
+  summoner2Id: {
+    type: Number,
+  },
   goldEarned: {
     type: Number,
   },
@@ -66,6 +78,9 @@ const ParticipantSchema = new mongoose.Schema({
     type: Number,
   },
   creepScore: {
+    type: Number,
+  },
+  teamId: {
     type: Number,
   },
   role: {
