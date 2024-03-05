@@ -3,7 +3,7 @@ body {
   background: linear-gradient(to bottom, #091428, #0A1428); /* Gradient background */
   color: #c89b3c; /* Yellow text color */
   margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
+  padding: 1; /* Remove default padding */
 }
 
 
