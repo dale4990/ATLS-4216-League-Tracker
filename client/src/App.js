@@ -1,10 +1,15 @@
 import './styles/App.css';
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, useNavigate, Routes} from 'react-router-dom';
 import Axios from "axios";
+import Display from "./Display.js"
 // import { StyledInput, StyledButton } from './StyledComponents';
 
 function App() {
   // states
+
+  // const navigate = useNavigate();
+
   const [listOfUsers, setListOfUsers] = useState([]);
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -90,7 +95,7 @@ function App() {
       }, []);
 
       setSumNames(summonerNames);
-
+      
       // Display only the requested participant data
       console.log("Match data:");
       for (const data of matchData) {
@@ -115,82 +120,46 @@ function App() {
         setError(error.response.data.error);
     }
   }
- 
-
   
   // Frontend design here
-  return (
-    <div className="App">
-      {error && <div>Error: {error}</div>}
+  return(
+      <div className="App">
+        {error && <div>Error: {error}</div>}
 
-      {/*<div className="displayUsers">
-        {listOfUsers.map((user, index) => (
-          <div key={index}>
-            <h1>Hi {user.name}@{user.username}!</h1>
-            <StyledButton onClick={() => deleteUser(user.userId)}> Delete User</StyledButton>
-          </div>
-        ))}
+        <div className='App-name'>
+          <h1> LOL.GG </h1>
+        </div>
+
+        <div className="input-container">
+          <input
+            className='StyledInput'
+            type="text"
+            placeholder='Riot ID'
+            value={riotId}
+            onChange={(event) => {
+              setRiotId(event.target.value)
+            }}
+          />
+          <input
+            className='StyledInput'
+            type="text"
+            placeholder='Tagline'
+            value={tagline}
+            onChange={(event) => {
+              setTagline(event.target.value)
+            }}
+          />
+          <button className="StyledButton" onClick={() => displayMatchHistory(riotId, tagline)}>Search</button>
+        </div>
+
+        {/* <div className="displaySummonerNames">
+          <ul>
+              {sumNames.map((sumName, index) => (
+                  <li key={index}>{sumName}</li>
+              ))}
+          </ul>
+        </div> */}
       </div>
-
-      <div>
-        <h1> Add Users Test </h1>
-      </div>
-
-      <div className="input-container">
-        <StyledInput
-          type="text"
-          placeholder='Name'
-          value={name}
-          onChange={(event) => {
-            setName(event.target.value)
-          }}
-        />
-        <StyledInput
-          type="text"
-          placeholder='Username'
-          value={username}
-          onChange={(event) => {
-            setUsername(event.target.value)
-          }}
-        />
-        <StyledButton onClick={createUser}>Create User</StyledButton>
-        </div>*/}
-
-      <div className='App-name'>
-        <h1> LOL.GG </h1>
-      </div>
-
-      <div className="input-container">
-        <input
-          className='StyledInput'
-          type="text"
-          placeholder='Riot ID'
-          value={riotId}
-          onChange={(event) => {
-            setRiotId(event.target.value)
-          }}
-        />
-        <input
-          className='StyledInput'
-          type="text"
-          placeholder='Tagline'
-          value={tagline}
-          onChange={(event) => {
-            setTagline(event.target.value)
-          }}
-        />
-        <button className="StyledButton" onClick={() => displayMatchHistory(riotId, tagline)}>Search</button>
-      </div>
-
-      <div className="displaySummonerNames">
-        <l>
-            {sumNames.map((sumName, index) => (
-                <div key={index}>{sumName}</div>
-            ))}
-        </l>
-    </div>
-    
-    </div>
   );
 }
 

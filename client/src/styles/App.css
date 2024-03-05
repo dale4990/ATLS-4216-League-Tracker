@@ -9,11 +9,12 @@ body {
 
 
 .App {
-  min-height: 100vh; /* Ensure the background covers the entire viewport */
+  min-height: fit-content; /* Ensure the background covers the entire viewport */
 }
 
 .App-name{
   margin-top: 250px;
+  font-size: 32px;
 }
 
 .App-header {
