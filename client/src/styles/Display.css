@@ -1,0 +1,24 @@
+.body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(to bottom, #091428, #0A1428); /* Gradient background */
+    color: #c89b3c; /* Yellow text color */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+  }
+  
+  .displaySummonerNames {
+    min-height: fit-content;
+    display: flex; 
+    justify-content: center;
+  }
+  
+  .columns {
+    display: flex;
+    width: 10%; 
+    text-align: center;
+  }
+  
+  .column {
+    flex: 1;
+  }
+  

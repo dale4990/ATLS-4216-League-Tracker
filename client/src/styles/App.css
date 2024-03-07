@@ -1,6 +1,7 @@
 body {
   font-family: 'Montserrat', sans-serif;
   background: linear-gradient(to bottom, #091428, #0A1428); /* Gradient background */
+  background-color: #091428;
   color: #c89b3c; /* Yellow text color */
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
@@ -13,8 +14,9 @@ body {
 }
 
 .App-name{
-  margin-top: 250px;
+  margin-top: 18%;
   font-size: 32px;
+  margin-bottom: -30px;
 }
 
 .App-header {
