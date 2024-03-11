@@ -86,7 +86,7 @@ function App() {
           const participants = data.participants;
           for (const participant of participants) {
               console.log(`  Summoner Name: ${participant.summonerName}`);
-              console.log(`  Champion Name/ID: ${participant.championName}`); // Assuming you have champion names
+              console.log(`  Champion Name: ${participant.championName}`); // Assuming you have champion names
               console.log(`  Summoner Level: ${participant.summonerLevel}`);
               // ... 
           }
@@ -120,14 +120,21 @@ function App() {
         ))}
       </div>
 
-      <div>
-        <h1> Add Users Test </h1>
+      <div className="App-header">
+        <h1> Add Profile </h1>
+        <ul className="homelinks">
+          <li><a href="google.com">home</a></li>
+          <li><a href="google.com">game</a></li>
+          <li><a href="google.com">about</a></li>
+          <li><a href="google.com">settings</a></li>
+          <li><a href="google.com">store</a></li>
+        </ul>
       </div>
 
       <div className="input-container">
         <StyledInput
           type="text"
-          placeholder='Name'
+          placeholder='Full Name'
           value={name}
           onChange={(event) => {
             setName(event.target.value)
@@ -135,7 +142,7 @@ function App() {
         />
         <StyledInput
           type="text"
-          placeholder='Username'
+          placeholder='IGN'
           value={username}
           onChange={(event) => {
             setUsername(event.target.value)

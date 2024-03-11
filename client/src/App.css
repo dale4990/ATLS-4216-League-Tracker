@@ -2,23 +2,40 @@ body {
   font-family: 'Montserrat', sans-serif;
   background: linear-gradient(to bottom, #091428, #0A1428); /* Gradient background */
   color: #17a9e2; /* Yellow text color */
-  margin: 0; /* Remove default margin */
-  padding: 1; /* Remove default padding */
+  margin: 10px auto; /* Remove default margin */
+  display: flex;
+  justify-content: center;
+  /* padding: 0px; */
+  text-align: center;
 }
 
 
 .App {
-  text-align: left;
+  text-align: center;
   min-height: 100vh; /* Ensure the background covers the entire viewport */
 }
 
 .App-header {
-  background-color: #282c34; /* Dark gray header background */
+  background-color: #000000; /* Dark gray header background */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 10px;
   font-size: calc(10px + 2vmin);
+}
+
+.homelinks {
+  display: flex;
+  gap: 20px;
+  list-style-type: none;
+  margin-right: 20px;
+  text-decoration: none;
+}
+
+.homelinks a {
+  text-decoration: none;
+  color: #0e9bec;
 }
 
 .App-link {
