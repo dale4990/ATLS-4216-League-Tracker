@@ -86,7 +86,7 @@ function Home() {
 
       // Wait for all requests to finish and retrieve their data
       const matchData = await Promise.all(matchDataPromises);
-
+  
       // Extract summoner names from each match and update the state
       const summonerNames = matchData.reduce((acc, cur) => {
         return [
@@ -131,11 +131,20 @@ function Home() {
   return(
     <div className="App">
       {error && <div>Error: {error}</div>}
+      <div className="App-header">
+        <ul className="left-links">
+          <li><a href="google.com">Home</a></li>
+          <li><a href="./Pages/About.html">About</a></li>
+        </ul>
+        <ul className="right-links">
+          <li><a href="google.com">Champions</a></li>
+          <li><a href="google.com">Modes</a></li>
+        </ul>
+      </div>
 
       <div className='App-name'>
         <h1> LOL.GG </h1>
       </div>
-
       <div className="input-container">
         <input
           className='StyledInput'

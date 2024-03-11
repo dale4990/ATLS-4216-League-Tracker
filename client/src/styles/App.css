@@ -1,27 +1,15 @@
 body {
   font-family: 'Montserrat', sans-serif;
   background: linear-gradient(to bottom, #091428, #0A1428); /* Gradient background */
-<<<<<<< HEAD:client/src/App.css
-  color: #17a9e2; /* Yellow text color */
-  margin: 10px auto; /* Remove default margin */
-  display: flex;
-  justify-content: center;
-  /* padding: 0px; */
-=======
   background-color: #091428;
   color: #c89b3c; /* Yellow text color */
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
->>>>>>> main:client/src/styles/App.css
   text-align: center;
 }
 
 
 .App {
-<<<<<<< HEAD:client/src/App.css
-  text-align: center;
-  min-height: 100vh; /* Ensure the background covers the entire viewport */
-=======
   min-height: fit-content; /* Ensure the background covers the entire viewport */
 }
 
@@ -29,30 +17,43 @@ body {
   margin-top: 18%;
   font-size: 32px;
   margin-bottom: -30px;
->>>>>>> main:client/src/styles/App.css
 }
 
 .App-header {
-  background-color: #000000; /* Dark gray header background */
+  background-color: #01040a; /* Dark gray header background */
   display: flex;
-  flex-direction: column;
+  height: 30px;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: 10px;
+  justify-content: space-evenly;
   font-size: calc(10px + 2vmin);
-}
-
-.homelinks {
-  display: flex;
-  gap: 20px;
   list-style-type: none;
-  margin-right: 20px;
-  text-decoration: none;
 }
 
-.homelinks a {
+.App-header .left-links {
+  font-size: 20px;
+  display: flex;
+  gap: 50px;
+  /* background: red; */
+  list-style-type: none;
+  justify-content: space-between;
+  margin-right: auto;
+}
+
+.App-header .right-links {
+  font-size: 20px;
+  display: flex;
+  list-style-type: none;
+  gap: 50px;
+  color: #c89b3c;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: 35px;
+}
+
+.App-header a {
   text-decoration: none;
-  color: #0e9bec;
+  color: #c89b3c;
 }
 
 .App-link {
