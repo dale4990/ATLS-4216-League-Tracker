@@ -113,7 +113,7 @@ app.post("/findRiotUser", async (req, res) => {
 app.post("/findMatches", async (req, res) => {
     const { puuid } = req.body;
     const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326"; 
-    const url = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${apiKey}`; // can customize region via dropdown later
+    const url = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=1&api_key=${apiKey}`; // can customize region via dropdown later
     
     try {
         const response = await axios.get(url);
@@ -127,6 +127,7 @@ app.post("/findMatches", async (req, res) => {
     }
 });
 
+// POST request to find individual match data based on matchId
 app.post("/findMatchData", async (req, res) => {
     const { matchId } = req.body;
 
@@ -137,12 +138,14 @@ app.post("/findMatchData", async (req, res) => {
             // Extract and return specific participant data
             const participants = existingMatch.info.participants.map((participant) => ({
                 summonerName: participant.summonerName,
-                championName: participant.championId,
+                profileIcon: participant.profileIcon,
+                championId: participant.championId,
+                championLevel: participant.championLevel,
                 summonerLevel: participant.summonerLevel,
                 kills: participant.kills,
                 deaths: participant.deaths,
                 assists: participant.assists,
-                championLevel: participant.championLevel,
+                championLevel: participant.champLevel,
                 itemsPurchased: participant.itemsPurchased,
                 items0: participant.item0,
                 items1: participant.item1,
@@ -151,6 +154,8 @@ app.post("/findMatchData", async (req, res) => {
                 items4: participant.item4,
                 items5: participant.item5,
                 items6: participant.item6,
+                summonerSpell1: participant.summoner1Id,
+                summonerSpell2: participant.summoner2Id,
                 goldEarned: participant.goldEarned,
                 totalDamageDealt: participant.totalDamageDealt,
                 totalDamageTaken: participant.totalDamageTaken,
@@ -158,6 +163,7 @@ app.post("/findMatchData", async (req, res) => {
                 wardsDestroyed: participant.wardsDestroyed,
                 visionScore: participant.visionScore,
                 creepScore: participant.creepScore,
+                teamId: participant.teamId,
                 role: participant.role,
             }));
 
@@ -184,12 +190,14 @@ app.post("/findMatchData", async (req, res) => {
             // Extract and return specific participant data from response
             const participants = info.participants.map((participant) => ({
                 summonerName: participant.summonerName,
-                championName: participant.championId, 
+                profileIcon: participant.profileIcon,
+                championId: participant.championId,
+                championLevel: participant.championLevel,
                 summonerLevel: participant.summonerLevel,
                 kills: participant.kills,
                 deaths: participant.deaths,
                 assists: participant.assists,
-                championLevel: participant.championLevel,
+                championLevel: participant.champLevel,
                 itemsPurchased: participant.itemsPurchased,
                 items0: participant.item0,
                 items1: participant.item1,
@@ -198,6 +206,8 @@ app.post("/findMatchData", async (req, res) => {
                 items4: participant.item4,
                 items5: participant.item5,
                 items6: participant.item6,
+                summonerSpell1: participant.summoner1Id,
+                summonerSpell2: participant.summoner2Id,
                 goldEarned: participant.goldEarned,
                 totalDamageDealt: participant.totalDamageDealt,
                 totalDamageTaken: participant.totalDamageTaken,
@@ -205,6 +215,7 @@ app.post("/findMatchData", async (req, res) => {
                 wardsDestroyed: participant.wardsDestroyed,
                 visionScore: participant.visionScore,
                 creepScore: participant.creepScore,
+                teamId: participant.teamId,
                 role: participant.role,
             }));
 

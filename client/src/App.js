@@ -1,9 +1,8 @@
-import './App.css';
-import { useState, useEffect } from "react";
-import Axios from "axios";
-import { StyledInput, StyledButton } from './StyledComponents';
+import './styles/App.css';
+import Routing from './Router/Routes.js'
 
 function App() {
+<<<<<<< HEAD
   // states
   const [listOfUsers, setListOfUsers] = useState([]);
   const [name, setName] = useState("");
@@ -175,6 +174,10 @@ function App() {
         <StyledButton onClick={() => displayMatchHistory(riotId, tagline)}>Search</StyledButton>
       </div>
     </div>
+=======
+  return(
+    <Routing />
+>>>>>>> main
   );
 }
 
