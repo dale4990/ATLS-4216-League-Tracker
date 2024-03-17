@@ -4,6 +4,7 @@ import Axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchMatchDataRequest, fetchMatchDataSuccess, fetchMatchDataFailure } from '../Redux/actions';
+import About from './About';
 
 function Home() {
 
@@ -134,7 +135,7 @@ function Home() {
       <div className="App-header">
         <ul className="left-links">
           <li><a href="google.com">Home</a></li>
-          <li><a href="./Pages/About.html">About</a></li>
+          <li><a href="/about">About</a></li>
         </ul>
         <ul className="right-links">
           <li><a href="google.com">Champions</a></li>
