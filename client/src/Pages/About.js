@@ -30,6 +30,12 @@ function About() {
       </div>
       <div className="riley">
             <div className="header3">Hi I'm Riley</div>
+            <div className="container">
+              <p>I am currently an undergrad junior at the University of Colorado at Boulder studying Computer Science with a minor in Chinese language. 
+                In my free time, I like to play Valorant, climb, play volleyball, and hit the gym. I'm a Diamond 3 peak in Valorant, and currently have
+                a vertical in the low thirties.
+              </p>
+            </div>
       </div>
       <div className="footer">
         Footer
