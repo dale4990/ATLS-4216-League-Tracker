@@ -134,11 +134,11 @@ function Home() {
       {error && <div>Error: {error}</div>}
       <div className="App-header">
         <ul className="left-links">
-          <li><a href="google.com">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="/about">About</a></li>
         </ul>
         <ul className="right-links">
-          <li><a href="google.com">Champions</a></li>
+          <li><a href="/champions">Champions</a></li>
           <li><a href="google.com">Modes</a></li>
         </ul>
       </div>
