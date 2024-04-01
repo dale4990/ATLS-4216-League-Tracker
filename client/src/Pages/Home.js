@@ -4,7 +4,7 @@ import Axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchMatchDataRequest, fetchMatchDataSuccess, fetchMatchDataFailure } from '../Redux/actions';
-import About from './About';
+// import About from './About';
 
 function Home() {
 
@@ -95,7 +95,18 @@ function Home() {
             ...cur.participants.map((participant) => participant.summonerName),
         ];
       }, []);
+
+      // Extract champion IDs from each match and update the state
+      const championIds = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.championId),
+        ];
+      }, []);
       //setSumNames(summonerNames);
+
+      // Dispatch success action with both sets of data
+      dispatch(fetchMatchDataSuccess(summonerNames, championIds));
       
       // Display only the requested participant data
       console.log("Match data:");
@@ -111,23 +122,27 @@ function Home() {
         setRiotId("");
         setTagline("");
         setError(null);
-        return summonerNames;
+
+        // Navigate to display route with riotId and tagline
+        navigate(`/display/${riotId}/${tagline}`);
+        // return summonerNames;
     }
     catch(error){
+        setError(error.response.data.error);
         dispatch(fetchMatchDataFailure(error));
     }
   }
 
-  const displayMatchHistory = (riotId, tagline) => {
-    getMatchDatas(riotId, tagline)
-      .then((sumNames) => {
-        dispatch(fetchMatchDataSuccess(sumNames));
-        navigate(`/display/${riotId}/${tagline}`);
-      })
-      .catch((error) => {
-        setError(error.response.data.error);
-      });
-  };
+  // const displayMatchHistory = (riotId, tagline) => {
+  //   getMatchDatas(riotId, tagline)
+  //     .then((sumNames) => {
+  //       dispatch(fetchMatchDataSuccess(sumNames, sumNames));
+  //       navigate(`/display/${riotId}/${tagline}`);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.response.data.error);
+  //     });
+  // };
   
   return(
     <div className="App">
@@ -165,7 +180,7 @@ function Home() {
             setTagline(event.target.value)
           }}
         />
-        <button className="StyledButton" onClick={() => displayMatchHistory(riotId, tagline)}>Search</button>
+        <button className="StyledButton" onClick={() => getMatchDatas(riotId, tagline)}>Search</button>
       </div> 
       {/* <div className="displaySummonerNames">
         <ul>

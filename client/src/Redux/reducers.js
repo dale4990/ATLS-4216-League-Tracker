@@ -4,6 +4,7 @@ import { FETCH_MATCH_DATA_REQUEST, FETCH_MATCH_DATA_SUCCESS, FETCH_MATCH_DATA_FA
 
 const initialState = {
   matchData: [],
+  championIds: [],
   loading: false,
   error: null,
 };
@@ -13,13 +14,27 @@ const matchDataReducer = (state = initialState, action) => {
     case FETCH_MATCH_DATA_REQUEST:
       return { ...state, loading: true, error: null };
     case FETCH_MATCH_DATA_SUCCESS:
-      return { ...state, loading: false, matchData: action.payload };
+      const { summonerNames, championIds } = action.payload;
+      return { ...state, loading: false, summonerNames, championIds };
     case FETCH_MATCH_DATA_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
 };
+
+// const matchDataReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case FETCH_MATCH_DATA_REQUEST:
+//       return { ...state, loading: true, error: null };
+//     case FETCH_MATCH_DATA_SUCCESS:
+//       return { ...state, loading: false, matchData: action.payload };
+//     case FETCH_MATCH_DATA_FAILURE:
+//       return { ...state, loading: false, error: action.payload };
+//     default:
+//       return state;
+//   }
+// };
 
 export default combineReducers({
   matchData: matchDataReducer,

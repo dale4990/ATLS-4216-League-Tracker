@@ -2,19 +2,20 @@ import '../styles/Display.css';
 import { useSelector } from 'react-redux';
 
 function Display() { 
-  const matchData = useSelector(state => state.matchData.matchData);
+  const summonerNames = useSelector(state => state.matchData.summonerNames);
+  const championIds = useSelector(state => state.matchData.championIds);
   const error = useSelector(state => state.matchData.error);
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
-  if (!matchData || matchData.length < 10) {
+  if (!summonerNames || summonerNames.length < 10) {
     return <div>No data available</div>;
   }
 
-  const leftColumn = matchData.slice(0, 5);
-  const rightColumn = matchData.slice(5, 10);
+  const leftColumn = summonerNames.slice(0, 5);
+  const rightColumn = summonerNames.slice(5, 10);
 
   return (
     <div className="displaySummonerNames">
