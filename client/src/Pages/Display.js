@@ -190,6 +190,38 @@ function getName(id) {
       case 81: return "Ezreal"; break;
       case 145: return "Kaisa"; break;
       case 777: return "Yone"; break;
+      case 164: return "Camille"; break;
+      case 498: return "Xayah"; break;
+      case 497: return "Rakan"; break;
+      case 141: return "Kayn"; break;
+      case 516: return "Ornn"; break;
+      case 142: return "Zoe"; break;
+      case 555: return "Pyke"; break;
+      case 518: return "Neeko"; break;
+      case 517: return "Sylas"; break;
+      case 350: return "Yuumi"; break;
+      case 246: return "Qiyana"; break;
+      case 235: return "Senna"; break;
+      case 523: return "Aphelios"; break;
+      case 875: return "Sett"; break;
+      case 876: return "Lillia"; break;
+      case 360: return "Samira"; break;
+      case 147: return "Seraphine"; break;
+      case 526: return "Rell"; break;
+      case 234: return "Viego"; break;
+      case 887: return "Gwen"; break;
+      case 166: return "Akshan"; break;
+      case 711: return "Vex"; break;
+      case 221: return "Zeri"; break;
+      case 888: return "Renata"; break;
+      case 200: return "Belveth"; break;
+      case 895: return "Nilah"; break;
+      case 897: return "KSante"; break;
+      case 902: return "Milio"; break;
+      case 950: return "Naafiri"; break;
+      case 233: return "Briar"; break;
+      case 910: return "Hwei"; break;
+      case 901: return "Smolder"; break;
       default: return ""; break;
   }
 }
