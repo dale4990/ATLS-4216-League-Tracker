@@ -27,8 +27,8 @@ function Display() {
               const champId = getName(championIds[index]); // Assign champId here
               return (
                 <div key={index}>
-                  {summonerName}
                   <img src={`/champImages/${champId}.png`} alt={champId} />
+                  {summonerName}
                 </div>
               );
             })}
@@ -41,8 +41,8 @@ function Display() {
               const champId = getName(championIds[index+5]); // Assign champId here
               return (
                 <div key={index}>
-                  {summonerName}
                   <img src={`/champImages/${champId}.png`} alt={champId} />
+                  {summonerName}
                 </div>
               );
             })}
