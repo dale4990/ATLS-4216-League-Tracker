@@ -165,10 +165,10 @@ app.post("/findMatchData", async (req, res) => {
                 creepScore: participant.creepScore,
                 teamId: participant.teamId,
                 role: participant.role,
-                // perks: {
-                //     primaryStyle: participant.perks.styles[0].selections,
-                //     secondaryStyle: participant.perks.styles[1].selections,
-                //   },
+                perks: {
+                    primaryStyle: participant.perks.styles[0].style,
+                    secondaryStyle: participant.perks.styles[1].style,
+                  },
             }));
 
             res.json({ matchId, participants });
