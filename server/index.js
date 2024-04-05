@@ -113,7 +113,7 @@ app.post("/findRiotUser", async (req, res) => {
 app.post("/findMatches", async (req, res) => {
     const { puuid } = req.body;
     const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326"; 
-    const url = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=1&api_key=${apiKey}`; // can customize region via dropdown later
+    const url = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${apiKey}`; // can customize region via dropdown later
     
     try {
         const response = await axios.get(url);
@@ -147,13 +147,13 @@ app.post("/findMatchData", async (req, res) => {
                 assists: participant.assists,
                 championLevel: participant.champLevel,
                 itemsPurchased: participant.itemsPurchased,
-                items0: participant.item0,
-                items1: participant.item1,
-                items2: participant.item2,
-                items3: participant.item3,
-                items4: participant.item4,
-                items5: participant.item5,
-                items6: participant.item6,
+                item0: participant.item0,
+                item1: participant.item1,
+                item2: participant.item2,
+                item3: participant.item3,
+                item4: participant.item4,
+                item5: participant.item5,
+                item6: participant.item6,
                 summonerSpell1: participant.summoner1Id,
                 summonerSpell2: participant.summoner2Id,
                 goldEarned: participant.goldEarned,
@@ -165,6 +165,10 @@ app.post("/findMatchData", async (req, res) => {
                 creepScore: participant.creepScore,
                 teamId: participant.teamId,
                 role: participant.role,
+                // perks: {
+                //     primaryStyle: participant.perks.styles[0].selections,
+                //     secondaryStyle: participant.perks.styles[1].selections,
+                //   },
             }));
 
             res.json({ matchId, participants });
@@ -199,13 +203,13 @@ app.post("/findMatchData", async (req, res) => {
                 assists: participant.assists,
                 championLevel: participant.champLevel,
                 itemsPurchased: participant.itemsPurchased,
-                items0: participant.item0,
-                items1: participant.item1,
-                items2: participant.item2,
-                items3: participant.item3,
-                items4: participant.item4,
-                items5: participant.item5,
-                items6: participant.item6,
+                item0: participant.item0,
+                item1: participant.item1,
+                item2: participant.item2,
+                item3: participant.item3,
+                item4: participant.item4,
+                item5: participant.item5,
+                item6: participant.item6,
                 summonerSpell1: participant.summoner1Id,
                 summonerSpell2: participant.summoner2Id,
                 goldEarned: participant.goldEarned,
@@ -217,6 +221,10 @@ app.post("/findMatchData", async (req, res) => {
                 creepScore: participant.creepScore,
                 teamId: participant.teamId,
                 role: participant.role,
+                // perks: {
+                //     primaryStyle: participant.perks.styles[0].selections,
+                //     secondaryStyle: participant.perks.styles[1].selections,
+                //   },
             }));
 
             res.json({ matchId, participants });

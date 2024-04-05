@@ -103,10 +103,74 @@ function Home() {
             ...cur.participants.map((participant) => participant.championId),
         ];
       }, []);
+
+      // Extract items0-6 from each match and update the state 
+      const items0 = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.item0),
+        ];
+      }, []);
+      const items1 = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.item1),
+        ];
+      }, []);
+      const items2 = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.item2),
+        ];
+      }, []);
+      const items3 = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.item3),
+        ];
+      }, []);
+      const items4 = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.item4),
+        ];
+      }, []);
+      const items5 = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.item5),
+        ];
+      }, []);
+      const items6 = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.item6),
+        ];
+      }, []);
+
+      // Extact K/D/A from each match and update the state
+      const kills = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.kills),
+        ];
+      }, []);
+      const deaths = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.deaths),
+        ];
+      }, []);
+      const assists = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.assists),
+        ];
+      }, []);
       //setSumNames(summonerNames);
 
-      // Dispatch success action with both sets of data
-      dispatch(fetchMatchDataSuccess(summonerNames, championIds));
+      // Dispatch success action with all sets of data
+      dispatch(fetchMatchDataSuccess(summonerNames, championIds, items0, items1, items2, items3, items4, items5, items6, kills, deaths, assists));
       
       // Display only the requested participant data
       console.log("Match data:");
@@ -116,6 +180,17 @@ function Home() {
               console.log(`  Summoner Name: ${participant.summonerName}`);
               console.log(`  Champion Name/ID: ${participant.championId}`); 
               console.log(`  Summoner Level: ${participant.summonerLevel}`);
+              console.log(`  item0: ${participant.item0}`);
+              console.log(`  item1: ${participant.item1}`);
+              console.log(`  item2: ${participant.item2}`);
+              console.log(`  item3: ${participant.item3}`);
+              console.log(`  item4: ${participant.item4}`);
+              console.log(`  item5: ${participant.item5}`);
+              console.log(`  item6: ${participant.item6}`);
+              console.log(`  kills: ${participant.kills}`);
+              console.log(`  deaths: ${participant.deaths}`);
+              console.log(`  assists: ${participant.assists}`);
+
               // ... 
           }
       }

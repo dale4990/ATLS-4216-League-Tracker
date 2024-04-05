@@ -14,8 +14,14 @@
   
   .columns {
     display: flex;
-    width: 10%; 
+    width: flex; 
     text-align: center;
+  }
+
+  .image-container img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
   }
   
   .column {

@@ -116,7 +116,6 @@ const TeamSchema = new mongoose.Schema({
 const InfoSchema = new mongoose.Schema({
   endOfGameResult: {
     type: String,
-    required: true,
   },
   gameCreation: {
     type: Number,
