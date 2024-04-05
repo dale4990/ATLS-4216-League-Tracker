@@ -33,8 +33,8 @@ function Display() {
     return <div>No data available</div>;
   }
 
-  const leftColumn = summonerNames.slice(0, 5);
-  const rightColumn = summonerNames.slice(5, 10);
+  const leftColumn = summonerNames.slice(0,5);
+  const rightColumn = summonerNames.slice(5,10);
 
   // Call the function to get the champion image map
   const championImageMap = parseChampionData();
@@ -43,73 +43,144 @@ function Display() {
 
 
 
+  // return (
+  //   <div className="displaySummonerNames">
+  //     <div className="columns">
+  //       {/* Left Column */}
+  //       <div className="column">
+  //         <ul>
+  //           {leftColumn.map((summonerName, index) => {
+  //             return (
+  //               <div key={index}>
+  //                 <img src={`/champion/${championImageMap[championIds[index]]}`} alt={championIds[index]} />
+  //                 <div className="image-container">
+  //                   <img src={`/item/${item0[index]}.png`} />
+  //                   <img src={`/item/${item1[index]}.png`} />
+  //                   <img src={`/item/${item2[index]}.png`} />
+  //                   <img src={`/item/${item3[index]}.png`} />
+  //                   <img src={`/item/${item4[index]}.png`} />
+  //                   <img src={`/item/${item5[index]}.png`} />
+  //                   <img src={`/item/${item6[index]}.png`} />
+  //                 </div>
+  //                 <div className="image-container">
+  //                   <img src={`/${mapRuneIdToIcon(primaryRune[index])}`} />
+  //                   <img src={`/${mapStyleIdToIcon(secondaryStyle[index])}`} />
+  //                 </div>
+  //                 <div className="image-container">
+  //                   <img src={`/spell/${summonerImageMap[summoner1Id[index]]}`} />
+  //                   <img src={`/spell/${summonerImageMap[summoner2Id[index]]}`} />
+  //                 </div>
+                  
+  //                 {summonerName}
+  //                 <div> {kills[index]}/{deaths[index]}/{assists[index]}</div>
+                  
+  //               </div>
+  //             );
+  //           })}
+  //         </ul>
+  //       </div>
+  //       {/* Right Column */}
+  //       <div className="column">
+  //         <ul>
+  //           {rightColumn.map((summonerName, index) => {
+  //             return (
+  //               <div key={index}>
+  //                 <img src={`/champImages/${championImageMap[championIds[index+5]]}`} alt={championIds[index+5]} />
+  //                 <div className="image-container">
+  //                   <img src={`/item/${item0[index+5]}.png`} />
+  //                   <img src={`/item/${item1[index+5]}.png`} />
+  //                   <img src={`/item/${item2[index+5]}.png`} />
+  //                   <img src={`/item/${item3[index+5]}.png`} />
+  //                   <img src={`/item/${item4[index+5]}.png`} />
+  //                   <img src={`/item/${item5[index+5]}.png`} />
+  //                   <img src={`/item/${item6[index+5]}.png`} />
+  //                 </div>
+  //                 <div className="image-container">
+  //                   <img src={`/${mapRuneIdToIcon(primaryRune[index+5])}`} />
+  //                   <img src={`/${mapStyleIdToIcon(secondaryStyle[index+5])}`} />
+  //                 </div>
+  //                 <div className="image-container">
+  //                   <img src={`/spell/${summonerImageMap[summoner1Id[index+5]]}`} />
+  //                   <img src={`/spell/${summonerImageMap[summoner2Id[index+5]]}`} />
+  //                 </div>
+  //                 {summonerName}
+  //                 <div> {kills[index+5]}/{deaths[index+5]}/{assists[index+5]}</div>
+  //               </div>
+  //             );
+  //           })}
+  //         </ul>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
   return (
-    <div className="displaySummonerNames">
-      <div className="columns">
-        {/* Left Column */}
-        <div className="column">
-          <ul>
-            {leftColumn.map((summonerName, index) => {
-              return (
-                <div key={index}>
-                  <img src={`/champion/${championImageMap[championIds[index]]}`} alt={championIds[index]} />
-                  <div className="image-container">
-                    <img src={`/item/${item0[index]}.png`} />
-                    <img src={`/item/${item1[index]}.png`} />
-                    <img src={`/item/${item2[index]}.png`} />
-                    <img src={`/item/${item3[index]}.png`} />
-                    <img src={`/item/${item4[index]}.png`} />
-                    <img src={`/item/${item5[index]}.png`} />
-                    <img src={`/item/${item6[index]}.png`} />
-                  </div>
-                  <div className="image-container">
-                    <img src={`/${mapRuneIdToIcon(primaryRune[index])}`} />
-                    <img src={`/${mapStyleIdToIcon(secondaryStyle[index])}`} />
-                  </div>
-                  <div className="image-container">
-                    <img src={`/spell/${summonerImageMap[summoner1Id[index]]}`} />
-                    <img src={`/spell/${summonerImageMap[summoner2Id[index]]}`} />
-                  </div>
-                  
-                  {summonerName}
-                  <div> {kills[index]}/{deaths[index]}/{assists[index]}</div>
-                  
-                </div>
-              );
-            })}
-          </ul>
-        </div>
-        {/* Right Column */}
-        <div className="column">
-          <ul>
-            {rightColumn.map((summonerName, index) => {
-              return (
-                <div key={index}>
-                  <img src={`/champImages/${championImageMap[championIds[index+5]]}`} alt={championIds[index+5]} />
-                  <div className="image-container">
-                    <img src={`/item/${item0[index+5]}.png`} />
-                    <img src={`/item/${item1[index+5]}.png`} />
-                    <img src={`/item/${item2[index+5]}.png`} />
-                    <img src={`/item/${item3[index+5]}.png`} />
-                    <img src={`/item/${item4[index+5]}.png`} />
-                    <img src={`/item/${item5[index+5]}.png`} />
-                    <img src={`/item/${item6[index+5]}.png`} />
-                  </div>
-                  <div className="image-container">
-                    <img src={`/${mapRuneIdToIcon(primaryRune[index+5])}`} />
-                    <img src={`/${mapStyleIdToIcon(secondaryStyle[index+5])}`} />
-                  </div>
-                  <div className="image-container">
-                    <img src={`/spell/${summonerImageMap[summoner1Id[index+5]]}`} />
-                    <img src={`/spell/${summonerImageMap[summoner2Id[index+5]]}`} />
-                  </div>
-                  {summonerName}
-                  <div> {kills[index+5]}/{deaths[index+5]}/{assists[index+5]}</div>
-                </div>
-              );
-            })}
-          </ul>
-        </div>
+    <div className="matchOverview">
+      <div className="team blue">
+        <h2>Blue</h2>
+        {leftColumn.map((summonerName, index) => (
+          <div key={index} className="summoner">
+            <div className="summoner-container">
+              <img src={`/champion/${championImageMap[championIds[index]]}`} alt={championIds[index]} className="summoner-icon"/>  
+            </div>
+            <div className="image-container">
+              <img src={`/${mapRuneIdToIcon(primaryRune[index])}`} />
+              <img src={`/${mapStyleIdToIcon(secondaryStyle[index])}`} />
+            </div>
+            <div className="image-container">
+              <img src={`/spell/${summonerImageMap[summoner1Id[index]]}`} />
+              <img src={`/spell/${summonerImageMap[summoner2Id[index]]}`} />
+            </div>
+            <div className="blank-space"></div>
+            <div className="info">
+              <div className="name">{summonerName}</div>
+              <div className="kda"> {kills[index]}/{deaths[index]}/{assists[index]}</div>
+              <div className='kda-ratio'>{`${calculateKdaRatio(kills[index], deaths[index], assists[index])}:1 KDA`}</div>
+            </div>
+            <div className="item-container">
+              <img src={`/item/${item0[index]}.png`} />
+              <img src={`/item/${item1[index]}.png`} />
+              <img src={`/item/${item2[index]}.png`} />
+              <img src={`/item/${item3[index]}.png`} />
+              <img src={`/item/${item4[index]}.png`} />
+              <img src={`/item/${item5[index]}.png`} />
+              <img src={`/item/${item6[index]}.png`} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="team red">
+        <h2>Red</h2>
+        {rightColumn.map((summonerName, index) => (
+          <div key={index} className="summoner">
+            <div className='summoner-container'>
+              <div className="black-circle"></div>
+              <img src={`/champImages/${championImageMap[championIds[index+5]]}`} alt={championIds[index+5]} className="summoner-icon"/>
+            </div>
+            <div className="image-container">
+              <img src={`/${mapRuneIdToIcon(primaryRune[index+5])}`} />
+              <img src={`/${mapStyleIdToIcon(secondaryStyle[index+5])}`} />
+            </div>
+            <div className="image-container">
+              <img src={`/spell/${summonerImageMap[summoner1Id[index+5]]}`} />
+              <img src={`/spell/${summonerImageMap[summoner2Id[index+5]]}`} />
+            </div>
+            <div className="blank-space"></div>
+            <div className="info">
+              <div className="name">{summonerName}</div>
+              <div className="kda"> {kills[index+5]}/{deaths[index+5]}/{assists[index+5]}</div>
+              <div className='kda-ratio'>{`${calculateKdaRatio(kills[index+5], deaths[index+5], assists[index+5])}:1 KDA`}</div>
+            </div>
+            <div className="item-container">
+              <img src={`/item/${item0[index+5]}.png`} />
+              <img src={`/item/${item1[index+5]}.png`} />
+              <img src={`/item/${item2[index+5]}.png`} />
+              <img src={`/item/${item3[index+5]}.png`} />
+              <img src={`/item/${item4[index+5]}.png`} />
+              <img src={`/item/${item5[index+5]}.png`} />
+              <img src={`/item/${item6[index+5]}.png`} />
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -170,6 +241,14 @@ const mapStyleIdToIcon = (styleId) => {
         }
       }
   return ""; 
+};
+
+const calculateKdaRatio = (kills, deaths, assists) => {
+  if (deaths === 0) {
+      return (kills + assists).toFixed(2); // Handle the case where there are no deaths
+  } else {
+      return ((kills + assists) / deaths).toFixed(2);
+  }
 };
 
 export default Display;
