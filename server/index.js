@@ -166,7 +166,7 @@ app.post("/findMatchData", async (req, res) => {
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
-                    primaryStyle: participant.perks.styles[0].style,
+                    primaryRune: participant.perks.styles[0].selections[0].perk,
                     secondaryStyle: participant.perks.styles[1].style,
                   },
             }));
@@ -221,10 +221,10 @@ app.post("/findMatchData", async (req, res) => {
                 creepScore: participant.creepScore,
                 teamId: participant.teamId,
                 role: participant.role,
-                // perks: {
-                //     primaryStyle: participant.perks.styles[0].selections,
-                //     secondaryStyle: participant.perks.styles[1].selections,
-                //   },
+                perks: {
+                    primaryRune: participant.perks.styles[0].selections[0].perk,
+                    secondaryStyle: participant.perks.styles[1].style,
+                  },
             }));
 
             res.json({ matchId, participants });

@@ -87,6 +87,9 @@ function Home() {
 
       // Wait for all requests to finish and retrieve their data
       const matchData = await Promise.all(matchDataPromises);
+
+      const matchDataParticipants = matchData.flat();
+
   
       // Extract summoner names from each match and update the state
       const summonerNames = matchData.reduce((acc, cur) => {
@@ -167,10 +170,36 @@ function Home() {
             ...cur.participants.map((participant) => participant.assists),
         ];
       }, []);
+      const primaryRune = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.perks.primaryRune),
+        ];
+      }, []);
+      const secondaryStyle = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.perks.secondaryStyle),
+        ];
+      }, []);
+      const summoner1Id = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.summonerSpell1),
+        ];
+      }, []);
+      const summoner2Id = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.summonerSpell2),
+        ];
+      }, []);
+
+
       //setSumNames(summonerNames);
 
       // Dispatch success action with all sets of data
-      dispatch(fetchMatchDataSuccess(summonerNames, championIds, items0, items1, items2, items3, items4, items5, items6, kills, deaths, assists));
+      dispatch(fetchMatchDataSuccess(matchDataParticipants, summonerNames, championIds, items0, items1, items2, items3, items4, items5, items6, kills, deaths, assists, primaryRune, secondaryStyle, summoner1Id, summoner2Id));
       
       // Display only the requested participant data
       console.log("Match data:");
@@ -190,6 +219,8 @@ function Home() {
               console.log(`  kills: ${participant.kills}`);
               console.log(`  deaths: ${participant.deaths}`);
               console.log(`  assists: ${participant.assists}`);
+              console.log(`  primaryRune: ${participant.perks.primaryRune}`);
+              console.log(`  secondaryStyle: ${participant.perks.secondaryStyle}`);
 
               // ... 
           }
