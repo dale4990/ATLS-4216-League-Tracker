@@ -108,7 +108,7 @@ const ParticipantSchema = new mongoose.Schema({
   goldEarned: {
     type: Number,
   },
-  totalDamageDealt: {
+  totalDamageDealtToChampions: {
     type: Number,
   },
   totalDamageTaken: {
@@ -123,7 +123,7 @@ const ParticipantSchema = new mongoose.Schema({
   visionScore: {
     type: Number,
   },
-  creepScore: {
+  totalMinionsKilled: {
     type: Number,
   },
   teamId: {
@@ -133,6 +133,9 @@ const ParticipantSchema = new mongoose.Schema({
     type: String,
   },
   perks: PerksSchema,
+  win: {
+    type: Boolean,
+  },
 });
 
 // Sub-schema for bans

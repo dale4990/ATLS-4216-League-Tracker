@@ -87,15 +87,26 @@ function Home() {
 
       // Wait for all requests to finish and retrieve their data
       const matchData = await Promise.all(matchDataPromises);
+    
+      const gameDurations = [];
+      matchData.forEach(data => {
+        const duration = data.gameDuration;
+        gameDurations.push(duration);
+      });
 
-      const matchDataParticipants = matchData.flat();
 
-  
       // Extract summoner names from each match and update the state
       const summonerNames = matchData.reduce((acc, cur) => {
         return [
             ...acc,
             ...cur.participants.map((participant) => participant.summonerName),
+        ];
+      }, []);
+
+      const summonerLevel = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.summonerLevel),
         ];
       }, []);
 
@@ -194,12 +205,42 @@ function Home() {
             ...cur.participants.map((participant) => participant.summonerSpell2),
         ];
       }, []);
+      const totalDamageDealtToChampions = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.totalDamageDealtToChampions),
+        ];
+      }, []);
+      const totalDamageTaken = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.totalDamageTaken),
+        ];
+      }, []);
+      const totalMinionsKilled = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.totalMinionsKilled),
+        ];
+      }, []);
+      const wins = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.win),
+        ];
+      }, []);
+
 
 
       //setSumNames(summonerNames);
 
       // Dispatch success action with all sets of data
-      dispatch(fetchMatchDataSuccess(matchDataParticipants, summonerNames, championIds, items0, items1, items2, items3, items4, items5, items6, kills, deaths, assists, primaryRune, secondaryStyle, summoner1Id, summoner2Id));
+      dispatch(fetchMatchDataSuccess(
+        gameDurations, summonerNames, summonerLevel, championIds, 
+        items0, items1, items2, items3, items4, items5, items6, 
+        kills, deaths, assists, primaryRune, secondaryStyle, summoner1Id, summoner2Id,
+        totalDamageDealtToChampions, totalDamageTaken, totalMinionsKilled, wins)
+      );
       
       // Display only the requested participant data
       console.log("Match data:");
@@ -221,6 +262,8 @@ function Home() {
               console.log(`  assists: ${participant.assists}`);
               console.log(`  primaryRune: ${participant.perks.primaryRune}`);
               console.log(`  secondaryStyle: ${participant.perks.secondaryStyle}`);
+              console.log(`  totalDamageDealtToChampions: ${participant.totalDamageDealtToChampions}`);
+              console.log(`  win: ${participant.win}`);
 
               // ... 
           }
