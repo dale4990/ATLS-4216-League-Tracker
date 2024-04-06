@@ -5,8 +5,9 @@ import runesReforged from '../assets/data/en_US/runesReforged.json';
 import summonerData from '../assets/data/en_US/summoner.json';
 
 function Display() { 
-  const matchData = useSelector(state => state.matchData);
+  const gameDuration = useSelector(state => state.matchData.gameDuration);
   const summonerNames = useSelector(state => state.matchData.summonerNames);
+  const summonerLevel = useSelector(state => state.matchData.summonerLevel);
   const championIds = useSelector(state => state.matchData.championIds);
   const item0 = useSelector(state => state.matchData.item0);
   const item1 = useSelector(state => state.matchData.item1);
@@ -22,6 +23,11 @@ function Display() {
   const secondaryStyle = useSelector(state => state.matchData.secondaryStyle);
   const summoner1Id = useSelector(state => state.matchData.summoner1Id);
   const summoner2Id = useSelector(state => state.matchData.summoner2Id);
+  const totalDamageDealt = useSelector(state => state.matchData.totalDamageDealt);
+  const totalDamageTaken = useSelector(state => state.matchData.totalDamageTaken);
+  const totalMinionsKilled = useSelector(state => state.matchData.totalMinionsKilled);
+  const win = useSelector(state => state.matchData.win);
+  
   const error = useSelector(state => state.matchData.error);
 
 
@@ -114,27 +120,44 @@ function Display() {
   //   </div>
   // );
   return (
-    <div className="matchOverview">
-      <div className="team blue">
-        <h2>Blue</h2>
+    <div className={`matchOverview`}>
+      <div className= {win[0] ? 'team blue': 'team red'}>
+        <h2>{win[0] ? 'Win' : 'Lose'}</h2>
         {leftColumn.map((summonerName, index) => (
           <div key={index} className="summoner">
             <div className="summoner-container">
-              <img src={`/champion/${championImageMap[championIds[index]]}`} alt={championIds[index]} className="summoner-icon"/>  
+              <img src={`/champion/${championImageMap[championIds[index]]}`} alt={championIds[index]} className="summoner-icon"/>
+              <div className="image-container">
+                <div className="rune-style-container">
+                  <div className="black-circle"></div>
+                  <img src={`/${mapRuneIdToIcon(primaryRune[index])}`} />
+                  <img src={`/${mapStyleIdToIcon(secondaryStyle[index])}`} className='secondary-path'/>
+                </div>
+                <div className="summoner-spell-container">
+                  <img src={`/spell/${summonerImageMap[summoner1Id[index]]}`} />
+                  <img src={`/spell/${summonerImageMap[summoner2Id[index]]}`} />
+                </div>
+            </div>  
             </div>
-            <div className="image-container">
-              <img src={`/${mapRuneIdToIcon(primaryRune[index])}`} />
-              <img src={`/${mapStyleIdToIcon(secondaryStyle[index])}`} />
-            </div>
-            <div className="image-container">
-              <img src={`/spell/${summonerImageMap[summoner1Id[index]]}`} />
-              <img src={`/spell/${summonerImageMap[summoner2Id[index]]}`} />
-            </div>
-            <div className="blank-space"></div>
-            <div className="info">
+            <div className="summoner-info">
               <div className="name">{summonerName}</div>
-              <div className="kda"> {kills[index]}/{deaths[index]}/{assists[index]}</div>
-              <div className='kda-ratio'>{`${calculateKdaRatio(kills[index], deaths[index], assists[index])}:1 KDA`}</div>
+              <div className="name"> Level {summonerLevel[index]} </div>
+            </div>
+            <div className='kda-container'>
+              <div> {kills[index]}/{deaths[index]}/{assists[index]}</div>
+              <div className='kda'>{`${calculateKdaRatio(kills[index], deaths[index], assists[index])}:1`}</div>
+            </div>
+            <div className="stats-container">
+              Dmg Dealt
+              <div> {totalDamageDealt[index]} </div>
+            </div>
+            <div className="stats-container">
+              Dmg Taken
+              <div> {totalDamageTaken[index]} </div>
+            </div>
+            <div className="stats-container">
+              CS
+              <div> {calculateCSPerMin(totalMinionsKilled[index], gameDuration[0])} </div>
             </div>
             <div className="item-container">
               <img src={`/item/${item0[index]}.png`} />
@@ -148,27 +171,43 @@ function Display() {
           </div>
         ))}
       </div>
-      <div className="team red">
-        <h2>Red</h2>
+      <div className={win[5] ? 'team blue': 'team red'}>
+        <h2>{win[5] ? 'Win' : 'Lose'}</h2>
         {rightColumn.map((summonerName, index) => (
-          <div key={index} className="summoner">
-            <div className='summoner-container'>
-              <div className="black-circle"></div>
-              <img src={`/champImages/${championImageMap[championIds[index+5]]}`} alt={championIds[index+5]} className="summoner-icon"/>
+            <div key={index} className="summoner">
+            <div className="summoner-container">
+              <img src={`/champion/${championImageMap[championIds[index+5]]}`} alt={championIds[index+5]} className="summoner-icon"/>
+              <div className="image-container">
+                <div className="rune-style-container">
+                  <div className="black-circle"></div>
+                  <img src={`/${mapRuneIdToIcon(primaryRune[index+5])}`} />
+                  <img src={`/${mapStyleIdToIcon(secondaryStyle[index+5])}`} className='secondary-path'/>
+                </div>
+                <div className="summoner-spell-container">
+                  <img src={`/spell/${summonerImageMap[summoner1Id[index+5]]}`} />
+                  <img src={`/spell/${summonerImageMap[summoner2Id[index+5]]}`} />
+                </div>
+            </div>  
             </div>
-            <div className="image-container">
-              <img src={`/${mapRuneIdToIcon(primaryRune[index+5])}`} />
-              <img src={`/${mapStyleIdToIcon(secondaryStyle[index+5])}`} />
-            </div>
-            <div className="image-container">
-              <img src={`/spell/${summonerImageMap[summoner1Id[index+5]]}`} />
-              <img src={`/spell/${summonerImageMap[summoner2Id[index+5]]}`} />
-            </div>
-            <div className="blank-space"></div>
-            <div className="info">
+            <div className="summoner-info">
               <div className="name">{summonerName}</div>
-              <div className="kda"> {kills[index+5]}/{deaths[index+5]}/{assists[index+5]}</div>
-              <div className='kda-ratio'>{`${calculateKdaRatio(kills[index+5], deaths[index+5], assists[index+5])}:1 KDA`}</div>
+              <div className="name"> Level {summonerLevel[index+5]} </div>
+            </div>
+            <div className='kda-container'>
+              <div> {kills[index]}/{deaths[index]}/{assists[index+5]}</div>
+              <div className='kda'>{`${calculateKdaRatio(kills[index+5], deaths[index+5], assists[index+5])}:1`}</div>
+            </div>
+            <div className="stats-container">
+              Dmg Dealt
+              <div> {totalDamageDealt[index+5]} </div>
+            </div>
+            <div className="stats-container">
+              Dmg Taken
+              <div> {totalDamageTaken[index+5]} </div>
+            </div>
+            <div className="stats-container">
+              CS
+              <div> {calculateCSPerMin(totalMinionsKilled[index+5], gameDuration[0])} </div>
             </div>
             <div className="item-container">
               <img src={`/item/${item0[index+5]}.png`} />
@@ -245,10 +284,21 @@ const mapStyleIdToIcon = (styleId) => {
 
 const calculateKdaRatio = (kills, deaths, assists) => {
   if (deaths === 0) {
-      return (kills + assists).toFixed(2); // Handle the case where there are no deaths
+      return ("Perfect"); 
   } else {
       return ((kills + assists) / deaths).toFixed(2);
   }
+};
+
+const formatGameDuration = (durationInSeconds) => {
+  const minutes = Math.floor(durationInSeconds / 60);
+  const seconds = durationInSeconds % 60;
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+};
+
+const calculateCSPerMin = (totalMinionsKilled, gameDurationInSeconds) => {
+  const gameDurationInMinutes = Math.floor(gameDurationInSeconds / 60);
+  return (totalMinionsKilled / gameDurationInMinutes).toFixed(1) + ` (${totalMinionsKilled})`;
 };
 
 export default Display;

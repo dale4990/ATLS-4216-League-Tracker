@@ -135,6 +135,8 @@ app.post("/findMatchData", async (req, res) => {
         const existingMatch = await MatchData.findOne({ matchId }); 
 
         if (existingMatch) {
+            const { info } = existingMatch;
+            const gameDuration = info.gameDuration; 
             // Extract and return specific participant data
             const participants = existingMatch.info.participants.map((participant) => ({
                 summonerName: participant.summonerName,
@@ -157,12 +159,12 @@ app.post("/findMatchData", async (req, res) => {
                 summonerSpell1: participant.summoner1Id,
                 summonerSpell2: participant.summoner2Id,
                 goldEarned: participant.goldEarned,
-                totalDamageDealt: participant.totalDamageDealt,
+                totalDamageDealtToChampions: participant.totalDamageDealtToChampions,
                 totalDamageTaken: participant.totalDamageTaken,
                 wardsPlaced: participant.wardsPlaced,
                 wardsDestroyed: participant.wardsDestroyed,
                 visionScore: participant.visionScore,
-                creepScore: participant.creepScore,
+                totalMinionsKilled: participant.totalMinionsKilled,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
@@ -171,7 +173,7 @@ app.post("/findMatchData", async (req, res) => {
                   },
             }));
 
-            res.json({ matchId, participants });
+            res.json({ matchId, gameDuration, participants });
             return;
         }
 
@@ -190,6 +192,8 @@ app.post("/findMatchData", async (req, res) => {
             });
 
             await newMatch.save();
+
+            const gameDuration = info.gameDuration; 
 
             // Extract and return specific participant data from response
             const participants = info.participants.map((participant) => ({
@@ -213,21 +217,22 @@ app.post("/findMatchData", async (req, res) => {
                 summonerSpell1: participant.summoner1Id,
                 summonerSpell2: participant.summoner2Id,
                 goldEarned: participant.goldEarned,
-                totalDamageDealt: participant.totalDamageDealt,
+                totalDamageDealtToChampions: participant.totalDamageDealtToChampions,
                 totalDamageTaken: participant.totalDamageTaken,
                 wardsPlaced: participant.wardsPlaced,
                 wardsDestroyed: participant.wardsDestroyed,
                 visionScore: participant.visionScore,
-                creepScore: participant.creepScore,
+                totalMinionsKilled: participant.totalMinionsKilled,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
                     primaryRune: participant.perks.styles[0].selections[0].perk,
                     secondaryStyle: participant.perks.styles[1].style,
-                  },
+                },
+                win: participant.win,
             }));
 
-            res.json({ matchId, participants });
+            res.json({ matchId, gameDuration, participants });
         } catch (error) {
             console.error("Error saving match data:", error.message);
             res.status(500).json({ error: "Failed to save match data" });
