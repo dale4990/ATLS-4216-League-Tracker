@@ -16,7 +16,7 @@ body {
   }
   
   .team {
-    width: 50%;
+    width: auto;
     padding: 20px;
     background-color: #f9f9f900;
     border-radius: 8px;
@@ -37,7 +37,7 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
-    justify-content: space-around;
+    justify-content: space-between;
   }
   
   .summoner img {
@@ -61,7 +61,7 @@ body {
   }
 
   .name {
-    width: 110px; 
+    width: 100px; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -72,6 +72,8 @@ body {
     display: flex;
     text-align: center;
     flex-direction: column;
+    justify-content: space-around;
+    margin-right: 10px;
   }
 
   .image-container {
@@ -134,8 +136,9 @@ body {
     font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     text-align: center;
+    justify-content: flex-end;
+    margin-right: 10px;
   }
 
   .kda{

@@ -130,12 +130,12 @@ function Display() {
               <div className="image-container">
                 <div className="rune-style-container">
                   <div className="black-circle"></div>
-                  <img src={`/${mapRuneIdToIcon(primaryRune[index])}`} />
-                  <img src={`/${mapStyleIdToIcon(secondaryStyle[index])}`} className='secondary-path'/>
+                  <img src={`/${mapRuneIdToIcon(primaryRune[index])}`} alt=''/>
+                  <img src={`/${mapStyleIdToIcon(secondaryStyle[index])}`} className='secondary-path' alt=''/>
                 </div>
                 <div className="summoner-spell-container">
-                  <img src={`/spell/${summonerImageMap[summoner1Id[index]]}`} />
-                  <img src={`/spell/${summonerImageMap[summoner2Id[index]]}`} />
+                  <img src={`/spell/${summonerImageMap[summoner1Id[index]]}`} alt=''/>
+                  <img src={`/spell/${summonerImageMap[summoner2Id[index]]}`} alt=''/>
                 </div>
             </div>  
             </div>
@@ -160,13 +160,13 @@ function Display() {
               <div> {calculateCSPerMin(totalMinionsKilled[index], gameDuration[0])} </div>
             </div>
             <div className="item-container">
-              <img src={`/item/${item0[index]}.png`} />
-              <img src={`/item/${item1[index]}.png`} />
-              <img src={`/item/${item2[index]}.png`} />
-              <img src={`/item/${item3[index]}.png`} />
-              <img src={`/item/${item4[index]}.png`} />
-              <img src={`/item/${item5[index]}.png`} />
-              <img src={`/item/${item6[index]}.png`} />
+              <img src={`/item/${item0[index]}.png`} alt=''/>
+              <img src={`/item/${item1[index]}.png`} alt=''/>
+              <img src={`/item/${item2[index]}.png`} alt=''/>
+              <img src={`/item/${item3[index]}.png`} alt=''/>
+              <img src={`/item/${item4[index]}.png`} alt=''/>
+              <img src={`/item/${item5[index]}.png`} alt=''/>
+              <img src={`/item/${item6[index]}.png`} alt=''/>
             </div>
           </div>
         ))}
@@ -180,12 +180,12 @@ function Display() {
               <div className="image-container">
                 <div className="rune-style-container">
                   <div className="black-circle"></div>
-                  <img src={`/${mapRuneIdToIcon(primaryRune[index+5])}`} />
-                  <img src={`/${mapStyleIdToIcon(secondaryStyle[index+5])}`} className='secondary-path'/>
+                  <img src={`/${mapRuneIdToIcon(primaryRune[index+5])}`} alt=''/>
+                  <img src={`/${mapStyleIdToIcon(secondaryStyle[index+5])}`} className='secondary-path'alt=''/>
                 </div>
                 <div className="summoner-spell-container">
-                  <img src={`/spell/${summonerImageMap[summoner1Id[index+5]]}`} />
-                  <img src={`/spell/${summonerImageMap[summoner2Id[index+5]]}`} />
+                  <img src={`/spell/${summonerImageMap[summoner1Id[index+5]]}`} alt=''/>
+                  <img src={`/spell/${summonerImageMap[summoner2Id[index+5]]}`} alt=''/>
                 </div>
             </div>  
             </div>
@@ -210,13 +210,13 @@ function Display() {
               <div> {calculateCSPerMin(totalMinionsKilled[index+5], gameDuration[0])} </div>
             </div>
             <div className="item-container">
-              <img src={`/item/${item0[index+5]}.png`} />
-              <img src={`/item/${item1[index+5]}.png`} />
-              <img src={`/item/${item2[index+5]}.png`} />
-              <img src={`/item/${item3[index+5]}.png`} />
-              <img src={`/item/${item4[index+5]}.png`} />
-              <img src={`/item/${item5[index+5]}.png`} />
-              <img src={`/item/${item6[index+5]}.png`} />
+              <img src={`/item/${item0[index+5]}.png`} alt=''/>
+              <img src={`/item/${item1[index+5]}.png`} alt=''/>
+              <img src={`/item/${item2[index+5]}.png`} alt=''/>
+              <img src={`/item/${item3[index+5]}.png`} alt=''/>
+              <img src={`/item/${item4[index+5]}.png`} alt=''/>
+              <img src={`/item/${item5[index+5]}.png`} alt=''/>
+              <img src={`/item/${item6[index+5]}.png`} alt=''/>
             </div>
           </div>
         ))}
