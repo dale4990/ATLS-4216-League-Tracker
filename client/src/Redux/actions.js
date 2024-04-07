@@ -5,8 +5,10 @@ export const FETCH_MATCH_DATA_FAILURE = 'FETCH_MATCH_DATA_FAILURE';
 
 export const fetchMatchDataRequest = () => ({ type: FETCH_MATCH_DATA_REQUEST });
 // export const fetchMatchDataSuccess = (data) => ({ type: FETCH_MATCH_DATA_SUCCESS, payload: data });
-export const fetchMatchDataSuccess = (summonerNames, championIds) => ({
+export const fetchMatchDataSuccess = (matchData, summonerNames, championIds, 
+  item0, item1, item2, item3, item4, item5, item6,
+  kills, deaths, assists, primaryRune, secondaryStyle, summoner1Id, summoner2Id) => ({
     type: FETCH_MATCH_DATA_SUCCESS,
-    payload: { summonerNames, championIds },
+    payload: {matchData, summonerNames, championIds, item0, item1, item2, item3, item4, item5, item6, kills, deaths, assists, primaryRune, secondaryStyle, summoner1Id, summoner2Id},
   });
 export const fetchMatchDataFailure = (error) => ({ type: FETCH_MATCH_DATA_FAILURE, payload: error });

@@ -4,7 +4,22 @@ import { FETCH_MATCH_DATA_REQUEST, FETCH_MATCH_DATA_SUCCESS, FETCH_MATCH_DATA_FA
 
 const initialState = {
   matchData: [],
+  summonerNames: [],
   championIds: [],
+  item0: [],
+  item1: [],
+  item2: [],
+  item3: [],
+  item4: [],
+  item5: [],
+  item6: [],
+  kills: [],
+  deaths: [],
+  assists: [],
+  primaryRune: [],
+  secondaryStyle: [],
+  summoner1Id: [],
+  summoner2Id: [],
   loading: false,
   error: null,
 };
@@ -14,14 +29,16 @@ const matchDataReducer = (state = initialState, action) => {
     case FETCH_MATCH_DATA_REQUEST:
       return { ...state, loading: true, error: null };
     case FETCH_MATCH_DATA_SUCCESS:
-      const { summonerNames, championIds } = action.payload;
-      return { ...state, loading: false, summonerNames, championIds };
+      const {matchData, summonerNames, championIds, item0, item1, item2, item3, item4, item5, item6, kills, deaths, assists, primaryRune, secondaryStyle, summoner1Id, summoner2Id} = action.payload;
+      return { ...state, loading: false, matchData, summonerNames, championIds, item0, item1, item2, item3, item4, item5, item6, kills, deaths, assists, primaryRune, secondaryStyle, summoner1Id, summoner2Id};
     case FETCH_MATCH_DATA_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
 };
+
+
 
 // const matchDataReducer = (state = initialState, action) => {
 //   switch (action.type) {

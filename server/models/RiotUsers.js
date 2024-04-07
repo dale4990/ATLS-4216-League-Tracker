@@ -9,7 +9,7 @@ const riotUserSchema = new mongoose.Schema({
     riotId: {
       type: String,
       required: true,
-      unique: true, 
+      //unique: true, 
     },
     tagline: {
       type: String,

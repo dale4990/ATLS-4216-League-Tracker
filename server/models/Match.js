@@ -1,5 +1,51 @@
 const mongoose = require("mongoose");
 
+// Schema for PerkStyleSelectionDto
+const PerkStyleSelectionSchema = new mongoose.Schema({
+  perk: {
+    type: Number,
+  },
+  var1: {
+    type: Number,
+  },
+  var2: {
+    type: Number,
+  },
+  var3: {
+    type: Number,
+  },
+});
+
+// Schema for PerkStyleDto
+const PerkStyleSchema = new mongoose.Schema({
+  description: {
+    type: String,
+  },
+  selections: [PerkStyleSelectionSchema],
+  style: {
+    type: Number,
+  },
+});
+
+// Schema for PerkStatsDto
+const PerkStatsSchema = new mongoose.Schema({
+  defense: {
+    type: Number,
+  },
+  flex: {
+    type: Number,
+  },
+  offense: {
+    type: Number,
+  },
+});
+
+// Schema for PerksDto
+const PerksSchema = new mongoose.Schema({
+  statPerks: PerkStatsSchema,
+  styles: [PerkStyleSchema],
+});
+
 // Sub-schema for participants
 const ParticipantSchema = new mongoose.Schema({
   summonerName: {
@@ -86,6 +132,7 @@ const ParticipantSchema = new mongoose.Schema({
   role: {
     type: String,
   },
+  perks: PerksSchema,
 });
 
 // Sub-schema for bans
@@ -116,7 +163,6 @@ const TeamSchema = new mongoose.Schema({
 const InfoSchema = new mongoose.Schema({
   endOfGameResult: {
     type: String,
-    required: true,
   },
   gameCreation: {
     type: Number,
