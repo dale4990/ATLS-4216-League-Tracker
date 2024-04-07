@@ -156,7 +156,7 @@ function Display() {
               <div> {totalDamageTaken[index]} </div>
             </div>
             <div className="stats-container">
-              CS
+              CS/m
               <div> {calculateCSPerMin(totalMinionsKilled[index], gameDuration[0])} </div>
             </div>
             <div className="item-container">
@@ -206,7 +206,7 @@ function Display() {
               <div> {totalDamageTaken[index+5]} </div>
             </div>
             <div className="stats-container">
-              CS
+              CS/m
               <div> {calculateCSPerMin(totalMinionsKilled[index+5], gameDuration[0])} </div>
             </div>
             <div className="item-container">

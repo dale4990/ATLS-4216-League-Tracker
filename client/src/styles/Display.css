@@ -68,6 +68,7 @@ body {
   }
   
   .kda-container {
+    font-family: 'Roboto', sans-serif;
     display: flex;
     text-align: center;
     flex-direction: column;
@@ -130,6 +131,7 @@ body {
   }
 
   .stats-container {
+    font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
