@@ -1,74 +1,74 @@
 body {
     margin: 0;
-    /* background-color: red; */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-
+  
 .About {
     display: flex;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     flex-direction: column;
-    justify-content: space-between;
     min-height: 100vh;
-    /* background-color: red; */
+}
+  
+.About-header {
+    text-align: center;
+    margin: 50px 0;
 }
 
-.App-Header a{
-    color: blue;
-}
-
-.dorjee {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 250px;
-    flex-direction: column;
-    margin-top: 15px;
-    /* background-color: red; */
-}
-
-.header {
-    font-size: 30px;
-    margin: auto;
-}
-
-.dan {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 250px;
-    flex-direction: column;
-}
-
-.riley {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    height: 250px;
-    width: auto;
-    flex-direction: column;
-}
-
-.images {
-    width: 250px;
-    height: 225px;
-}
-.container {
-    width: auto;
-    height: 700px;
-    font-size: 25px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.container p {
-    width: auto;
-    height: 20px;
-    
-}
-
-.footer {
-    background-color: black;
+.About-header h1 {
     font-family: "Trebuchet MS";
-    font-size: 20px;
+    margin-bottom: 0;
 }
+
+.About-header p {
+    margin-top: 0;
+}
+  
+.Team {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+  
+.Team-member {
+    width: 30%;
+    margin: 0 10px;
+    text-align: center;
+}
+  
+.pic {
+    width: 100%; 
+    height: auto;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid rgb(26, 140, 216);
+}
+
+@media (max-width: 1024px) {
+    .Team-member {
+      width: 45%;
+    }
+}
+  
+@media (max-width: 768px) {
+    .Team-member {
+      width: 90%;
+      margin: 10px auto;
+    }
+}
+  
+.About-footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: "Trebuchet MS";
+}
+
+a {
+    text-decoration: none;
+}
+  
