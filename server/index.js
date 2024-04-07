@@ -170,7 +170,8 @@ app.post("/findMatchData", async (req, res) => {
                 perks: {
                     primaryRune: participant.perks.styles[0].selections[0].perk,
                     secondaryStyle: participant.perks.styles[1].style,
-                  },
+                },
+                win: participant.win,
             }));
 
             res.json({ matchId, gameDuration, participants });

@@ -194,7 +194,7 @@ function Display() {
               <div className="name"> Level {summonerLevel[index+5]} </div>
             </div>
             <div className='kda-container'>
-              <div> {kills[index]}/{deaths[index]}/{assists[index+5]}</div>
+              <div> {kills[index+5]}/{deaths[index+5]}/{assists[index+5]}</div>
               <div className='kda'>{`${calculateKdaRatio(kills[index+5], deaths[index+5], assists[index+5])}:1`}</div>
             </div>
             <div className="stats-container">
