@@ -243,17 +243,6 @@ function Home() {
   return(
     <div className="App">
       {error && <div>Error: {error}</div>}
-      <div className="App-header">
-        <ul className="left-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-        </ul>
-        <ul className="right-links">
-          <li><a href="/champions">Champions</a></li>
-          <li><a href="google.com">Modes</a></li>
-        </ul>
-      </div>
-
       <div className='App-name'>
         <h1> LOL.GG </h1>
       </div>

@@ -1,10 +1,13 @@
 import React from 'react';
 import './styles/App.css';
-import Routing from './Router/Routes.js'
+import {BrowserRouter} from 'react-router-dom';
+import LOLGGRouter from './LOLGGRouter.js';
 
 function App() {
   return(
-    <Routing />
+    <BrowserRouter basename={'/'}>
+      <LOLGGRouter />
+    </BrowserRouter>
   );
 }
 
