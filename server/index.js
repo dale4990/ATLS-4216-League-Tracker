@@ -197,6 +197,8 @@ app.post("/findMatchData", async (req, res) => {
             await newMatch.save();
 
             const gameDuration = info.gameDuration; 
+            const gameMode = info.gameMode;
+            const gameEndTimestamp = info.gameEndTimestamp;
 
             // Extract and return specific participant data from response
             const participants = info.participants.map((participant) => ({
@@ -235,7 +237,7 @@ app.post("/findMatchData", async (req, res) => {
                 win: participant.win,
             }));
 
-            res.json({ matchId, gameDuration, participants });
+            res.json({ matchId, gameDuration, gameEndTimestamp, gameMode, participants });
         } catch (error) {
             console.error("Error saving match data:", error.message);
             res.status(500).json({ error: "Failed to save match data" });
