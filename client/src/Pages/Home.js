@@ -11,55 +11,9 @@ function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const [listOfUsers, setListOfUsers] = useState([]);
-  // const [name, setName] = useState("");
-  // const [username, setUsername] = useState("");
   const [riotId, setRiotId] = useState("");
   const [tagline, setTagline] = useState("");
-  //const [sumNames, setSumNames] = useState([]);
   const [error, setError] = useState(null);
-
-  // useEffect(() =>{
-  //   Axios.get("http://localhost:5069/getUsers").then((response) => {
-  //     setListOfUsers(response.data);
-  //   });
-  // }, []);
-
-  // const createUser = async () => {
-  //   try {
-  //       // Check if the username already exists
-  //       const usernameExists = listOfUsers.some(user => user.username === username);
-  //       if (usernameExists) {
-  //           setError("Username already exists. Please choose a different username.");
-  //           return;
-  //       }
-
-  //       // If the username is unique, proceed to create the user
-  //       const response = await Axios.post("http://localhost:5069/createUser", {
-  //           name: name, 
-  //           username: username,
-  //       });
-  //       setListOfUsers([...listOfUsers, response.data]);
-  //       setName("");
-  //       setUsername("");
-  //       setError(null);
-  //   } catch (error) {
-  //       setError(error.response.data.error);
-  //   }
-  // }
-
-
-  // const deleteUser = async (userId) => {
-  //   try {
-  //     const response = await Axios.post("http://localhost:5069/deleteUser", {
-  //       userId: userId, 
-  //     });
-  //     console.log("User deleted successfully:", response.data);
-  //     setListOfUsers(listOfUsers.filter(user => user.userId !== userId));
-  //   } catch (error){
-  //     setError(error.response.data.error);
-  //   }
-  // }
 
   const getMatchDatas = async(riotId, tagline) => {
     dispatch(fetchMatchDataRequest());
@@ -282,16 +236,9 @@ function Home() {
     }
   }
 
-  // const displayMatchHistory = (riotId, tagline) => {
-  //   getMatchDatas(riotId, tagline)
-  //     .then((sumNames) => {
-  //       dispatch(fetchMatchDataSuccess(sumNames, sumNames));
-  //       navigate(`/display/${riotId}/${tagline}`);
-  //     })
-  //     .catch((error) => {
-  //       setError(error.response.data.error);
-  //     });
-  // };
+  const storeId = (riotId, tagline) => {
+    //
+  }
   
   return(
     <div className="App">
@@ -329,15 +276,8 @@ function Home() {
             setTagline(event.target.value)
           }}
         />
-        <button className="StyledButton" onClick={() => getMatchDatas(riotId, tagline)}>Search</button>
+        <button className="StyledButton" onClick={() => storeId(riotId, tagline)}>Search</button>
       </div> 
-      {/* <div className="displaySummonerNames">
-        <ul>
-            {sumNames.map((sumName, index) => (
-                <div key={index}>{sumName}</div>
-            ))}
-        </ul>
-            </div>*/}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Display from '../Pages/Display';
+import Games from '../Pages/games/Games';
 import Home from '../Pages/Home';
 import About from '../Pages/About';
 import Champions from '../Pages/Champions'
@@ -17,7 +18,7 @@ function Routing() {
             <Route path="/champions" element={<Champions/>}/>
             <Route 
                 path="/display/:riotId/:tagline"
-                element={<Display /> }
+                element={<Games /> }
             />
             </Routes>
         </Router>
