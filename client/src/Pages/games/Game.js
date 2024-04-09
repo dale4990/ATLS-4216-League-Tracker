@@ -40,7 +40,6 @@ function timestampToAgo(timestamp) {
 }
 
 function Game({gameId, matchData, summoner}) {
-    console.log(matchData);
     const gameMode = matchData.gameMode;
     const gameDuration = secondsToHMS(matchData.gameDuration);
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
