@@ -1,34 +1,48 @@
 import React from 'react';
 import '../../styles/Games.css';
 import Game from './Game';
-import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getMatches, getMatchDatas } from '../../helper/Fetcher';
+import { useEffect, useState } from "react";
 
 function Games() {
-    // For now we can just use placeholder to test, start with 20 Game.js components
-    const gamesDefualt = () => {
+    const { riotId, tagline } = useParams();
+
+    const [matches, setMatches] = useState([]);
+    const [matchData, setMatchData] = useState([]);
+
+    // This should be the real implementation. When in games, we should be in url /display/:riotId/:tagline
+    const games = () => {
         let games = [];
-        for (let i = 0; i < 20; i++) {
-            games.push(<Game key={i} />);
+        // push up to 20 games
+        const gameNum = Math.min(20, matchData.length);
+        for (let i = 0; i < gameNum; i++) {
+            let match = matchData[i];
+            let gameId = matches[i];
+            games.push(<Game key={gameId} gameId={gameId} matchData={match} summoner={riotId} />);
         }
         return games;
     }
 
-    // This should be the real implementation. When in games, we should be in url /display/:riotId/:tagline
-    const games = () => {
-        // Get the riotId and tagline from the url
-        const riotId = useSelector(state => state.riotId);
-        const tagline = useSelector(state => state.tagline);
+    useEffect(() => {
+        async function fetchGames() {
+            const matches = await getMatches(riotId, tagline);
+            setMatches(matches);
+        }
+        fetchGames();
+    } , [riotId, tagline]);
 
-        console.log(riotId, "#", tagline);
-
-        return 1; // Placeholder
-    }
-
-    games();
+    useEffect(() => {
+        async function fetchMatchData() {
+            const matchData = await getMatchDatas(matches);
+            setMatchData(matchData);
+        }
+        fetchMatchData();
+    }, [matches]);
 
     return (
         <div className="game-list">
-            {gamesDefualt()} 
+            {matchData.length === 0 ? "Invalid Input or Loading" : games()} 
         </div>
     )
 }

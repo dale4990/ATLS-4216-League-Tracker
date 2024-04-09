@@ -136,7 +136,9 @@ app.post("/findMatchData", async (req, res) => {
 
         if (existingMatch) {
             const { info } = existingMatch;
-            const gameDuration = info.gameDuration; 
+            const gameDuration = info.gameDuration;
+            const gameMode = info.gameMode;
+            const gameEndTimestamp = info.gameEndTimestamp;
             // Extract and return specific participant data
             const participants = existingMatch.info.participants.map((participant) => ({
                 summonerName: participant.summonerName,
@@ -174,7 +176,7 @@ app.post("/findMatchData", async (req, res) => {
                 win: participant.win,
             }));
 
-            res.json({ matchId, gameDuration, participants });
+            res.json({ matchId, gameDuration, gameEndTimestamp, gameMode, participants });
             return;
         }
 

@@ -17,14 +17,12 @@
 .outer .deco {
     min-width: 6px;
     width: 6px;
-    background-color: #5383e8;
 }
 
 .outer .contents {
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: #28344e;
     padding: 4px 0px;
     gap: 4px;
 }

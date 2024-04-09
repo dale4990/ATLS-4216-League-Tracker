@@ -85,7 +85,7 @@ const Navbar = () => {
             </LeftContainer>
 
             <RightContainer>
-                <div style={{height: '43px'}}>
+                <div style={{height: '40px'}}>
                     <input
                         className='StyledInput'
                         type="text"
@@ -94,7 +94,7 @@ const Navbar = () => {
                         onChange={handleIdChange}
                     />
                 </div>
-                <div style={{height: '43px'}}>
+                <div style={{height: '40px'}}>
                     <input
                         className='StyledInput'
                         type="text"
@@ -103,7 +103,7 @@ const Navbar = () => {
                         onChange={handleTagChange}
                     />
                 </div>
-                <div style={{height: '43px'}}><button className="StyledButton" onClick={handleSubmit}>Search</button></div>
+                <div style={{height: '40px'}}><button className="StyledButton" onClick={handleSubmit}>Search</button></div>
             </RightContainer>
         </Container>
     )

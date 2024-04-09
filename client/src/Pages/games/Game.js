@@ -1,33 +1,73 @@
 import React from 'react';
 import '../../styles/Games.css';
-import { useSelector } from 'react-redux';
 
-function Game() {
-    const wins = useSelector(state => state.matchData.win);
-    const win = wins[3];
+// Function to convert seconds to a string of the form "Xh Ym Zs"
+function secondsToHMS(seconds) {
+    let h = Math.floor(seconds / 3600);
+    let m = Math.floor(seconds % 3600 / 60);
+    let s = Math.floor(seconds % 3600 % 60);
+    let hDisplay = h > 0 ? h + (h === 1 ? "h " : "h ") : "";
+    let mDisplay = m > 0 ? m + (m === 1 ? "m " : "m ") : "";
+    let sDisplay = s > 0 ? s + (s === 1 ? "s" : "s") : "";
+    return hDisplay + mDisplay + sDisplay;
+}
+
+// Function to convert timestamp in milliseconds to a string "X hours ago" or "X minutes ago" or "X days ago"
+// For minutes, round down to the nearest minute
+// If it reachest 60 minutes, round down to the nearest hour
+// If it reaches 24 hours, round down to the nearest day
+// If it reaches 1 day, return "a day ago"
+// If it reaches 1 hour, return "an hour ago"
+function timestampToAgo(timestamp) {
+    let now = new Date();
+    let then = new Date(timestamp);
+    let diff = now - then;
+    let seconds = Math.floor(diff / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    let days = Math.floor(hours / 24);
+
+    if (days > 0) {
+        return days === 1 ? "a day ago" : days + " days ago";
+    }
+    if (hours > 0) {
+        return hours === 1 ? "an hour ago" : hours + " hours ago";
+    }
+    if (minutes > 0) {
+        return minutes === 1 ? "a minute ago" : minutes + " minutes ago";
+    }
+    return seconds === 1 ? "a second ago" : seconds + " seconds ago";
+}
+
+function Game({gameId, matchData, summoner}) {
+    console.log(matchData);
+    const gameMode = matchData.gameMode;
+    const gameDuration = secondsToHMS(matchData.gameDuration);
+    const timestampString = timestampToAgo(matchData.gameEndTimestamp);
+
+    const isMe = matchData.participants.find(participant => participant.summonerName === summoner);
+    const { win, kills, deaths, assists, totalMinionsKilled, teamId } = isMe;
+
     const winColor = win ? "#28344e" : "#59343b";
     const gameColor = win ? "#5383e8" : "#e84057";
     const buttonColor = win ? "#2f436e" : "#703c47";
-    const decoColor = gameColor;
-    const kills = useSelector(state => state.matchData.kills);
-    const kill = kills[3];
-    const deaths = useSelector(state => state.matchData.deaths);
-    const death = deaths[3];
-    const assists = useSelector(state => state.matchData.assists);
-    const assist = assists[3];
-    // stores kda ratio as a string "X.XX:1 KDA"
-    const kda = ((kill + assist) / death).toFixed(2) + ":1 KDA";
+    
+    // Calculated states
+    const kda = ((kills + assists) / deaths).toFixed(2) + ":1 KDA";
+    const killParticipation = ((kills + assists) / matchData.participants.filter(participant => participant.teamId === teamId).reduce((acc, cur) => acc + cur.kills, 0) * 100).toFixed(0);
+    const csm = (totalMinionsKilled / (matchData.gameDuration / 60)).toFixed(1).replace(/\.0$/, '');
+
 
     return(
         <div className="outer">
-            <div className="deco" style={{ color: decoColor }}></div>
-            <div className="contents" background-color={winColor}>
+            <div className="deco" style={{ backgroundColor: gameColor }}></div>
+            <div className="contents" style={{ backgroundColor: winColor }}>
                 <div className="inner">
                     <div className="timestamp-details">
                         <div className="head-group">
-                            <div className="game-type" style={{ color: gameColor }}>ARAM</div> {/* Variable */}
+                            <div className="game-type" style={{ color: gameColor }}>{gameMode}</div>
                             <div className="timestamp">
-                                <div className style={{position: 'relative'}}>19 hours ago</div> {/* Variable */}
+                                <div className style={{position: 'relative'}}>{timestampString}</div>
                             </div> {/* timestamp */}
                         </div> {/* head-group */}
 
@@ -35,7 +75,7 @@ function Game() {
 
                         <div className="head-group">
                             <div className="result">{win ? "Victory" : "Defeat"}</div>
-                            <div className="duration">19m 15s</div> {/* Variable */}
+                            <div className="duration">{gameDuration}</div>
                         </div> {/* head-group */}
                     </div> {/* timestamp-details */}
 
@@ -72,11 +112,11 @@ function Game() {
 
                             <div className="kda-stats">
                                 <div className="kda">
-                                    <span>{kill}</span>
+                                    <span>{kills}</span>
                                     /
-                                    <span className="d">{death}</span>
+                                    <span className="d">{deaths}</span>
                                     /
-                                    <span>{assist}</span>
+                                    <span>{assists}</span>
                                 </div> {/* kda */}
 
                                 <div className="kda-ratio">{kda}</div>
@@ -84,11 +124,11 @@ function Game() {
 
                             <div className="game-stats">
                                 <div className="p-kill">
-                                    <div className style={{position: 'relative'}}>P/Kill 69%</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>P/Kill {killParticipation}%</div> {/* Variable */}
                                 </div> {/* p-kill */}
 
                                 <div className="cs">
-                                    <div className style={{position: 'relative'}}>CS 69 (6.9)</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>CS {totalMinionsKilled} ({csm})</div> {/* Variable */}
                                 </div> {/* cs */}
 
                                 <div className="avg-tier">
