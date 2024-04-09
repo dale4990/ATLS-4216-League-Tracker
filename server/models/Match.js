@@ -51,6 +51,15 @@ const ParticipantSchema = new mongoose.Schema({
   summonerName: {
     type: String,
   },
+  puuid: {
+    type: String,
+  },
+  riotIdName: {
+    type: String,
+  },
+  riotIdTagline: {
+    type: String,
+  },
   profileIcon:{
     type: Number,
   },
