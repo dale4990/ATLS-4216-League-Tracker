@@ -3,18 +3,10 @@ import '../styles/About.css';
 import rileyImage from '../images/riley.jpeg';
 import dorjeeImage from '../images/dorj.jpeg';
 import danImage from '../images/dan.jpeg';
-import Home from './Home';
-import { Link } from 'react-router-dom';
 
 function About() {
   return (
     <div className="About">
-      <div className="App-header">
-        <p><Link to="/">Home</Link></p>
-        <p><a>Dorjee Zhang</a></p>
-        <p><a>Daniel Lee</a></p>
-        <p><a>Riley Mei</a></p>
-      </div>
       <div className="dorjee">
             <div className="header">Hi I'm Dorjee!</div>
             <div className="container">
