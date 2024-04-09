@@ -246,7 +246,7 @@ function Home() {
       <div className='App-name'>
         <h1> LOL.GG </h1>
       </div>
-      <div className="input-container">
+      {/* <div className="input-container">
         <input
           className='StyledInput'
           type="text"
@@ -266,7 +266,7 @@ function Home() {
           }}
         />
         <button className="StyledButton" onClick={() => storeId(riotId, tagline)}>Search</button>
-      </div> 
+      </div>  */}
     </div>
   );
 }
