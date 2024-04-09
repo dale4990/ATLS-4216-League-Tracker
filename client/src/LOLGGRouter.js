@@ -5,6 +5,19 @@ import About from './Pages/About';
 import Champions from './Pages/Champions'
 import Navbar from './Navbar';
 
+const championDict = require('./assets/data/en_US/champion.json');
+const champions = championDict.data; // dictionary of champions
+const summonerDict = require('./assets/data/en_US/summoner.json');
+const summoners = summonerDict.data; // dictionary of summoner spells
+const runesDict = require('./assets/data/en_US/runesReforged.json'); // array of runes
+
+// Pack them together
+export const data = {
+    champions: champions,
+    summoners: summoners,
+    runes: runesDict
+};
+
 function LOLGGRouter() {
     return (
         <>
@@ -15,7 +28,7 @@ function LOLGGRouter() {
                     <Route path="/about" element={<About />} />
                     <Route path="/champions" element={<Champions />} />
                     <Route path="/modes" element={<></>} />
-                    <Route path="/display/:riotId/:tagline" element={<Games />} />
+                    <Route path="/display/:riotId/:tagline" element={<Games data={data} />} />
                 </Routes>
             </div>
         </>

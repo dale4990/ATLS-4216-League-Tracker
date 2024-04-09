@@ -4,7 +4,7 @@ import Game from './Game';
 import { useParams } from 'react-router-dom';
 import { getMatches, getMatchDatas } from '../../helper/Fetcher';
 
-function Games() {
+function Games({data}) {
     const { riotId, tagline } = useParams();
 
     const [games, setGames] = useState([]);
@@ -20,7 +20,7 @@ function Games() {
 
                 // Process match data to generate games array
                 const gamesArray = matchData.slice(0, 20).map((match, index) => (
-                    <Game key={matches[index]} gameId={matches[index]} matchData={match} summoner={riotId} />
+                    <Game key={matches[index]} gameId={matches[index]} matchData={match} summoner={riotId} data={data}/>
                 ));
 
                 // Update games state

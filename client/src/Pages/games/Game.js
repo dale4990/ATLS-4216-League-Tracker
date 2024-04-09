@@ -39,13 +39,68 @@ function timestampToAgo(timestamp) {
     return seconds === 1 ? "a second ago" : seconds + " seconds ago";
 }
 
-function Game({gameId, matchData, summoner}) {
+// Returns a list of items that the player has in their inventory
+function getMyItems(isMe) {
+    const { item0, item1, item2, item3, item4, item5, item6 } = isMe;
+    const items = [item0, item1, item2, item3, item4, item5];
+
+    // /item/{item}.png
+    // If item is 0, return an empty item slot; item6 is className="trinket"
+    const itemDivs = items.map(item => {
+        if (item === 0) return <dd class="item"></dd>;
+        return <dd><div className="item" style={{position: 'relative'}}><img src={`/item/${item}.png`} width="22" height="22" alt="Who cares right now" /></div></dd>;
+    });
+
+    // Add trinket to the end of the list
+    itemDivs.push(<dd><div className="trinket" style={{position: 'relative'}}><img src={`/item/${item6}.png`} width="22" height="22" alt="Trinket" /></div></dd>);
+
+    return itemDivs;
+}
+function Game({gameId, matchData, summoner, data}) {
+    const { champions: champDict, summoners: summDict, runes } = data;
     const gameMode = matchData.gameMode;
     const gameDuration = secondsToHMS(matchData.gameDuration);
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
 
     const isMe = matchData.participants.find(participant => participant.summonerName === summoner);
-    const { win, kills, deaths, assists, totalMinionsKilled, teamId } = isMe;
+    const { win, kills, deaths, assists, totalMinionsKilled, teamId, championLevel, championId } = isMe;
+    const myChampionEntry = Object.entries(champDict).find(([key, champion]) => champion.key === championId);
+    const myChampion = myChampionEntry ? myChampionEntry[1] : null;
+
+    const getMySummRunes = () => {
+        const { summonerSpell1, summonerSpell2, perks } = isMe;
+        const { primaryRune, secondaryStyle } = perks;
+        
+        const firstSpell = Object.entries(summDict).find(([key, spell]) => spell.key === summonerSpell1);
+        const secondSpell = Object.entries(summDict).find(([key, spell]) => spell.key === summonerSpell2);
+
+        const firstSpellDiv = <div className="spell" style={{position: 'relative'}}><img src={`/spell/${firstSpell[1].id}.png`} width="22" height="22" alt={firstSpell[1].name} /></div>;
+        const secondSpellDiv = <div className="spell" style={{position: 'relative'}}><img src={`/spell/${secondSpell[1].id}.png`} width="22" height="22" alt={secondSpell[1].name} /></div>;
+        
+        // runes is an array instead of a dictionary; it holds an array of rune trees, each of which has another array stored in the "slots" key, which holds rows of runes
+        // The firstRune will be found by iterating through each nested array and finding the first rune that matches the ID of the first rune in the primary tree
+        // The secondRune will be found by iterating only through the outer array and finding the first rune that matches the ID of the first rune in the secondary tree
+        const findFirstRune = () => {
+            for (const tree of runes) {
+                for (const slot of tree.slots) {
+                    const runes = slot.runes;
+                    const rune = runes.find(rune => rune.id === primaryRune);
+                    if (rune) return rune;
+                }
+            }
+        }
+        const firstRune = findFirstRune();
+        const secondRune = runes.find(tree => tree.id === secondaryStyle);
+
+        const firstRuneDiv = <div className="rune rune-primary" style={{position: 'relative', backgroundColor: 'black', borderRadius: '50%'}}><img src={`/${firstRune.icon}`} width="22" height="22" alt={firstRune.name} /></div>;
+        const secondRuneDiv = <div className="rune" style={{position: 'relative'}}><img src={`/${secondRune.icon}`} width="22" height="22" alt={secondRune.name} /></div>;
+
+        return [ [firstSpellDiv, secondSpellDiv], [firstRuneDiv, secondRuneDiv] ];
+    }
+    
+    const [ [firstSpellDiv, secondSpellDiv], [firstRuneDiv, secondRuneDiv] ] = getMySummRunes();
+    const itemList = getMyItems(isMe);
+
 
     const winColor = win ? "#28344e" : "#59343b";
     const gameColor = win ? "#5383e8" : "#e84057";
@@ -82,29 +137,19 @@ function Game({gameId, matchData, summoner}) {
                         <div className="main">
                             <div className="info">
                                 <div className="champion">
-                                    <img src="/champion/Xayah.png" width="48" height="48" alt="Xayah" /> {/* Variable */}
-                                    <span className="champion-level">18</span> {/* Variable */}
+                                    <img src={`/champion/${myChampion.id}.png`} width="48" height="48" alt={myChampion.name} />
+                                    <span className="champion-level">{championLevel}</span>
                                 </div> {/* champion */}
 
                                 <div className="summ-runes-container">
                                     <div className="summ-runes">
-                                        <div className="spell" style={{position: 'relative'}}>
-                                            <img src="/spell/SummonerHaste.png" width="22" height="22" alt="Ghost" /> {/* Variable */}
-                                        </div> {/* Variable */}
-
-                                        <div className="spell" style={{position: 'relative'}}>
-                                            <img src="/spell/SummonerCherryFlash.png" width="22" height="22" alt="Flash" /> {/* Variable */}
-                                        </div> {/* Variable */}
+                                        {firstSpellDiv}
+                                        {secondSpellDiv}
                                     </div> {/* summ-runes */}
 
                                     <div className="summ-runes">
-                                        <div className="rune rune-primary" style={{position: 'relative', backgroundColor: 'black', borderRadius: '50%'}}>
-                                            <img src="/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" width="22" height="22" alt="Lethal Tempo" /> {/* Variable */}
-                                        </div> {/* Variable */}
-
-                                        <div className="rune" style={{position: 'relative'}}>
-                                            <img src="/perk-images/Styles/7200_Domination.png" width="22" height="22" alt="Domination" /> {/* Variable */}
-                                        </div> {/* Variable */}
+                                        {firstRuneDiv}
+                                        {secondRuneDiv}
                                     </div> {/* summ-runes */}
                                 </div> {/* summ-runes-container */}
                             </div> {/* info */}
@@ -123,11 +168,11 @@ function Game({gameId, matchData, summoner}) {
 
                             <div className="game-stats">
                                 <div className="p-kill">
-                                    <div className style={{position: 'relative'}}>P/Kill {killParticipation}%</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>P/Kill {killParticipation}%</div>
                                 </div> {/* p-kill */}
 
                                 <div className="cs">
-                                    <div className style={{position: 'relative'}}>CS {totalMinionsKilled} ({csm})</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>CS {totalMinionsKilled} ({csm})</div>
                                 </div> {/* cs */}
 
                                 <div className="avg-tier">
@@ -138,13 +183,7 @@ function Game({gameId, matchData, summoner}) {
 
                         <div className="sub">
                             <dl className="items">
-                                <dd><div className="item" style={{position: 'relative'}}><img src="/item/6672.png" width="22" height="22" alt="Kraken Slayer" /></div></dd> {/* Variable */}
-                                <dd><div className="item" style={{position: 'relative'}}><img src="/item/3006.png" width="22" height="22" alt="Berserker's Greaves" /></div></dd> {/* Variable */}
-                                <dd><div className="item" style={{position: 'relative'}}><img src="/item/6675.png" width="22" height="22" alt="Navori Quickblades" /></div></dd> {/* Variable */}
-                                <dd><div className="item" style={{position: 'relative'}}><img src="/item/3072.png" width="22" height="22" alt="Bloodthirster" /></div></dd> {/* Variable */}
-                                <dd><div className="item" style={{position: 'relative'}}><img src="/item/6673.png" width="22" height="22" alt="Immortal Shieldbow" /></div></dd> {/* Variable */}
-                                <dd><div className="item" style={{position: 'relative'}}><img src="/item/3035.png" width="22" height="22" alt="Last Whisper" /></div></dd> {/* Variable */}
-                                <dd className="trinket"><div className="item" style={{position: 'relative'}}><img src="/item/2052.png" width="22" height="22" alt="Poro-Snax" /></div></dd> {/* Variable */}
+                                {itemList}
                             </dl> {/* items */}
 
                             <div className="game-tags__scroll-container">
