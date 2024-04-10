@@ -54,7 +54,7 @@ const ParticipantSchema = new mongoose.Schema({
   puuid: {
     type: String,
   },
-  riotIdName: {
+  riotIdGameName: {
     type: String,
   },
   riotIdTagline: {
@@ -133,6 +133,18 @@ const ParticipantSchema = new mongoose.Schema({
     type: Number,
   },
   totalMinionsKilled: {
+    type: Number,
+  },
+  doubleKills: {
+    type: Number,
+  },
+  tripleKills: {
+    type: Number,
+  },
+  quadraKills: {
+    type: Number,
+  },
+  pentaKills: {
     type: Number,
   },
   teamId: {

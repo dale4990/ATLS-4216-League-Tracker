@@ -180,7 +180,7 @@ app.post("/findMatchData", async (req, res) => {
             const participants = existingMatch.info.participants.map((participant) => ({
                 summonerName: participant.summonerName,
                 puuid: participant.puuid,
-                riotIdName: participant.riotIdName,
+                riotIdGameName: participant.riotIdGameName,
                 riotIdTagline: participant.riotIdTagline,
                 profileIcon: participant.profileIcon,
                 championId: participant.championId.toString(),
@@ -207,6 +207,10 @@ app.post("/findMatchData", async (req, res) => {
                 wardsDestroyed: participant.wardsDestroyed,
                 visionScore: participant.visionScore,
                 totalMinionsKilled: participant.totalMinionsKilled,
+                doubleKills: participant.doubleKills,
+                tripleKills: participant.tripleKills,
+                quadraKills: participant.quadraKills,
+                pentaKills: participant.pentaKills,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
@@ -246,7 +250,7 @@ app.post("/findMatchData", async (req, res) => {
             const participants = info.participants.map((participant) => ({
                 summonerName: participant.summonerName,
                 puuid: participant.puuid,
-                riotIdName: participant.riotIdName,
+                riotIdGameName: participant.riotIdGameName,
                 riotIdTagline: participant.riotIdTagline,
                 profileIcon: participant.profileIcon,
                 championId: participant.championId.toString(),
@@ -273,6 +277,10 @@ app.post("/findMatchData", async (req, res) => {
                 wardsDestroyed: participant.wardsDestroyed,
                 visionScore: participant.visionScore,
                 totalMinionsKilled: participant.totalMinionsKilled,
+                doubleKills: participant.doubleKills,
+                tripleKills: participant.tripleKills,
+                quadraKills: participant.quadraKills,
+                pentaKills: participant.pentaKills,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {

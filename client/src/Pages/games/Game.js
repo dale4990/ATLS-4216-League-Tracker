@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../styles/Games.css';
-import championData from '../../assets/data/en_US/champion.json';
 
 // Function to convert seconds to a string of the form "Xh Ym Zs"
 function secondsToHMS(seconds) {
@@ -45,14 +44,15 @@ function timestampToAgo(timestamp) {
 }
 
 // Returns a list of items that the player has in their inventory
-function getMyItems(isMe) {
+function getMyItems(isMe, win) {
     const { item0, item1, item2, item3, item4, item5, item6 } = isMe;
     const items = [item0, item1, item2, item3, item4, item5];
 
     // /item/{item}.png
     // If item is 0, return an empty item slot; item6 is className="trinket"
+    console.log(win);
     const itemDivs = items.map(item => {
-        if (item === 0) return <dd class="item"></dd>;
+        if (item === 0) return <dd className="items" style={{backgroundColor: win ? '#2f436e' : '#703c47'}}></dd>;
         return <dd><div className="item" style={{position: 'relative'}}><img src={`/item/${item}.png`} width="22" height="22" alt="Who cares right now" /></div></dd>;
     });
 
@@ -61,9 +61,25 @@ function getMyItems(isMe) {
 
     return itemDivs;
 }
+
+function determineHighestKillType(doubleKills, tripleKills, quadraKills, pentaKills) {
+    let highestKillType = '';
+
+    if (pentaKills > 0) {
+        highestKillType = 'Penta Kill';
+    } else if (quadraKills > 0) {
+        highestKillType = 'Quadra Kill';
+    } else if (tripleKills > 0) {
+        highestKillType = 'Triple Kill';
+    } else if (doubleKills > 0) {
+        highestKillType = 'Double Kill';
+    }
+
+    return highestKillType;
+}
+
 function Game({matchData, summoner, data, rankData}) {
     const { champions: champDict, summoners: summDict, runes, championImageMap } = data;
-    const endOfGameResult = matchData.endOfGameResult;
     const gameMode = matchData.gameMode;
     const gameDuration = secondsToHMS(matchData.gameDuration);
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
@@ -71,7 +87,8 @@ function Game({matchData, summoner, data, rankData}) {
     const rankDivision = rankData.rank;
 
     const isMe = matchData.participants.find(participant => participant.puuid === summoner);
-    const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled} = isMe;
+    const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled, 
+    doubleKills, tripleKills, quadraKills, pentaKills} = isMe;
     const myChampionEntry = Object.entries(champDict).find(([key, champion]) => champion.key === championId);
     const myChampion = myChampionEntry ? myChampionEntry[1] : null;
 
@@ -107,7 +124,7 @@ function Game({matchData, summoner, data, rankData}) {
     }
     
     const [ mySpells, myRunes ] = getMySummRunes();
-    const itemList = getMyItems(isMe);
+    const itemList = getMyItems(isMe, win);
 
     const winColor = win ? "#28344e" : "#59343b";
     const gameColor = win ? "#5383e8" : "#e84057";
@@ -120,19 +137,19 @@ function Game({matchData, summoner, data, rankData}) {
 
 
     return(
-        <div className="outer">
+        <div className="outer" >
             <div className="deco" style={{ backgroundColor: gameColor }}></div>
             <div className="contents" style={{ backgroundColor: winColor }}>
-                <div className="inner">
+                <div className="inner" >
                     <div className="timestamp-details">
-                        <div className="head-group">
+                        <div className="head-group" >
                             <div className="game-type" style={{ color: gameColor }}>{gameMode}</div>
                             <div className="timestamp">
                                 <div className style={{position: 'relative'}}>{timestampString}</div>
                             </div> {/* timestamp */}
                         </div> {/* head-group */}
 
-                        <div className="divider"></div>
+                        <div className= "divider" style={{backgroundColor: win ? '#2f436e' : '#703c47'}}></div>
 
                         <div className="head-group">
                             <div className="result">{win ? "Victory" : "Defeat"}</div>
@@ -171,7 +188,7 @@ function Game({matchData, summoner, data, rankData}) {
                                 <div className="kda-ratio">{kda}</div>
                             </div> {/* kda-stats */}
 
-                            <div className="game-stats">
+                            <div className="game-stats" style={{borderColor: win ? '#2f436e' : '#703c47'}}>
                                 <div className="p-kill">
                                     <div className style={{position: 'relative'}}>P/Kill {killParticipation}%</div>
                                 </div> {/* p-kill */}
@@ -186,14 +203,16 @@ function Game({matchData, summoner, data, rankData}) {
                             </div> {/* game-stats */}
                         </div> {/* main */}
 
-                        <div className="sub">
+                        <div className="sub" >
                             <dl className="items">
                                 {itemList}
                             </dl> {/* items */}
 
                             <div className="game-tags__scroll-container">
-                                <div className="game-tags">
-                                    <div className="tag kill-tag">Triple Kill</div> {/* Variable */}
+                                <div className="game-tags" >
+                                {determineHighestKillType(doubleKills, tripleKills, quadraKills, pentaKills) !== '' ? (
+                                    <div className="tag kill-tag">{ determineHighestKillType(doubleKills, tripleKills, quadraKills, pentaKills)}</div>
+                                ) : null}
                                 </div> {/* game-tags */}
                             </div> {/* game-tags__scroll-container */}
                         </div> {/* sub */}
@@ -201,14 +220,14 @@ function Game({matchData, summoner, data, rankData}) {
 
                     <div className="player-list">
                         {matchData.participants.map(participant => (
-                            <div className="player" key={participant.summonerName}>
+                            <div className="player">
                                 <div className="icon" style={{position: 'relative'}}>
                                     <img src={`/champion/${championImageMap[participant.championId]}`} style={{borderRadius: "3px", border: "none", height: "16px", width: "16px"}} alt={`"${participant.championName}"`} />
                                 </div>
                                 <div className="name">
                                     <div className="summoner-tooltip" style={{position: 'relative'}}>
                                         <div className="teammate-name teammate-align" style={{color: (participant.puuid === summoner ? "#FFFFFF" : "#9e9eb1")}}>
-                                            <span className="team-name-font team-name-align">{(participant.summonerName.length === 0 ? "??????????" : participant.summonerName)}</span>
+                                            <span className="team-name-font team-name-align">{(participant.riotIdGameName.length === 0 ? "??????????" : participant.riotIdGameName)}</span>
                                         </div> {/* teammate-name */}
                                     </div> {/* summoner-tooltip */}
                                 </div> {/* name */}
@@ -218,7 +237,7 @@ function Game({matchData, summoner, data, rankData}) {
                 </div> {/* inner */}
             </div> {/* contents */}
             
-            <div className="actions">
+            <div className="actions" >
                 <button className="button" background-color={buttonColor}>
                     <img src="/spell/SummonerCherryFlash.png" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" alt="Temp Button" />
                 </button> {/* button */}

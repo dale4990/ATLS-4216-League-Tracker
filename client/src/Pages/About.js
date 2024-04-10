@@ -36,7 +36,7 @@ function About() {
             </div>
           </div>
           <h3>Daniel Lee</h3>
-          <h4>EE(BS) + Senior + Backend/Frontend</h4>
+          <h4>ECE(BS) + Senior + Full-Stack</h4>
           <p>Native born and raised in Colorado, Daniel has the native hiking blood in him. Spending his early days dabbling into SUPERCELL and .io games, Daniel would grow quite fond of video games. Once the quarantine days began, Daniel would 
             spend much of his time playing League of Legends, watching Clone Wars, and focusing on school. Daniel grew quite fond of computers, and, after entering college as an Electrical Engineer major, he decided to pick up a computer science 
             minor as well. Computer Systems (CSCI 2400) would bode his most difficult class. In his free time, Daniel enjoys playing League, making beats, and watching anime.
