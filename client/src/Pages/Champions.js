@@ -3,18 +3,17 @@ import '../styles/champions.css';
 
 const Champions = ({ champions }) => {
   return (
-    <div>
+    <div className="champions-container">
       {Object.keys(champions).map((championKey) => {
         const champion = champions[championKey];
         return (
           <div key={champion.id} className="champion">
-            <div className="nameTitle">
-            <h2>{champion.name}</h2>
-            <p className="title">{champion.title}</p>
+            <img src={`/splash/${champion.id}_0.jpg`} className="champion-img" alt={champion.name} />
+            <div className="champion-info">
+              <h2 className="champion-name">{champion.name}</h2>
+              <p className="champion-title">{champion.title}</p>
+              <p className="champion-lore">{champion.lore}</p>
             </div>
-            {/* <img src={require(`./assets/img/${champion.image.full}`).default} alt={champion.name} /> */}
-            <img src={`/splash/${champion.id}_0.jpg`} className="img" alt={champion.name} />
-            <p className="lore">{champion.lore}</p>
           </div>
         );
       })}
