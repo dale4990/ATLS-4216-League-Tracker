@@ -1,47 +1,41 @@
-.championInfo{
-    display: flex;
-    margin: 5px;
-    border: 15px solid #c89b3c;
+.champion {
+    display: inline-block;
+    margin: 20px;
+    background-color: #01040a;
+    color: #c89b3c;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 300px;
+    vertical-align: top; 
+  }
+  
+  .champion-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+  }
+  
+  .champion-info {
+    position: relative;
+    background-color: rgba(1, 4, 10, 0.85);
+    color: #c89b3c;
+    padding: 15px;
     height: 200px;
-    border-width: 5px;
-    
-}
-
-.champ{
-    display: flex;
-    flex-direction: column;
-    border: 15px solid yellow;
-    height: 125px;
-    padding-left: 150px;
-    width: 1500px;
-    text-align: center;
-}
-.img{
-    display: flex;
-    border: #c89b3c;
-    height: 180px;
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-bottom: 5px;
-
-}
-
-.nameTitle{
-    text-align: left;
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-    width: 500px;
-}
-
-.title{
-    margin-bottom: 25px;
-}
-
-.lore{
-    display:flex;
-    text-align: center;
-    padding-top: 50px;
-    padding-right: 25px;
-}
+    overflow: auto;
+  }
+  
+  .champion-name {
+    font-size: 20px;
+    margin: 10px 0 5px;
+  }
+  
+  .champion-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .champion-lore {
+    font-size: 16px;
+  }
+  
