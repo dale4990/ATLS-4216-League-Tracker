@@ -141,7 +141,7 @@ function Game({matchData, summoner, data}) {
 
     const isMe = matchData.participants.find(participant => participant.puuid === summoner);
     console.log("Me: ", isMe);
-    const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled, neutralMinionsKilled, kda, killParticipation, controlWardsPurchased,
+    const { win, kills, deaths, assists, championLevel, championId, totalMinionsKilled, neutralMinionsKilled, kda, killParticipation, controlWardsPurchased,
     doubleKills, tripleKills, quadraKills, pentaKills} = isMe;
     // const myRank = tier ? (tier + " " + rank) : "Unranked";
     const averageRanks = matchData.participants.map(participant => (participant.tier ? participant.tier + " " + participant.rank : "unranked"));
@@ -187,7 +187,8 @@ function Game({matchData, summoner, data}) {
 
     const winColor = win ? "#28344e" : "#59343b";
     const gameColor = win ? "#5383e8" : "#e84057";
-    const buttonColor = win ? "#2f436e" : "#703c47";
+    const buttonColor = gameColor;
+    const actionsColor = win ? "#2f436e" : "#703c47";
     
     // Calculated states
     const kdaString = kda.toFixed(2).replace(/\.0$/, '') + ":1 KDA";
@@ -299,9 +300,21 @@ function Game({matchData, summoner, data}) {
                 </div> {/* inner */}
             </div> {/* contents */}
             
-            <div className="actions" >
-                <button className="button" background-color={buttonColor}>
-                    <img src="/spell/SummonerCherryFlash.png" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" alt="Temp Button" />
+            <div className="actions">
+                <div></div>
+                
+                <button className="button" style={{backgroundColor: actionsColor}}>
+                    <span className="svg-icon svg-icon--arrow-down button-display" style={{color: buttonColor, width: "24px", height: "24px"}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <g fill="currentColor" fill-rule="evenodd">
+                                <g fill="currentColor" fill-rule="nonzero">
+                                    <g fill="currentColor">
+                                        <path d="M12 13.2L16.5 9 18 10.4 12 16 6 10.4 7.5 9z" transform="translate(-64 -228) translate(64 228)" fill="currentColor"></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </span>
                 </button> {/* button */}
             </div> {/* actions */}
         </div>
