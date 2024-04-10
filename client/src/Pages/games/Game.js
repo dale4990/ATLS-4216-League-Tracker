@@ -61,12 +61,14 @@ function getMyItems(isMe) {
 
     return itemDivs;
 }
-function Game({matchData, summoner, data}) {
+function Game({matchData, summoner, data, rankData}) {
     const { champions: champDict, summoners: summDict, runes, championImageMap } = data;
     const endOfGameResult = matchData.endOfGameResult;
     const gameMode = matchData.gameMode;
     const gameDuration = secondsToHMS(matchData.gameDuration);
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
+    const rankTier = rankData.tier;
+    const rankDivision = rankData.rank;
 
     const isMe = matchData.participants.find(participant => participant.puuid === summoner);
     const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled} = isMe;
@@ -179,7 +181,7 @@ function Game({matchData, summoner, data}) {
                                 </div> {/* cs */}
 
                                 <div className="avg-tier">
-                                    <div className style={{position: 'relative'}}>gold 1</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>{ rankTier }</div> {/* Variable */}
                                 </div> {/* avg-tier */}
                             </div> {/* game-stats */}
                         </div> {/* main */}
