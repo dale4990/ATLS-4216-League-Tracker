@@ -145,7 +145,7 @@ app.post("/findId", async (req, res) => {
     }
 });
 
-// GET request to find a summoner by UID
+// POST request to find a summoner by UID
 app.post("/findSummoner", async (req, res) => {
     const { puuid } = req.body;
     const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326";
@@ -163,7 +163,7 @@ app.post("/findSummoner", async (req, res) => {
     }
 });
 
-// GET request to find summoner Rank by summonerId
+// POST request to find summoner Rank by summonerId
 app.post("/findRank", async (req, res) => {
     const { id } = req.body;
     const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326";

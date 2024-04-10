@@ -42,7 +42,7 @@ const getRank = async(puuid) => {
         });
 
         const rankData = rankResponse.data;
-        
+
         if (rankData.length === 0) {
             return {};
         }
@@ -67,12 +67,19 @@ export const getMatchDatas = async(matchIds) => {
         // Wait for all requests to finish and retrieve their data
         const matchData = await Promise.all(matchDataPromises);
 
+        const romanToInt = {
+            "I": 1,
+            "II": 2,
+            "III": 3,
+            "IV": 4,
+        };
+
         // For each participant in each match, add the rank to the participant object
         for (const match of matchData) {
             for (const participant of match.participants) {
                 const rankData = await getRank(participant.puuid);
-                participant.rank = rankData.rank;
-                participant.tier = rankData.tier.toLowerCase();
+                participant.rank = rankData.rank ? romanToInt[rankData.rank] : undefined;
+                participant.tier = rankData.tier ? rankData.tier.toLowerCase() : undefined;
             }
         }
         
