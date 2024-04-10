@@ -16,7 +16,11 @@ body {
   }
   
   .team {
+<<<<<<< HEAD
     width: 50%;
+=======
+    width: auto;
+>>>>>>> 10f5a1142417ed5d46551138229932ec909e9070
     padding: 20px;
     background-color: #f9f9f900;
     border-radius: 8px;
@@ -61,16 +65,25 @@ body {
   }
 
   .name {
-    width: 110px; 
+    width: 100px; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   
   .kda-container {
+<<<<<<< HEAD
     display: flex;
     text-align: center;
     flex-direction: column;
+=======
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: 10px;
+>>>>>>> 10f5a1142417ed5d46551138229932ec909e9070
   }
 
   .image-container {
@@ -130,10 +143,19 @@ body {
   }
 
   .stats-container {
+<<<<<<< HEAD
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     text-align: center;
+=======
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: flex-end;
+    margin-right: 10px;
+>>>>>>> 10f5a1142417ed5d46551138229932ec909e9070
   }
 
   .kda{

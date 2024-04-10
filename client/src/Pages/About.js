@@ -9,19 +9,17 @@ import { Link } from 'react-router-dom';
 function About() {
   return (
     <div className="About">
-      <div className="App-header">
-        <p><Link to="/">Home</Link></p>
-        <p><a>Dorjee Zhang</a></p>
-        <p><a>Daniel Lee</a></p>
-        <p><a>Riley Mei</a></p>
-      </div>
       <header className="About-header">
-        <p>Meet</p>
         <h1>The Team</h1>
       </header>
       <section className="Team">
         <div className="Team-member">
-          <img src={dorjeeImage} alt="DorjeeZ" className="pic"/>
+          <div className="pic">
+            <img src={dorjeeImage} alt="DorjeeZ"/>
+            <div class="circle-container">
+              <div class="circle">19</div>
+            </div>
+          </div>
           <h3>Dorjee Zhang</h3>
           <h4>CS(BS) + Sophomore + Frontend</h4>
           <p>Born in Honolulu Hawaii and a 13 year resident of Colorado, Dorjee spent his early days dabbling into games on his Nintendo 3DS. He would grow up to love Pokemon (Genesect and Greninja are his favorites) and Plants Vs. Zombies.
@@ -31,9 +29,14 @@ function About() {
           <p><a href="https://www.linkedin.com/in/dorjeezhang/" target="_blank">Linkedin</a></p>
         </div>
         <div className="Team-member">
-          <img src={danImage} alt="DanielL" className="pic"/>
+        <div className="pic">
+            <img src={danImage} alt="DanielL"/>
+            <div class="circle-container">
+              <div class="circle">22</div>
+            </div>
+          </div>
           <h3>Daniel Lee</h3>
-          <h4>EE(BS) + Senior + Backend/Frontend</h4>
+          <h4>ECE(BS) + Senior + Full-Stack</h4>
           <p>Native born and raised in Colorado, Daniel has the native hiking blood in him. Spending his early days dabbling into SUPERCELL and .io games, Daniel would grow quite fond of video games. Once the quarantine days began, Daniel would 
             spend much of his time playing League of Legends, watching Clone Wars, and focusing on school. Daniel grew quite fond of computers, and, after entering college as an Electrical Engineer major, he decided to pick up a computer science 
             minor as well. Computer Systems (CSCI 2400) would bode his most difficult class. In his free time, Daniel enjoys playing League, making beats, and watching anime.
@@ -41,7 +44,12 @@ function About() {
           <p><a href="https://www.linkedin.com/in/daniel-juhwan-lee/" target="_blank">Linkedin</a></p>
         </div>
         <div className="Team-member">
-          <img src={rileyImage} alt="RileyM" className="pic"/>
+          <div className="pic">
+              <img src={rileyImage} alt="RileyM"/>
+              <div class="circle-container">
+                <div class="circle">20</div>
+              </div>
+          </div>
           <h3>Riley Mei</h3>
           <h4>CS(BA) + Junior + Backend</h4>
           <p>Native born and raised in Colorado, Riley is a natural athlete who frequents volleyball courts, ski resorts, and rock of sorts. Riley would spend his early days playing Clash Royale and Clash of Clans, being immensly rushed with level 12 walls. 

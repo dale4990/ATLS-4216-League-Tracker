@@ -9,20 +9,6 @@ body {
     min-height: 100vh;
 }
   
-.About-header {
-    text-align: center;
-    margin: 50px 0;
-}
-
-.About-header h1 {
-    font-family: "Trebuchet MS";
-    margin-bottom: 0;
-}
-
-.About-header p {
-    margin-top: 0;
-}
-  
 .Team {
     display: flex;
     justify-content: space-around;
@@ -38,13 +24,44 @@ body {
     margin: 0 10px;
     text-align: center;
 }
-  
+
 .pic {
     width: 100%; 
+    border-radius: 50%;
     height: auto;
     margin-bottom: 20px;
     box-sizing: border-box;
     border: 2px solid rgb(26, 140, 216);
+    position: relative;
+}
+
+.pic img {
+    border-radius: 50%;
+    width: 100%;
+    height: auto;
+}
+
+.circle-container {
+    position: absolute;
+    bottom: 12%;
+    right: 18%;
+    transform: translate(50%, 50%);
+    justify-content: center; 
+    display: flex;
+    align-items: center;
+    width: 75px;
+    height: 75px;
+}
+
+.circle {
+    width: 75px;
+    height: 75px;
+    background-color: #010A13; 
+    color: white;
+    font-size: 32px;
+    border-radius: 50%;
+    z-index: 2;
+    line-height: 75px;
 }
 
 @media (max-width: 1024px) {

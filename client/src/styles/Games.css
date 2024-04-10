@@ -1,0 +1,369 @@
+/* Container that holds general game data, with a button that can be clicked to view more details */
+.game-list {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.outer {
+    display: flex;
+    width: 740px;
+    height: 96px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.outer .deco {
+    min-width: 6px;
+    width: 6px;
+}
+
+.outer .contents {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 4px 0px;
+    gap: 4px;
+}
+
+.outer .contents .inner {
+    display: flex;
+    padding: 0px 12px;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 8px;
+    flex: 1 1 0%;
+}
+
+/* First child of the game class:  */
+.timestamp-details {
+    width: 108px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #9e9eb1;
+}
+
+/* Split details */
+.timestamp-details .head-group {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.timestamp-details .divider {
+    width: 48px;
+    height: 1px;
+    background-color: #2f436e;
+}
+
+.result, .duration, .timestamp, .game-type {
+    font-weight: 700;
+}
+
+/* Main player details */
+.player-stats {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    height: 88px;
+    width: 378px;
+    gap: 2px;
+    flex: 1 1 0%;
+}
+
+/* Main player stats */
+.player-stats .main {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 12px;
+}
+
+/* info class inherits main */
+.player-stats .main .info {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 4px;
+    height: 58px;
+}
+
+.player-stats .main .info .champion {
+    position: relative;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    min-width: 48px;
+}
+
+.player-stats .main .info .champion > img {
+    border-radius: 50%;
+}
+
+.player-stats .main .info .champion .champion-level {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    width: 20px;
+    height: 20px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 14px;
+    color: rgb(255, 255, 255);
+    background: rgb(32, 45, 55);
+    border-radius: 50%;
+}
+
+.summ-runes-container {
+    display: flex;
+    gap: 2px;
+}
+
+.summ-runes-container .summ-runes {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.summ-runes-container .summ-runes .spell, .summ-runes-container .summ-runes .rune {
+    display: flex;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.summ-runes-container .summ-runes img {
+    aspect-ratio: 1 / 1;
+}
+
+.player-stats .main .kda-stats {
+    width: 108px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.player-stats .main .kda-stats .kda {
+    color: #7b7a8e;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.player-stats .main .kda-stats .kda span {
+    color: #ffffff;
+}
+
+.player-stats .main .kda-stats .kda span.d {
+    color: #e84057;
+}
+
+.player-stats .main .kda-stats .kda-ratio {
+    color: #9e9eb1;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+}
+
+.player-stats .main .game-stats {
+    display: flex;
+    flex-direction: column;
+    height: 58px;
+    flex: 1 1 0%;
+    padding-left: 8px;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-color: #2f436e;
+    color: #9e9eb1;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 14px;
+    text-align: left;
+}
+
+.player-stats .main .game-stats .p-kill {
+    color: #e84057;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.player-stats .main .game-stats div {
+    white-space: nowrap;
+}
+
+.player-stats .main .game-stats .avg-tier {
+    text-transform: capitalize;
+}
+
+dl, dt, dd, ol, ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.player-stats .sub {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.player-stats .sub .items {
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.player-stats .sub .items dd {
+    overflow: hidden;
+    border-radius: 4px;
+    background-color: #28344e;
+    min-width: 22px;
+    height: 22px;
+}
+
+.player-stats .sub .item {
+    display: flex;
+    min-width: 22px;
+    height: 22px;
+}
+
+img {
+    border: 0;
+    max-width: 100%;
+}
+
+.player-stats .sub .items dd.trinket {
+    border-radius: 50%;
+}
+
+.player-stats .game-tags__scroll-container {
+    position: relative;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.player-stats .game-tags {
+    display: flex;
+    gap: 2px 4px;
+    max-width: 200px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    height: 20px;
+}
+
+.player-stats .game-tags .tag {
+    display: flex;
+    padding: 0px 8px;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+.player-stats .game-tags .kill-tag {
+    background-color: #e84057;
+    color: #ffffff;
+}
+
+.player-list {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 2px 8px;
+    max-height: 88px;
+    width: 168px;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #9e9eb1;
+}
+
+.player .icon {
+    max-height: 16px;
+    min-width: 16px;
+}
+
+.player .icon img {
+    border-radius: 4px;
+}
+
+.player .name {
+    max-width: 60px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: flex;
+}
+
+.player .summoner-tooltip {
+    overflow: hidden;
+}
+
+.player .teammate-name {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    box-sizing: border-box;
+    gap: 4px;
+    max-width: 100%;
+}
+
+.team-name-font {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.player .teammate-align {
+    max-width: 100%;
+}
+
+.player .team-name-align {
+    font-size: 12px;
+    line-height: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.outer .actions {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 40px;
+}
+
+.outer .actions .button {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #2f436e;
+    cursor: pointer;
+}
