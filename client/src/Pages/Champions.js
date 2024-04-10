@@ -8,11 +8,13 @@ const Champions = ({ champions }) => {
         const champion = champions[championKey];
         return (
           <div key={champion.id} className="champion">
+            <div className="nameTitle">
             <h2>{champion.name}</h2>
-            <p>{champion.title}</p>
+            <p className="title">{champion.title}</p>
+            </div>
             {/* <img src={require(`./assets/img/${champion.image.full}`).default} alt={champion.name} /> */}
-            <img src={`/splash/${champion.id}_0.jpg`} alt={champion.name} />
-            <p>{champion.lore}</p>
+            <img src={`/splash/${champion.id}_0.jpg`} className="img" alt={champion.name} />
+            <p className="lore">{champion.lore}</p>
           </div>
         );
       })}

@@ -1,0 +1,47 @@
+.champion{
+    display: flex;
+    margin: 5px;
+    border: 15px solid #c89b3c;
+    height: 200px;
+    border-width: 5px;
+    
+}
+
+.champ{
+    display: flex;
+    flex-direction: column;
+    border: 15px solid yellow;
+    height: 125px;
+    padding-left: 150px;
+    width: 1500px;
+    text-align: center;
+}
+.img{
+    display: flex;
+    border: #c89b3c;
+    height: 180px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+
+}
+
+.nameTitle{
+    text-align: left;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 500px;
+}
+
+.title{
+    margin-bottom: 25px;
+}
+
+.lore{
+    display:flex;
+    text-align: center;
+    padding-top: 50px;
+    padding-right: 25px;
+}
