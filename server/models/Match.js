@@ -46,6 +46,16 @@ const PerksSchema = new mongoose.Schema({
   styles: [PerkStyleSchema],
 });
 
+// Schema for Challenges
+const ChallengeSchema = new mongoose.Schema({
+  kda: {
+    type: Number,
+  },
+  killParticipation: {
+    type: Number,
+  },
+});
+
 // Sub-schema for participants
 const ParticipantSchema = new mongoose.Schema({
   summonerName: {
@@ -133,6 +143,13 @@ const ParticipantSchema = new mongoose.Schema({
     type: Number,
   },
   totalMinionsKilled: {
+    type: Number,
+  },
+  neutralMinionsKilled: {
+    type: Number,
+  },
+  challenges: ChallengeSchema,
+  visionWardsBoughtInGame: {
     type: Number,
   },
   doubleKills: {
