@@ -7,7 +7,7 @@ const Champions = ({ champions }) => {
       {Object.keys(champions).map((championKey) => {
         const champion = champions[championKey];
         return (
-          <div key={champion.id} className="champion">
+          <div key={champion.id} className="championInfo">
             <div className="nameTitle">
             <h2>{champion.name}</h2>
             <p className="title">{champion.title}</p>
