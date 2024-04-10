@@ -78,6 +78,56 @@ function determineHighestKillType(doubleKills, tripleKills, quadraKills, pentaKi
     return highestKillType;
 }
 
+function calculateAverageRank(playerRanks) {
+    const rankValues = {
+      iron: 1,
+      bronze: 2,
+      silver: 3,
+      gold: 4,
+      platinum: 5,
+      emerald: 6,
+      diamond: 7,
+      master: 8,
+      grandmaster: 9,
+      challenger: 10,
+    };
+  
+    let totalRank = 0;
+    let rankedPlayers = 0;
+  
+    playerRanks.forEach((rank) => {
+      if (rank !== "undefined undefined") {
+        const [tier, division] = rank.split(" ");
+        const tierValue = rankValues[tier];
+        totalRank += tierValue + parseInt(division);
+        rankedPlayers++;
+      }
+    });
+  
+    if (rankedPlayers === 0) {
+      return "";
+    }
+  
+    const averageRank = totalRank / rankedPlayers;
+  
+    let tier;
+    for (const key in rankValues) {
+      if (averageRank >= rankValues[key]) {
+        tier = key;
+      } else {
+        break;
+      }
+    }
+    
+    var averageDivision = Math.round(averageRank - rankValues[tier]);
+
+    if (averageDivision == 0) {
+        averageDivision = "";
+    }
+  
+    return `${tier} ${averageDivision}`;
+  }
+
 function Game({matchData, summoner, data}) {
     const { champions: champDict, summoners: summDict, runes, championImageMap } = data;
     const gameMode = matchData.gameMode;
@@ -88,6 +138,10 @@ function Game({matchData, summoner, data}) {
     const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled, rank, tier, 
     doubleKills, tripleKills, quadraKills, pentaKills} = isMe;
     const myRank = tier ? (tier + " " + rank) : "Unranked";
+    const averageRanks = matchData.participants.map(participant => participant.tier + " " + participant.rank);
+    console.log(averageRanks);
+    const averageRank = calculateAverageRank(averageRanks);
+    console.log(averageRank);
     const myChampionEntry = Object.entries(champDict).find(([key, champion]) => champion.key === championId);
     const myChampion = myChampionEntry ? myChampionEntry[1] : null;
 
@@ -197,7 +251,7 @@ function Game({matchData, summoner, data}) {
                                 </div> {/* cs */}
 
                                 <div className="avg-tier">
-                                    <div className style={{position: 'relative'}}>{myRank}</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>{averageRank}</div> {/* Variable */}
                                 </div> {/* avg-tier */}
                             </div> {/* game-stats */}
                         </div> {/* main */}

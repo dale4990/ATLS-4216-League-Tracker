@@ -7,7 +7,7 @@ const Champions = ({ champions }) => {
       {Object.keys(champions).map((championKey) => {
         const champion = champions[championKey];
         return (
-          <div key={champion.id} className="champion">
+          <div key={champion.id} className="champion-class">
             <img src={`/splash/${champion.id}_0.jpg`} className="champion-img" alt={champion.name} />
             <div className="champion-info">
               <h2 className="champion-name">{champion.name}</h2>

@@ -1,4 +1,4 @@
-.champion {
+.champion-class {
     display: inline-block;
     margin: 20px;
     background-color: #01040a;
@@ -18,7 +18,7 @@
   
   .champion-info {
     position: relative;
-    background-color: rgba(1, 4, 10, 0.85);
+    background-color: #010A13;
     color: #c89b3c;
     padding: 15px;
     height: 200px;
@@ -37,5 +37,6 @@
   
   .champion-lore {
     font-size: 16px;
+    font-family: "Helvetica Neue", sans-serif;
   }
   
