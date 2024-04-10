@@ -27,7 +27,11 @@ function timestampToAgo(timestamp) {
     let minutes = Math.floor(seconds / 60);
     let hours = Math.floor(minutes / 60);
     let days = Math.floor(hours / 24);
+    let months = Math.floor(days / 30);
 
+    if (months > 0) {
+        return months === 1 ? "a month ago" : months + " months ago";
+    }
     if (days > 0) {
         return days === 1 ? "a day ago" : days + " days ago";
     }
@@ -39,22 +43,6 @@ function timestampToAgo(timestamp) {
     }
     return seconds === 1 ? "a second ago" : seconds + " seconds ago";
 }
-
-const parseChampionData = () => {
-    const championImageMap = {};
-    const champions = championData.data;
-  
-    for (const championKey in champions) {
-      if (Object.hasOwnProperty.call(champions, championKey)) {
-        const champion = champions[championKey];
-        const championId = champion.key;
-        const championImage = champion.image.full;
-        championImageMap[championId] = championImage;
-      }
-    }
-  
-    return championImageMap;
-};
 
 // Returns a list of items that the player has in their inventory
 function getMyItems(isMe) {
@@ -73,8 +61,13 @@ function getMyItems(isMe) {
 
     return itemDivs;
 }
+<<<<<<< HEAD
 function Game({gameId, matchData, summoner, data, rankData}) {
     const { champions: champDict, summoners: summDict, runes } = data;
+=======
+function Game({matchData, summoner, data}) {
+    const { champions: champDict, summoners: summDict, runes, championImageMap } = data;
+>>>>>>> 0c5bed66ced6073faa1be3bc3ff992a0bcc339bf
     const endOfGameResult = matchData.endOfGameResult;
     const gameMode = matchData.gameMode;
     const gameDuration = secondsToHMS(matchData.gameDuration);
@@ -83,7 +76,7 @@ function Game({gameId, matchData, summoner, data, rankData}) {
     const rankTier = rankData.tier;
     const rankDivision = rankData.rank; 
 
-    const isMe = matchData.participants.find(participant => participant.summonerName === summoner);
+    const isMe = matchData.participants.find(participant => participant.puuid === summoner);
     const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled} = isMe;
     const myChampionEntry = Object.entries(champDict).find(([key, champion]) => champion.key === championId);
     const myChampion = myChampionEntry ? myChampionEntry[1] : null;
@@ -119,13 +112,18 @@ function Game({gameId, matchData, summoner, data, rankData}) {
         return [ [firstSpellDiv, secondSpellDiv], [firstRuneDiv, secondRuneDiv] ];
     }
     
-    const [ [firstSpellDiv, secondSpellDiv], [firstRuneDiv, secondRuneDiv] ] = getMySummRunes();
+    const [ mySpells, myRunes ] = getMySummRunes();
     const itemList = getMyItems(isMe);
 
+<<<<<<< HEAD
     const championImageMap = parseChampionData();
 
     const winColor = remake ? "#1E2328" : (win ? "#28344e" : "#59343b");
     const gameColor = remake ? "#A09B8C" : (win ? "#5383e8" : "#e84057");
+=======
+    const winColor = win ? "#28344e" : "#59343b";
+    const gameColor = win ? "#5383e8" : "#e84057";
+>>>>>>> 0c5bed66ced6073faa1be3bc3ff992a0bcc339bf
     const buttonColor = win ? "#2f436e" : "#703c47";
     
     // Calculated states
@@ -165,13 +163,11 @@ function Game({gameId, matchData, summoner, data, rankData}) {
 
                                 <div className="summ-runes-container">
                                     <div className="summ-runes">
-                                        {firstSpellDiv}
-                                        {secondSpellDiv}
+                                        {mySpells}
                                     </div> {/* summ-runes */}
 
                                     <div className="summ-runes">
-                                        {firstRuneDiv}
-                                        {secondRuneDiv}
+                                        {myRunes}
                                     </div> {/* summ-runes */}
                                 </div> {/* summ-runes-container */}
                             </div> {/* info */}
@@ -220,107 +216,17 @@ function Game({gameId, matchData, summoner, data, rankData}) {
                         {matchData.participants.map(participant => (
                             <div className="player" key={participant.summonerName}>
                                 <div className="icon" style={{position: 'relative'}}>
-                                    <img src={`/champion/${championImageMap[participant.championId]}`} width="16" height="16" alt={participant.championName} />
+                                    <img src={`/champion/${championImageMap[participant.championId]}`} style={{borderRadius: "3px", border: "none", height: "16px", width: "16px"}} alt={`"${participant.championName}"`} />
                                 </div>
                                 <div className="name">
                                     <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                        <div className="teammate-name">
-                                            <span className="team-name-font">{participant.summonerName}</span>
+                                        <div className="teammate-name teammate-align" style={{color: (participant.puuid === summoner ? "#FFFFFF" : "#9e9eb1")}}>
+                                            <span className="team-name-font team-name-align">{(participant.summonerName.length === 0 ? "??????????" : participant.summonerName)}</span>
                                         </div> {/* teammate-name */}
                                     </div> {/* summoner-tooltip */}
                                 </div> {/* name */}
                             </div> // player
                         ))}
-                        {/* <div className="player">
-                            <div className="icon" style={{position: 'relative'}}><img src="/champion/Nidalee.png" width="16" height="16" alt="Nidalee" /></div>
-                            <div className="name">
-                                <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                    <div className="teammate-name">
-                                        <span className="team-name-font">photik95</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="player">
-                            <div className="icon" style={{position: 'relative'}}><img src="/champion/Vi.png" width="16" height="16" alt="Vi" /></div>
-                            <div className="name">
-                                <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                    <div className="teammate-name">
-                                        <span className="team-name-font">Z Boogiepop</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="player">
-                            <div className="icon" style={{position: 'relative'}}><img src="/champion/Shaco.png" width="16" height="16" alt="Shaco" /></div>
-                            <div className="name">
-                                <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                    <div className="teammate-name">
-                                        <span className="team-name-font">ultrasun261</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="player">
-                            <div className="icon" style={{position: 'relative'}}><img src="/champion/Xayah.png" width="16" height="16" alt="Xayah" /></div>
-                            <div className="name">
-                                <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                    <div className="teammate-name">
-                                        <span className="team-name-font">Spasznee</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="player">
-                            <div className="icon" style={{position: 'relative'}}><img src="/champion/Zed.png" width="16" height="16" alt="Zed" /></div>
-                            <div className="name">
-                                <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                    <div className="teammate-name">
-                                        <span className="team-name-font">thedorkster</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="player">
-                            <div className="icon" style={{position: 'relative'}}><img src="/champion/Katarina.png" width="16" height="16" alt="Katarina" /></div>
-                            <div className="name">
-                                <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                    <div className="teammate-name">
-                                        <span className="team-name-font">Mushu</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="player">
-                            <div className="icon" style={{position: 'relative'}}><img src="/champion/Zoe.png" width="16" height="16" alt="Zoe" /></div>
-                            <div className="name">
-                                <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                    <div className="teammate-name">
-                                        <span className="team-name-font">Metalax</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="player">
-                            <div className="icon" style={{position: 'relative'}}><img src="/champion/Varus.png" width="16" height="16" alt="Varus" /></div>
-                            <div className="name">
-                                <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                    <div className="teammate-name">
-                                        <span className="team-name-font">oogablaga</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="player">
-                            <div className="icon" style={{position: 'relative'}}><img src="/champion/Naafiri.png" width="16" height="16" alt="Naafiri" /></div>
-                            <div className="name">
-                                <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                    <div className="teammate-name">
-                                        <span className="team-name-font">kz2</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     </div> {/* player-list */}
                 </div> {/* inner */}
             </div> {/* contents */}

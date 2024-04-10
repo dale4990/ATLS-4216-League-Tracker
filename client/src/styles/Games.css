@@ -244,7 +244,6 @@ dl, dt, dd, ol, ul, li {
 
 img {
     border: 0;
-    vertical-align: middle;
     max-width: 100%;
 }
 
@@ -293,7 +292,6 @@ img {
 
 .player {
     display: flex;
-    -webkit-box-align: center;
     align-items: center;
     gap: 4px;
     color: #9e9eb1;
@@ -332,13 +330,22 @@ img {
     max-width: 100%;
 }
 
-.player .team-name-font {
-    font-size: 12px;
-    line-height: 16px;
-    color: #ffffff;
+.team-name-font {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.player .teammate-align {
+    max-width: 100%;
+}
+
+.player .team-name-align {
+    font-size: 12px;
+    line-height: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .outer .actions {
