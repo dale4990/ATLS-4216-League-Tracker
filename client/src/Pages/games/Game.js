@@ -51,7 +51,7 @@ function getMyItems(isMe) {
     // /item/{item}.png
     // If item is 0, return an empty item slot; item6 is className="trinket"
     const itemDivs = items.map(item => {
-        if (item === 0) return <dd class="item"></dd>;
+        if (item === 0) return <dd className="item"></dd>;
         return <dd><div className="item" style={{position: 'relative'}}><img src={`/item/${item}.png`} width="22" height="22" alt="Who cares right now" /></div></dd>;
     });
 
@@ -60,6 +60,7 @@ function getMyItems(isMe) {
 
     return itemDivs;
 }
+
 function Game({matchData, summoner, data}) {
     const { champions: champDict, summoners: summDict, runes, championImageMap } = data;
     const endOfGameResult = matchData.endOfGameResult;
@@ -225,4 +226,14 @@ function Game({matchData, summoner, data}) {
     )
 }
 
-export default Game;
+// Memoize the Game component to prevent unnecessary re-renders
+const MemoizedGame = React.memo(Game, (prevProps, nextProps) => {
+    // Compare the props to determine if re-render is needed
+    // Return true if props are equal, false otherwise
+    return (
+        prevProps.matchData === nextProps.matchData &&
+        prevProps.summoner === nextProps.summoner
+    );
+});
+
+export default MemoizedGame;

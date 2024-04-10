@@ -33,19 +33,13 @@ export const getMatches = async(puuid, start, amount) => {
 
 const getRank = async(puuid) => {
     try {
-        console.log("puuid", puuid);
-
         const summonerId = await Axios.post("http://localhost:5069/findSummoner", {
             puuid: puuid,
         });
 
-        console.log(puuid, summonerId.data);
-
         const rankResponse = await Axios.post("http://localhost:5069/findRank", {
             id: summonerId.data.id,
         });
-
-        console.log(summonerId.data.id, rankResponse);
 
         const rankData = rankResponse.data;
         
@@ -78,7 +72,7 @@ export const getMatchDatas = async(matchIds) => {
             for (const participant of match.participants) {
                 const rankData = await getRank(participant.puuid);
                 participant.rank = rankData.rank;
-                participant.tier = rankData.tier;
+                participant.tier = rankData.tier.toLowerCase();
             }
         }
         
