@@ -81,7 +81,7 @@ const Navbar = () => {
                 <LeftContainerContent href="/" onClick={() => { browserHistory.push("/") }}>Home</LeftContainerContent>
                 <LeftContainerContent href="/about">About</LeftContainerContent>
                 <LeftContainerContent href="/champions">Champions</LeftContainerContent>
-                <LeftContainerContent href="google.com">Modes</LeftContainerContent>
+                <LeftContainerContent href="/modes">Modes</LeftContainerContent>
             </LeftContainer>
 
             <RightContainer>
