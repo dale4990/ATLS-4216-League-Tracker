@@ -2,8 +2,7 @@
     display: inline-block;
     margin: 20px;
     background-color: #01040a;
-    color: #c89b3c;
-    border-radius: 5px;
+    border: 5px solid #c89b3c;
     overflow: hidden;
     width: 300px;
     vertical-align: top; 
