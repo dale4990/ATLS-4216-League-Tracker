@@ -12,7 +12,7 @@ const Champions = ({ champions }) => {
             <p>{champion.title}</p>
             {/* <img src={require(`./assets/img/${champion.image.full}`).default} alt={champion.name} /> */}
             <img src={`/splash/${champion.id}_0.jpg`} alt={champion.name} />
-            <p>{champion.blurb}</p>
+            <p>{champion.lore}</p>
           </div>
         );
       })}

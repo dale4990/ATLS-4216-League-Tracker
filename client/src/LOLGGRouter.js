@@ -5,7 +5,7 @@ import About from './Pages/About';
 import Champions from './Pages/Champions'
 import Navbar from './Navbar';
 
-const championDict = require('./assets/data/en_US/champion.json');
+const championDict = require('./assets/data/en_US/championFull.json');
 const champions = championDict.data; // dictionary of champions
 const summonerDict = require('./assets/data/en_US/summoner.json');
 const summoners = summonerDict.data; // dictionary of summoner spells

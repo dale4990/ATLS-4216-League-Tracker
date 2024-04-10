@@ -51,7 +51,7 @@ function About() {
               </div>
           </div>
           <h3>Riley Mei</h3>
-          <h4>CS(BA) + Junior + Backend</h4>
+          <h4>CS(BA) + Junior + Frontend</h4>
           <p>Native born and raised in Colorado, Riley is a natural athlete who frequents volleyball courts, ski resorts, and rock of sorts. Riley would spend his early days playing Clash Royale and Clash of Clans, being immensly rushed with level 12 walls. 
             During quarantine, he would find enjoyment in Riot Games's VALORANT. He would quickly rise the ranks, finding himself going from Iron to Bronze to hardstuck silver, before getting boosted by some friends to Diamond. Riley would go to Summit Middle School, 
             then later on Fairview High School where he would find enjoyment in computer science.
