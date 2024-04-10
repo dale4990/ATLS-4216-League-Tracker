@@ -1,10 +1,7 @@
 import React from 'react';
 import '../styles/champions.css';
-import championData from '../assets/data/en_US/champion.json'
 
-const Champions = () => {
-  const champions = championData.data;
-
+const Champions = ({ champions }) => {
   return (
     <div>
       {Object.keys(champions).map((championKey) => {
