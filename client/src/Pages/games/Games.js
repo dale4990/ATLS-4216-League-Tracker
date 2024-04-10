@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../../styles/Games.css';
 import Game from './Game';
 import { useParams } from 'react-router-dom';
-import { getMatches, getMatchDatas } from '../../helper/Fetcher';
+import { getMatches, getMatchDatas, getRank } from '../../helper/Fetcher';
 
 function Games({data}) {
     const { riotId, tagline } = useParams();
@@ -18,9 +18,11 @@ function Games({data}) {
                 // Fetch match data
                 const matchData = await getMatchDatas(matches);
 
+                const rankData = await getRank(riotId, tagline);
+
                 // Process match data to generate games array
                 const gamesArray = matchData.slice(0, 20).map((match, index) => (
-                    <Game key={matches[index]} gameId={matches[index]} matchData={match} summoner={riotId} data={data}/>
+                    <Game key={matches[index]} gameId={matches[index]} matchData={match} summoner={riotId} data={data} rankData={rankData}/>
                 ));
 
                 // Update games state

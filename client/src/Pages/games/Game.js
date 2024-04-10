@@ -73,12 +73,15 @@ function getMyItems(isMe) {
 
     return itemDivs;
 }
-function Game({gameId, matchData, summoner, data}) {
+function Game({gameId, matchData, summoner, data, rankData}) {
     const { champions: champDict, summoners: summDict, runes } = data;
     const endOfGameResult = matchData.endOfGameResult;
     const gameMode = matchData.gameMode;
     const gameDuration = secondsToHMS(matchData.gameDuration);
+    const remake = matchData.gameDuration < 210 ? true : false; 
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
+    const rankTier = rankData.tier;
+    const rankDivision = rankData.rank; 
 
     const isMe = matchData.participants.find(participant => participant.summonerName === summoner);
     const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled} = isMe;
@@ -121,8 +124,8 @@ function Game({gameId, matchData, summoner, data}) {
 
     const championImageMap = parseChampionData();
 
-    const winColor = win ? "#28344e" : "#59343b";
-    const gameColor = win ? "#5383e8" : "#e84057";
+    const winColor = remake ? "#1E2328" : (win ? "#28344e" : "#59343b");
+    const gameColor = remake ? "#A09B8C" : (win ? "#5383e8" : "#e84057");
     const buttonColor = win ? "#2f436e" : "#703c47";
     
     // Calculated states
@@ -147,7 +150,7 @@ function Game({gameId, matchData, summoner, data}) {
                         <div className="divider"></div>
 
                         <div className="head-group">
-                            <div className="result">{win ? "Victory" : "Defeat"}</div>
+                            <div className="result">{remake ? "Remake" : (win ? "Victory" : "Defeat")}</div>
                             <div className="duration">{gameDuration}</div>
                         </div> {/* head-group */}
                     </div> {/* timestamp-details */}
@@ -195,7 +198,7 @@ function Game({gameId, matchData, summoner, data}) {
                                 </div> {/* cs */}
 
                                 <div className="avg-tier">
-                                    <div className style={{position: 'relative'}}>gold 1</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>{rankTier}</div> {/* Variable */}
                                 </div> {/* avg-tier */}
                             </div> {/* game-stats */}
                         </div> {/* main */}

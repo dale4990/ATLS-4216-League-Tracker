@@ -127,6 +127,42 @@ app.post("/findMatches", async (req, res) => {
     }
 });
 
+// POST request to find summoner ID by puuid
+app.post("/findId", async (req, res) => {
+    const { puuid } = req.body;
+    const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326";
+    const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}?api_key=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+
+        const summonerId = response.data;
+
+        res.json(summonerId);
+    } catch (error) {
+        console.error("Error:", error.response.data);
+        res.status(500).json({ error: "Failed to fetch summoner IDs" });
+    }
+});
+
+// POST request to find summoner Rank by summonerId
+app.post("/findRank", async (req, res) => {
+    const { id } = req.body;
+    const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326";
+    const url = `https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+
+        const rankData = response.data;
+
+        res.json(rankData);
+    }catch (error) {
+        console.error("Error:", error.response.data);
+        res.status(500).json({ error: "Failed to fetch ranked data" });
+    }
+});
+
 // POST request to find individual match data based on matchId
 app.post("/findMatchData", async (req, res) => {
     const { matchId } = req.body;
@@ -135,7 +171,7 @@ app.post("/findMatchData", async (req, res) => {
         const existingMatch = await MatchData.findOne({ matchId }); 
 
         if (existingMatch) {
-            const { info, metadata } = existingMatch;
+            const { info, rankData } = existingMatch;
             const endOfGameResult = info.endOfGameResult;
             const gameDuration = info.gameDuration;
             const gameMode = info.gameMode;
@@ -197,6 +233,7 @@ app.post("/findMatchData", async (req, res) => {
                 metadata,
                 info,
             });
+
 
             await newMatch.save();
 
