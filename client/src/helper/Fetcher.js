@@ -1,15 +1,22 @@
 import '../styles/App.css';
 import Axios from "axios";
 
-export const getMatches = async(riotId, tagline) => {
+export const getPUUID = async(riotId, tagline) => {
     try {
-      const findUserResponse = await Axios.post("http://localhost:5069/findRiotUser", {
-          riotId: riotId,
-          tagline: tagline,
-      });
+        const response = await Axios.post("http://localhost:5069/findRiotUser", {
+            riotId: riotId,
+            tagline: tagline,
+        });
 
-      const puuid = findUserResponse.data.puuid;
+        return response.data.puuid;
+    } catch(error){
+        console.log(error.response.data.error);
+        return "";
+    }
+}
 
+export const getMatches = async(puuid) => {
+    try {
       const findMatchesResponse = await Axios.post("http://localhost:5069/findMatches", {
           puuid: puuid,
       });
