@@ -61,20 +61,12 @@ function getMyItems(isMe) {
 
     return itemDivs;
 }
-<<<<<<< HEAD
-function Game({gameId, matchData, summoner, data, rankData}) {
-    const { champions: champDict, summoners: summDict, runes } = data;
-=======
 function Game({matchData, summoner, data}) {
     const { champions: champDict, summoners: summDict, runes, championImageMap } = data;
->>>>>>> 0c5bed66ced6073faa1be3bc3ff992a0bcc339bf
     const endOfGameResult = matchData.endOfGameResult;
     const gameMode = matchData.gameMode;
     const gameDuration = secondsToHMS(matchData.gameDuration);
-    const remake = matchData.gameDuration < 210 ? true : false; 
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
-    const rankTier = rankData.tier;
-    const rankDivision = rankData.rank; 
 
     const isMe = matchData.participants.find(participant => participant.puuid === summoner);
     const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled} = isMe;
@@ -115,15 +107,8 @@ function Game({matchData, summoner, data}) {
     const [ mySpells, myRunes ] = getMySummRunes();
     const itemList = getMyItems(isMe);
 
-<<<<<<< HEAD
-    const championImageMap = parseChampionData();
-
-    const winColor = remake ? "#1E2328" : (win ? "#28344e" : "#59343b");
-    const gameColor = remake ? "#A09B8C" : (win ? "#5383e8" : "#e84057");
-=======
     const winColor = win ? "#28344e" : "#59343b";
     const gameColor = win ? "#5383e8" : "#e84057";
->>>>>>> 0c5bed66ced6073faa1be3bc3ff992a0bcc339bf
     const buttonColor = win ? "#2f436e" : "#703c47";
     
     // Calculated states
@@ -148,7 +133,7 @@ function Game({matchData, summoner, data}) {
                         <div className="divider"></div>
 
                         <div className="head-group">
-                            <div className="result">{remake ? "Remake" : (win ? "Victory" : "Defeat")}</div>
+                            <div className="result">{win ? "Victory" : "Defeat"}</div>
                             <div className="duration">{gameDuration}</div>
                         </div> {/* head-group */}
                     </div> {/* timestamp-details */}
@@ -194,7 +179,7 @@ function Game({matchData, summoner, data}) {
                                 </div> {/* cs */}
 
                                 <div className="avg-tier">
-                                    <div className style={{position: 'relative'}}>{rankTier}</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>gold 1</div> {/* Variable */}
                                 </div> {/* avg-tier */}
                             </div> {/* game-stats */}
                         </div> {/* main */}
