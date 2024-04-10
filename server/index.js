@@ -229,6 +229,7 @@ app.post("/findMatchData", async (req, res) => {
                 tripleKills: participant.tripleKills,
                 quadraKills: participant.quadraKills,
                 pentaKills: participant.pentaKills,
+                summonerId: participant.summonerId,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
@@ -299,6 +300,7 @@ app.post("/findMatchData", async (req, res) => {
                 tripleKills: participant.tripleKills,
                 quadraKills: participant.quadraKills,
                 pentaKills: participant.pentaKills,
+                summonerId: participant.summonerId,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {

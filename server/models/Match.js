@@ -147,6 +147,9 @@ const ParticipantSchema = new mongoose.Schema({
   pentaKills: {
     type: Number,
   },
+  summonerId: {
+    type: String,
+  },
   teamId: {
     type: Number,
   },

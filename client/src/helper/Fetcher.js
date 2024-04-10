@@ -31,14 +31,10 @@ export const getMatches = async(puuid, start, amount) => {
     }
 }
 
-const getRank = async(puuid) => {
+const getRank = async(summonerId) => {
     try {
-        const summonerId = await Axios.post("http://localhost:5069/findSummoner", {
-            puuid: puuid,
-        });
-
         const rankResponse = await Axios.post("http://localhost:5069/findRank", {
-            id: summonerId.data.id,
+            id: summonerId,
         });
 
         const rankData = rankResponse.data;
@@ -77,7 +73,7 @@ export const getMatchDatas = async(matchIds) => {
         // For each participant in each match, add the rank to the participant object
         for (const match of matchData) {
             for (const participant of match.participants) {
-                const rankData = await getRank(participant.puuid);
+                const rankData = await getRank(participant.summonerId);
                 participant.rank = rankData.rank ? romanToInt[rankData.rank] : undefined;
                 participant.tier = rankData.tier ? rankData.tier.toLowerCase() : undefined;
             }
