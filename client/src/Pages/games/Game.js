@@ -80,53 +80,58 @@ function determineHighestKillType(doubleKills, tripleKills, quadraKills, pentaKi
 
 function calculateAverageRank(playerRanks) {
     const rankValues = {
-      iron: 1,
-      bronze: 2,
-      silver: 3,
-      gold: 4,
-      platinum: 5,
-      emerald: 6,
-      diamond: 7,
-      master: 8,
-      grandmaster: 9,
-      challenger: 10,
+      "iron 4": 0,
+      "iron 3": 100,
+      "iron 2": 200,
+      "iron 1": 300,
+      "bronze 4": 400,
+      "bronze 3": 500,
+      "bronze 2": 600,
+      "bronze 1": 700,
+      "silver 4": 800,
+      "silver 3": 900,
+      "silver 2": 1000,
+      "silver 1": 1100, 
+      "gold 4": 1200,
+      "gold 3": 1300,
+      "gold 2": 1400,
+      "gold 1": 1500,
+      "platinum 4": 1600,
+      "platinum 3": 1700,
+      "platinum 2": 1800,
+      "platinum 1": 1900,
+      "emerald 4": 2000,
+      "emerald 3": 2100,
+      "emerald 2": 2200,
+      "emerald 1": 2300,
+      "diamond 4": 2400,
+      "diamond 3": 2500,
+      "diamond 2": 2600,
+      "diamond 1": 2700,
+      "master 1": 2800,
+      "grandmaster 1": 2900,
+      "challenger 1": 3000
     };
-  
-    let totalRank = 0;
-    let rankedPlayers = 0;
-  
-    playerRanks.forEach((rank) => {
-      if (rank !== "undefined undefined") {
-        const [tier, division] = rank.split(" ");
-        const tierValue = rankValues[tier];
-        totalRank += tierValue + parseInt(division);
-        rankedPlayers++;
-      }
-    });
-  
-    if (rankedPlayers === 0) {
-      return "";
-    }
-  
-    const averageRank = totalRank / rankedPlayers;
-  
-    let tier;
-    for (const key in rankValues) {
-      if (averageRank >= rankValues[key]) {
-        tier = key;
-      } else {
-        break;
-      }
-    }
-    
-    var averageDivision = Math.round(averageRank - rankValues[tier]);
 
-    if (averageDivision == 0) {
-        averageDivision = "";
-    }
+    // Don't include unranked players in the average
+    const filteredRanks = playerRanks.filter(rank => rank !== "unranked");
+
+    if (filteredRanks.length === 0) return "unranked";
   
-    return `${tier} ${averageDivision}`;
-  }
+    const total = filteredRanks.reduce((acc, cur) => acc + rankValues[cur], 0);
+    const average = total / filteredRanks.length;
+    const roundedAverage = Math.round(average / 100) * 100;
+
+    // Find the rank that corresponds to the rounded average
+    const rankKeys = Object.keys(rankValues);
+    const averageRank = rankKeys.find(rank => rankValues[rank] === roundedAverage);
+
+    if (averageRank.includes("master") || averageRank.includes("grandmaster") || averageRank.includes("challenger")) {
+      return averageRank.slice(0, -2);
+    }
+
+    return averageRank;
+}
 
 function Game({matchData, summoner, data}) {
     const { champions: champDict, summoners: summDict, runes, championImageMap } = data;
@@ -135,10 +140,11 @@ function Game({matchData, summoner, data}) {
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
 
     const isMe = matchData.participants.find(participant => participant.puuid === summoner);
-    const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled, rank, tier, 
+    console.log("Me: ", isMe);
+    const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled, neutralMinionsKilled, kda, killParticipation, controlWardsPurchased,
     doubleKills, tripleKills, quadraKills, pentaKills} = isMe;
-    const myRank = tier ? (tier + " " + rank) : "Unranked";
-    const averageRanks = matchData.participants.map(participant => participant.tier + " " + participant.rank);
+    // const myRank = tier ? (tier + " " + rank) : "Unranked";
+    const averageRanks = matchData.participants.map(participant => (participant.tier ? participant.tier + " " + participant.rank : "unranked"));
     console.log(averageRanks);
     const averageRank = calculateAverageRank(averageRanks);
     console.log(averageRank);
@@ -184,9 +190,10 @@ function Game({matchData, summoner, data}) {
     const buttonColor = win ? "#2f436e" : "#703c47";
     
     // Calculated states
-    const kda = ((kills + assists) / deaths).toFixed(2) + ":1 KDA";
-    const killParticipation = ((kills + assists) / matchData.participants.filter(participant => participant.teamId === teamId).reduce((acc, cur) => acc + cur.kills, 0) * 100).toFixed(0);
-    const csm = (totalMinionsKilled / (matchData.gameDuration / 60)).toFixed(1).replace(/\.0$/, '');
+    const kdaString = kda.toFixed(2).replace(/\.0$/, '') + ":1 KDA";
+    const kp = Math.round(killParticipation*100);
+    const cs = totalMinionsKilled + neutralMinionsKilled;
+    const csm = (cs / (matchData.gameDuration / 60)).toFixed(1).replace(/\.0$/, '');
 
 
     return(
@@ -238,20 +245,22 @@ function Game({matchData, summoner, data}) {
                                     <span>{assists}</span>
                                 </div> {/* kda */}
 
-                                <div className="kda-ratio">{kda}</div>
+                                <div className="kda-ratio">{kdaString}</div>
                             </div> {/* kda-stats */}
 
                             <div className="game-stats" style={{borderColor: win ? '#2f436e' : '#703c47'}}>
                                 <div className="p-kill">
-                                    <div className style={{position: 'relative'}}>P/Kill {killParticipation}%</div>
+                                    <div className style={{position: 'relative'}}>P/Kill {kp}%</div>
                                 </div> {/* p-kill */}
 
+                                <div className="ward">Control Ward {controlWardsPurchased}</div>
+
                                 <div className="cs">
-                                    <div className style={{position: 'relative'}}>CS {totalMinionsKilled} ({csm})</div>
+                                    <div className style={{position: 'relative'}}>CS {cs} ({csm})</div>
                                 </div> {/* cs */}
 
                                 <div className="avg-tier">
-                                    <div className style={{position: 'relative'}}>{averageRank}</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>{averageRank}</div>
                                 </div> {/* avg-tier */}
                             </div> {/* game-stats */}
                         </div> {/* main */}
