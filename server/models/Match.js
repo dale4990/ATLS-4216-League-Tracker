@@ -51,6 +51,15 @@ const ParticipantSchema = new mongoose.Schema({
   summonerName: {
     type: String,
   },
+  puuid: {
+    type: String,
+  },
+  riotIdGameName: {
+    type: String,
+  },
+  riotIdTagline: {
+    type: String,
+  },
   profileIcon:{
     type: Number,
   },
@@ -108,7 +117,7 @@ const ParticipantSchema = new mongoose.Schema({
   goldEarned: {
     type: Number,
   },
-  totalDamageDealt: {
+  totalDamageDealtToChampions: {
     type: Number,
   },
   totalDamageTaken: {
@@ -123,8 +132,23 @@ const ParticipantSchema = new mongoose.Schema({
   visionScore: {
     type: Number,
   },
-  creepScore: {
+  totalMinionsKilled: {
     type: Number,
+  },
+  doubleKills: {
+    type: Number,
+  },
+  tripleKills: {
+    type: Number,
+  },
+  quadraKills: {
+    type: Number,
+  },
+  pentaKills: {
+    type: Number,
+  },
+  summonerId: {
+    type: String,
   },
   teamId: {
     type: Number,
@@ -133,6 +157,9 @@ const ParticipantSchema = new mongoose.Schema({
     type: String,
   },
   perks: PerksSchema,
+  win: {
+    type: Boolean,
+  },
 });
 
 // Sub-schema for bans

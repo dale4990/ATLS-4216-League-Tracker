@@ -11,55 +11,9 @@ function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const [listOfUsers, setListOfUsers] = useState([]);
-  // const [name, setName] = useState("");
-  // const [username, setUsername] = useState("");
   const [riotId, setRiotId] = useState("");
   const [tagline, setTagline] = useState("");
-  //const [sumNames, setSumNames] = useState([]);
   const [error, setError] = useState(null);
-
-  // useEffect(() =>{
-  //   Axios.get("http://localhost:5069/getUsers").then((response) => {
-  //     setListOfUsers(response.data);
-  //   });
-  // }, []);
-
-  // const createUser = async () => {
-  //   try {
-  //       // Check if the username already exists
-  //       const usernameExists = listOfUsers.some(user => user.username === username);
-  //       if (usernameExists) {
-  //           setError("Username already exists. Please choose a different username.");
-  //           return;
-  //       }
-
-  //       // If the username is unique, proceed to create the user
-  //       const response = await Axios.post("http://localhost:5069/createUser", {
-  //           name: name, 
-  //           username: username,
-  //       });
-  //       setListOfUsers([...listOfUsers, response.data]);
-  //       setName("");
-  //       setUsername("");
-  //       setError(null);
-  //   } catch (error) {
-  //       setError(error.response.data.error);
-  //   }
-  // }
-
-
-  // const deleteUser = async (userId) => {
-  //   try {
-  //     const response = await Axios.post("http://localhost:5069/deleteUser", {
-  //       userId: userId, 
-  //     });
-  //     console.log("User deleted successfully:", response.data);
-  //     setListOfUsers(listOfUsers.filter(user => user.userId !== userId));
-  //   } catch (error){
-  //     setError(error.response.data.error);
-  //   }
-  // }
 
   const getMatchDatas = async(riotId, tagline) => {
     dispatch(fetchMatchDataRequest());
@@ -87,15 +41,26 @@ function Home() {
 
       // Wait for all requests to finish and retrieve their data
       const matchData = await Promise.all(matchDataPromises);
+    
+      const gameDurations = [];
+      matchData.forEach(data => {
+        const duration = data.gameDuration;
+        gameDurations.push(duration);
+      });
 
-      const matchDataParticipants = matchData.flat();
 
-  
       // Extract summoner names from each match and update the state
       const summonerNames = matchData.reduce((acc, cur) => {
         return [
             ...acc,
             ...cur.participants.map((participant) => participant.summonerName),
+        ];
+      }, []);
+
+      const summonerLevel = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.summonerLevel),
         ];
       }, []);
 
@@ -194,12 +159,42 @@ function Home() {
             ...cur.participants.map((participant) => participant.summonerSpell2),
         ];
       }, []);
+      const totalDamageDealtToChampions = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.totalDamageDealtToChampions),
+        ];
+      }, []);
+      const totalDamageTaken = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.totalDamageTaken),
+        ];
+      }, []);
+      const totalMinionsKilled = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.totalMinionsKilled),
+        ];
+      }, []);
+      const wins = matchData.reduce((acc, cur) => {
+        return [
+            ...acc,
+            ...cur.participants.map((participant) => participant.win),
+        ];
+      }, []);
+
 
 
       //setSumNames(summonerNames);
 
       // Dispatch success action with all sets of data
-      dispatch(fetchMatchDataSuccess(matchDataParticipants, summonerNames, championIds, items0, items1, items2, items3, items4, items5, items6, kills, deaths, assists, primaryRune, secondaryStyle, summoner1Id, summoner2Id));
+      dispatch(fetchMatchDataSuccess(
+        gameDurations, summonerNames, summonerLevel, championIds, 
+        items0, items1, items2, items3, items4, items5, items6, 
+        kills, deaths, assists, primaryRune, secondaryStyle, summoner1Id, summoner2Id,
+        totalDamageDealtToChampions, totalDamageTaken, totalMinionsKilled, wins)
+      );
       
       // Display only the requested participant data
       console.log("Match data:");
@@ -221,6 +216,8 @@ function Home() {
               console.log(`  assists: ${participant.assists}`);
               console.log(`  primaryRune: ${participant.perks.primaryRune}`);
               console.log(`  secondaryStyle: ${participant.perks.secondaryStyle}`);
+              console.log(`  totalDamageDealtToChampions: ${participant.totalDamageDealtToChampions}`);
+              console.log(`  win: ${participant.win}`);
 
               // ... 
           }
@@ -239,35 +236,17 @@ function Home() {
     }
   }
 
-  // const displayMatchHistory = (riotId, tagline) => {
-  //   getMatchDatas(riotId, tagline)
-  //     .then((sumNames) => {
-  //       dispatch(fetchMatchDataSuccess(sumNames, sumNames));
-  //       navigate(`/display/${riotId}/${tagline}`);
-  //     })
-  //     .catch((error) => {
-  //       setError(error.response.data.error);
-  //     });
-  // };
+  const storeId = (riotId, tagline) => {
+    //
+  }
   
   return(
     <div className="App">
       {error && <div>Error: {error}</div>}
-      <div className="App-header">
-        <ul className="left-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-        </ul>
-        <ul className="right-links">
-          <li><a href="/champions">Champions</a></li>
-          <li><a href="google.com">Modes</a></li>
-        </ul>
-      </div>
-
       <div className='App-name'>
         <h1> LOL.GG </h1>
       </div>
-      <div className="input-container">
+      {/* <div className="input-container">
         <input
           className='StyledInput'
           type="text"
@@ -286,15 +265,8 @@ function Home() {
             setTagline(event.target.value)
           }}
         />
-        <button className="StyledButton" onClick={() => getMatchDatas(riotId, tagline)}>Search</button>
-      </div> 
-      {/* <div className="displaySummonerNames">
-        <ul>
-            {sumNames.map((sumName, index) => (
-                <div key={index}>{sumName}</div>
-            ))}
-        </ul>
-            </div>*/}
+        <button className="StyledButton" onClick={() => storeId(riotId, tagline)}>Search</button>
+      </div>  */}
     </div>
   );
 }

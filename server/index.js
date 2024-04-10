@@ -113,7 +113,7 @@ app.post("/findRiotUser", async (req, res) => {
 app.post("/findMatches", async (req, res) => {
     const { puuid } = req.body;
     const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326"; 
-    const url = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${apiKey}`; // can customize region via dropdown later
+    const url = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${apiKey}`; // can customize region via dropdown later
     
     try {
         const response = await axios.get(url);
@@ -127,6 +127,60 @@ app.post("/findMatches", async (req, res) => {
     }
 });
 
+// POST request to find summoner ID by puuid
+app.post("/findId", async (req, res) => {
+    const { puuid } = req.body;
+    const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326";
+    const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}?api_key=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+
+        const summonerId = response.data;
+
+        res.json(summonerId);
+    } catch (error) {
+        console.error("Error:", error.response.data);
+        res.status(500).json({ error: "Failed to fetch summoner IDs" });
+    }
+});
+
+// POST request to find a summoner by UID
+app.post("/findSummoner", async (req, res) => {
+    const { puuid } = req.body;
+    const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326";
+    const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}?api_key=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+
+        const summonerData = response.data;
+
+        res.json(summonerData);
+    } catch (error) {
+        console.error("Error:", error.response.data);
+        res.status(500).json({ error: "Failed to fetch summoner data" });
+    }
+});
+
+// POST request to find summoner Rank by summonerId
+app.post("/findRank", async (req, res) => {
+    const { id } = req.body;
+    const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326";
+    const url = `https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+
+        const rankData = response.data;
+
+        res.json(rankData);
+    }catch (error) {
+        console.error("Error:", error.response.data);
+        res.status(500).json({ error: "Failed to fetch ranked data" });
+    }
+});
+
 // POST request to find individual match data based on matchId
 app.post("/findMatchData", async (req, res) => {
     const { matchId } = req.body;
@@ -135,11 +189,19 @@ app.post("/findMatchData", async (req, res) => {
         const existingMatch = await MatchData.findOne({ matchId }); 
 
         if (existingMatch) {
+            const { info, rankData } = existingMatch;
+            const endOfGameResult = info.endOfGameResult;
+            const gameDuration = info.gameDuration;
+            const gameMode = info.gameMode;
+            const gameEndTimestamp = info.gameEndTimestamp;
             // Extract and return specific participant data
             const participants = existingMatch.info.participants.map((participant) => ({
                 summonerName: participant.summonerName,
+                puuid: participant.puuid,
+                riotIdGameName: participant.riotIdGameName,
+                riotIdTagline: participant.riotIdTagline,
                 profileIcon: participant.profileIcon,
-                championId: participant.championId,
+                championId: participant.championId.toString(),
                 championLevel: participant.championLevel,
                 summonerLevel: participant.summonerLevel,
                 kills: participant.kills,
@@ -154,24 +216,30 @@ app.post("/findMatchData", async (req, res) => {
                 item4: participant.item4,
                 item5: participant.item5,
                 item6: participant.item6,
-                summonerSpell1: participant.summoner1Id,
-                summonerSpell2: participant.summoner2Id,
+                summonerSpell1: participant.summoner1Id.toString(),
+                summonerSpell2: participant.summoner2Id.toString(),
                 goldEarned: participant.goldEarned,
-                totalDamageDealt: participant.totalDamageDealt,
+                totalDamageDealtToChampions: participant.totalDamageDealtToChampions,
                 totalDamageTaken: participant.totalDamageTaken,
                 wardsPlaced: participant.wardsPlaced,
                 wardsDestroyed: participant.wardsDestroyed,
                 visionScore: participant.visionScore,
-                creepScore: participant.creepScore,
+                totalMinionsKilled: participant.totalMinionsKilled,
+                doubleKills: participant.doubleKills,
+                tripleKills: participant.tripleKills,
+                quadraKills: participant.quadraKills,
+                pentaKills: participant.pentaKills,
+                summonerId: participant.summonerId,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
                     primaryRune: participant.perks.styles[0].selections[0].perk,
                     secondaryStyle: participant.perks.styles[1].style,
-                  },
+                },
+                win: participant.win,
             }));
 
-            res.json({ matchId, participants });
+            res.json({ matchId, endOfGameResult, gameDuration, gameEndTimestamp, gameMode, participants});
             return;
         }
 
@@ -189,13 +257,22 @@ app.post("/findMatchData", async (req, res) => {
                 info,
             });
 
+
             await newMatch.save();
+
+            const endOfGameResult = info.endOfGameResult;
+            const gameDuration = info.gameDuration; 
+            const gameMode = info.gameMode;
+            const gameEndTimestamp = info.gameEndTimestamp;
 
             // Extract and return specific participant data from response
             const participants = info.participants.map((participant) => ({
                 summonerName: participant.summonerName,
+                puuid: participant.puuid,
+                riotIdGameName: participant.riotIdGameName,
+                riotIdTagline: participant.riotIdTagline,
                 profileIcon: participant.profileIcon,
-                championId: participant.championId,
+                championId: participant.championId.toString(),
                 championLevel: participant.championLevel,
                 summonerLevel: participant.summonerLevel,
                 kills: participant.kills,
@@ -210,24 +287,30 @@ app.post("/findMatchData", async (req, res) => {
                 item4: participant.item4,
                 item5: participant.item5,
                 item6: participant.item6,
-                summonerSpell1: participant.summoner1Id,
-                summonerSpell2: participant.summoner2Id,
+                summonerSpell1: participant.summoner1Id.toString(),
+                summonerSpell2: participant.summoner2Id.toString(),
                 goldEarned: participant.goldEarned,
-                totalDamageDealt: participant.totalDamageDealt,
+                totalDamageDealtToChampions: participant.totalDamageDealtToChampions,
                 totalDamageTaken: participant.totalDamageTaken,
                 wardsPlaced: participant.wardsPlaced,
                 wardsDestroyed: participant.wardsDestroyed,
                 visionScore: participant.visionScore,
-                creepScore: participant.creepScore,
+                totalMinionsKilled: participant.totalMinionsKilled,
+                doubleKills: participant.doubleKills,
+                tripleKills: participant.tripleKills,
+                quadraKills: participant.quadraKills,
+                pentaKills: participant.pentaKills,
+                summonerId: participant.summonerId,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
                     primaryRune: participant.perks.styles[0].selections[0].perk,
                     secondaryStyle: participant.perks.styles[1].style,
-                  },
+                },
+                win: participant.win,
             }));
 
-            res.json({ matchId, participants });
+            res.json({ matchId, endOfGameResult, gameDuration, gameEndTimestamp, gameMode, participants});
         } catch (error) {
             console.error("Error saving match data:", error.message);
             res.status(500).json({ error: "Failed to save match data" });
