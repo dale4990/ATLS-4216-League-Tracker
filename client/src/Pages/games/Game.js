@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../styles/Games.css';
-import championData from '../../assets/data/en_US/champion.json';
 
 // Function to convert seconds to a string of the form "Xh Ym Zs"
 function secondsToHMS(seconds) {
@@ -69,7 +68,8 @@ function Game({matchData, summoner, data}) {
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
 
     const isMe = matchData.participants.find(participant => participant.puuid === summoner);
-    const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled} = isMe;
+    const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled, rank, tier } = isMe;
+    const myRank = rank ? (tier + " " + rank) : "UNRANKED";
     const myChampionEntry = Object.entries(champDict).find(([key, champion]) => champion.key === championId);
     const myChampion = myChampionEntry ? myChampionEntry[1] : null;
 
@@ -179,7 +179,7 @@ function Game({matchData, summoner, data}) {
                                 </div> {/* cs */}
 
                                 <div className="avg-tier">
-                                    <div className style={{position: 'relative'}}>gold 1</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>{myRank}</div> {/* Variable */}
                                 </div> {/* avg-tier */}
                             </div> {/* game-stats */}
                         </div> {/* main */}

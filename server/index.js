@@ -145,7 +145,25 @@ app.post("/findId", async (req, res) => {
     }
 });
 
-// POST request to find summoner Rank by summonerId
+// GET request to find a summoner by UID
+app.post("/findSummoner", async (req, res) => {
+    const { puuid } = req.body;
+    const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326";
+    const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}?api_key=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+
+        const summonerData = response.data;
+
+        res.json(summonerData);
+    } catch (error) {
+        console.error("Error:", error.response.data);
+        res.status(500).json({ error: "Failed to fetch summoner data" });
+    }
+});
+
+// GET request to find summoner Rank by summonerId
 app.post("/findRank", async (req, res) => {
     const { id } = req.body;
     const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326";

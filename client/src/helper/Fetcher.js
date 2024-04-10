@@ -15,7 +15,7 @@ export const getPUUID = async(riotId, tagline) => {
     }
 }
 
-export const getMatches = async(puuid) => {
+export const getMatches = async(puuid, start, amount) => {
     try {
       const findMatchesResponse = await Axios.post("http://localhost:5069/findMatches", {
           puuid: puuid,
@@ -23,7 +23,7 @@ export const getMatches = async(puuid) => {
 
       const matchIds = findMatchesResponse.data;
 
-      return matchIds;
+      return matchIds.slice(start, start + amount);
 
     } catch(error){
         console.log(error.response.data.error);
@@ -31,31 +31,33 @@ export const getMatches = async(puuid) => {
     }
 }
 
-export const getRank = async(riotId, tagline) => {
+const getRank = async(puuid) => {
     try {
-        const findUserResponse = await Axios.post("http://localhost:5069/findRiotUser", {
-            riotId: riotId,
-            tagline: tagline,
-        });
+        console.log("puuid", puuid);
 
-        const puuid = findUserResponse.data.puuid;
-
-        const findIdResponse = await Axios.post("http://localhost:5069/findId", {
+        const summonerId = await Axios.post("http://localhost:5069/findSummoner", {
             puuid: puuid,
         });
 
-        const id = findIdResponse.data.id;
+        console.log(puuid, summonerId.data);
 
-        const findRankResponse = await Axios.post("http://localhost:5069/findRank", {
-            id: id,
+        const rankResponse = await Axios.post("http://localhost:5069/findRank", {
+            id: summonerId.data.id,
         });
 
-        const rankData = findRankResponse.data;
+        console.log(summonerId.data.id, rankResponse);
 
-        return rankData;
+        const rankData = rankResponse.data;
+        
+        if (rankData.length === 0) {
+            return {};
+        }
+
+        return rankData[0];
+
     } catch(error){
         console.log(error.response.data.error);
-        return [];
+        return {};
     }
 }
 
@@ -70,6 +72,15 @@ export const getMatchDatas = async(matchIds) => {
 
         // Wait for all requests to finish and retrieve their data
         const matchData = await Promise.all(matchDataPromises);
+
+        // For each participant in each match, add the rank to the participant object
+        for (const match of matchData) {
+            for (const participant of match.participants) {
+                const rankData = await getRank(participant.puuid);
+                participant.rank = rankData.rank;
+                participant.tier = rankData.tier;
+            }
+        }
         
         return matchData;
     } catch(error){

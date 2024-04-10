@@ -16,13 +16,13 @@ function Games({data}) {
                 const puuid = await getPUUID(riotId, tagline);
 
                 // Fetch matches
-                const matches = await getMatches(puuid);
+                const matches = await getMatches(puuid, 0, 5);
 
                 // Fetch match data
                 const matchData = await getMatchDatas(matches);
 
                 // Process match data to generate games array
-                const gamesArray = matchData.slice(0, 20).map((match, index) => (
+                const gamesArray = matchData.map((match, index) => (
                     <Game key={matches[index]} matchData={match} summoner={puuid} data={data}/>
                 ));
 
