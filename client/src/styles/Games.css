@@ -231,7 +231,7 @@ dl, dt, dd, ol, ul, li {
 .player-stats .sub .items dd {
     overflow: hidden;
     border-radius: 4px;
-    background: #2f436e; /* var(--game-item-color-500); */
+    background-color: #28344e;
     min-width: 22px;
     height: 22px;
 }

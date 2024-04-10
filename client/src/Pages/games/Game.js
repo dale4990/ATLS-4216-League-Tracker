@@ -83,6 +83,8 @@ function Game({matchData, summoner, data}) {
     const gameMode = matchData.gameMode;
     const gameDuration = secondsToHMS(matchData.gameDuration);
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
+    const rankTier = rankData.tier;
+    const rankDivision = rankData.rank;
 
     const isMe = matchData.participants.find(participant => participant.puuid === summoner);
     const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled, rank, tier, 
