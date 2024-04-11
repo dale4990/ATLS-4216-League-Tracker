@@ -388,3 +388,7 @@ button {
     background: transparent;
     cursor: pointer;
 }
+
+a {
+    cursor: pointer;
+}

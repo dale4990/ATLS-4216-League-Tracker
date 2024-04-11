@@ -286,9 +286,11 @@ function Game({matchData, summoner, data}) {
                                 </div>
                                 <div className="name">
                                     <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                        <div className="teammate-name teammate-align" style={{color: (participant.puuid === summoner ? "#FFFFFF" : "#9e9eb1")}}>
-                                            <span className="team-name-font team-name-align">{(participant.riotIdGameName.length === 0 ? "??????????" : participant.riotIdGameName)}</span>
-                                        </div> {/* teammate-name */}
+                                        <a target="_blank" rel="noopener noreferrer" href={`/display/${participant.riotIdGameName}/${participant.riotIdTagline}`}>
+                                            <div className="teammate-name teammate-align" style={{color: (participant.puuid === summoner ? "#FFFFFF" : "#9e9eb1")}}>
+                                                <span className="team-name-font team-name-align">{(participant.riotIdGameName.length === 0 ? "??????????" : participant.riotIdGameName)}</span>
+                                            </div> {/* teammate-name */}
+                                        </a> {/* teammate-link */}
                                     </div> {/* summoner-tooltip */}
                                 </div> {/* name */}
                             </div> // player

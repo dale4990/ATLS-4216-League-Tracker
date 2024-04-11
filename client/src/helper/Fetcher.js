@@ -31,13 +31,13 @@ export const getMatches = async(puuid, start, amount) => {
     }
 }
 
-const getRank = async(puuid, summonerId) => {
+const getRank = async(puuid, riotId, tagline, summonerId) => {
     try {
         // Try finding the user in the database
         const response = await Axios.get(`http://localhost:5069/getRiotUser/${puuid}`);
         const user = response.data;
         if (user.rank) return user.rank;
-        return "unranked";
+        throw new Error("User rank not found in database.");
     } catch(error){
         // If the user is not found, we will continue to fetch the rank from the Riot API
         try {
@@ -61,12 +61,14 @@ const getRank = async(puuid, summonerId) => {
             // Post the rank to the database
             await Axios.post("http://localhost:5069/updateRiotUser", {
                 puuid: puuid,
+                riotId: riotId,
+                tagline: tagline,
                 rank: rank,
             });
             
             return rank;
         } catch(error) {
-            console.log(error.response.data.error);
+            if (error.response) console.log(error.response.data.error);
             return "unranked";
         }
     }
@@ -87,7 +89,7 @@ export const getMatchDatas = async(matchIds) => {
         // For each participant in each match, add the rank to the participant object
         for (const match of matchData) {
             for (const participant of match.participants) {
-                participant.rank = await getRank(participant.puuid, participant.summonerId);
+                participant.rank = await getRank(participant.puuid, participant.riotIdGameName, participant.riotIdTagline, participant.summonerId);
             }
         }
         
