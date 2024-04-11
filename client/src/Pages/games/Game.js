@@ -50,7 +50,6 @@ function getMyItems(isMe, win) {
 
     // /item/{item}.png
     // If item is 0, return an empty item slot; item6 is className="trinket"
-    console.log(win);
     const itemDivs = items.map(item => {
         if (item === 0) return <dd className="items" style={{backgroundColor: win ? '#2f436e' : '#703c47'}}></dd>;
         return <dd><div className="item" style={{position: 'relative'}}><img src={`/item/${item}.png`} width="22" height="22" alt="Who cares right now" /></div></dd>;
@@ -140,14 +139,12 @@ function Game({matchData, summoner, data}) {
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
 
     const isMe = matchData.participants.find(participant => participant.puuid === summoner);
-    console.log("Me: ", isMe);
-    const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled, neutralMinionsKilled, kda, killParticipation, controlWardsPurchased,
+    const { win, kills, deaths, assists, championLevel, championId, totalMinionsKilled, neutralMinionsKilled, kda, killParticipation, controlWardsPurchased,
     doubleKills, tripleKills, quadraKills, pentaKills} = isMe;
-    // const myRank = tier ? (tier + " " + rank) : "Unranked";
-    const averageRanks = matchData.participants.map(participant => (participant.tier ? participant.tier + " " + participant.rank : "unranked"));
-    console.log(averageRanks);
+
+    const averageRanks = matchData.participants.map(participant => participant.rank);
     const averageRank = calculateAverageRank(averageRanks);
-    console.log(averageRank);
+
     const myChampionEntry = Object.entries(champDict).find(([key, champion]) => champion.key === championId);
     const myChampion = myChampionEntry ? myChampionEntry[1] : null;
 
@@ -187,7 +184,8 @@ function Game({matchData, summoner, data}) {
 
     const winColor = win ? "#28344e" : "#59343b";
     const gameColor = win ? "#5383e8" : "#e84057";
-    const buttonColor = win ? "#2f436e" : "#703c47";
+    const buttonColor = gameColor;
+    const actionsColor = win ? "#2f436e" : "#703c47";
     
     // Calculated states
     const kdaString = kda.toFixed(2).replace(/\.0$/, '') + ":1 KDA";
@@ -220,10 +218,10 @@ function Game({matchData, summoner, data}) {
                     <div className="player-stats">
                         <div className="main">
                             <div className="info">
-                                <div className="champion">
+                                <a target="_blank" rel="noreferrer" className="champion" href="/champions">
                                     <img src={`/champion/${myChampion.id}.png`} width="48" height="48" alt={myChampion.name} />
                                     <span className="champion-level">{championLevel}</span>
-                                </div> {/* champion */}
+                                </a> {/* champion */}
 
                                 <div className="summ-runes-container">
                                     <div className="summ-runes">
@@ -288,9 +286,11 @@ function Game({matchData, summoner, data}) {
                                 </div>
                                 <div className="name">
                                     <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                        <div className="teammate-name teammate-align" style={{color: (participant.puuid === summoner ? "#FFFFFF" : "#9e9eb1")}}>
-                                            <span className="team-name-font team-name-align">{(participant.riotIdGameName.length === 0 ? "??????????" : participant.riotIdGameName)}</span>
-                                        </div> {/* teammate-name */}
+                                        <a target="_blank" rel="noopener noreferrer" href={`/display/${participant.riotIdGameName}/${participant.riotIdTagline}`}>
+                                            <div className="teammate-name teammate-align" style={{color: (participant.puuid === summoner ? "#FFFFFF" : "#9e9eb1")}}>
+                                                <span className="team-name-font team-name-align">{(participant.riotIdGameName.length === 0 ? "??????????" : participant.riotIdGameName)}</span>
+                                            </div> {/* teammate-name */}
+                                        </a> {/* teammate-link */}
                                     </div> {/* summoner-tooltip */}
                                 </div> {/* name */}
                             </div> // player
@@ -299,9 +299,21 @@ function Game({matchData, summoner, data}) {
                 </div> {/* inner */}
             </div> {/* contents */}
             
-            <div className="actions" >
-                <button className="button" background-color={buttonColor}>
-                    <img src="/spell/SummonerCherryFlash.png" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" alt="Temp Button" />
+            <div className="actions">
+                <div></div>
+                
+                <button className="button" style={{backgroundColor: actionsColor}}>
+                    <span className="svg-icon svg-icon--arrow-down button-display" style={{color: buttonColor, width: "24px", height: "24px"}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <g fill="currentColor" fillRule="evenodd">
+                                <g fill="currentColor" fillRule="nonzero">
+                                    <g fill="currentColor">
+                                        <path d="M12 13.2L16.5 9 18 10.4 12 16 6 10.4 7.5 9z" transform="translate(-64 -228) translate(64 228)" fill="currentColor"></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </span>
                 </button> {/* button */}
             </div> {/* actions */}
         </div>

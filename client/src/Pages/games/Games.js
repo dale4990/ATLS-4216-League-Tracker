@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import '../../styles/Games.css';
 import MemoizedGame from './Game';
 import { useParams } from 'react-router-dom';
-import { getMatches, getMatchDatas, getPUUID, getRank } from '../../helper/Fetcher';
+import { getMatches, getMatchDatas, getPUUID } from '../../helper/Fetcher';
 
 function Games({data}) {
     const { riotId, tagline } = useParams();

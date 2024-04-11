@@ -53,7 +53,7 @@ const riotUserSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    rankedData: {
+    rank: {
       type: String
     },
   });
