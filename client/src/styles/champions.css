@@ -7,6 +7,7 @@
     overflow: hidden;
     width: 300px;
     vertical-align: top; 
+    border-radius: 5%;
   }
   
   .champion-img {
@@ -21,7 +22,7 @@
     background-color: #010A13;
     color: #c89b3c;
     padding: 15px;
-    height: 200px;
+    height: auto;
     overflow: auto;
   }
   

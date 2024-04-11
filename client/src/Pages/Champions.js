@@ -12,7 +12,7 @@ const Champions = ({ champions }) => {
             <div className="champion-info">
               <h2 className="champion-name">{champion.name}</h2>
               <p className="champion-title">{champion.title}</p>
-              <p className="champion-lore">{champion.lore}</p>
+              {/* <p className="champion-lore">{champion.lore}</p> */}
             </div>
           </div>
         );
