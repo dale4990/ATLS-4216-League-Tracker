@@ -1,10 +1,10 @@
 import React from 'react';
 import '../../styles/gameStats.css';
 
-function gameStats () {
+function GameStats () {
     return (
         <div> Hello World!</div>
     );
 }
 
-export default gameStats;
+export default GameStats;
