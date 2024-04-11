@@ -15,7 +15,9 @@ function About() {
       <section className="Team">
         <div className="Team-member">
           <div className="pic">
-            <img src={dorjeeImage} alt="DorjeeZ"/>
+            <a href="https://www.linkedin.com/in/dorjeezhang/" target="_blank">
+              <img src={dorjeeImage} alt="DorjeeZ"/>
+            </a>
             <div class="circle-container">
               <div class="circle">19</div>
             </div>
@@ -26,11 +28,13 @@ function About() {
             He would get his first introduction to computer science during quarantine, when he came across the API for discord, an instant messaging social media platform. Dorjee would also begin playing League of Legends during the beginning
              of quarantine, resulting in a modern day addiction. In his free time, Dorjee enjoys reading stoic literature, going on walks, hitting the gym, and sleeping.
           </p>
-          <p><a href="https://www.linkedin.com/in/dorjeezhang/" target="_blank">Linkedin</a></p>
+          {/* <p><a href="https://www.linkedin.com/in/dorjeezhang/" target="_blank">Linkedin</a></p> */}
         </div>
         <div className="Team-member">
         <div className="pic">
-            <img src={danImage} alt="DanielL"/>
+            <a href="https://www.linkedin.com/in/daniel-juhwan-lee/" target="_blank">
+              <img src={danImage} alt="DanielL"/>
+            </a>
             <div class="circle-container">
               <div class="circle">22</div>
             </div>
@@ -41,11 +45,13 @@ function About() {
             spend much of his time playing League of Legends, watching Clone Wars, and focusing on school. Daniel grew quite fond of computers, and, after entering college as an Electrical Engineer major, he decided to pick up a computer science 
             minor as well. Computer Systems (CSCI 2400) would bode his most difficult class. In his free time, Daniel enjoys playing League, making beats, and watching anime.
           </p>
-          <p><a href="https://www.linkedin.com/in/daniel-juhwan-lee/" target="_blank">Linkedin</a></p>
+          {/* <p><a href="https://www.linkedin.com/in/daniel-juhwan-lee/" target="_blank">Linkedin</a></p> */}
         </div>
         <div className="Team-member">
           <div className="pic">
-              <img src={rileyImage} alt="RileyM"/>
+              <a href="https://www.linkedin.com/in/riley-mei/" target="_blank">
+                <img src={rileyImage} alt="RileyM"/>
+              </a>
               <div class="circle-container">
                 <div class="circle">20</div>
               </div>
@@ -56,7 +62,7 @@ function About() {
             During quarantine, he would find enjoyment in Riot Games's VALORANT. He would quickly rise the ranks, finding himself going from Iron to Bronze to hardstuck silver, before getting boosted by some friends to Diamond. Riley would go to Summit Middle School, 
             then later on Fairview High School where he would find enjoyment in computer science.
           </p>
-          <p><a href="https://www.linkedin.com/in/riley-mei/" target="_blank">Linkedin</a></p>
+          {/* <p><a href="https://www.linkedin.com/in/riley-mei/" target="_blank">Linkedin</a></p> */}
         </div>
       </section>
       <div className="About-footer">

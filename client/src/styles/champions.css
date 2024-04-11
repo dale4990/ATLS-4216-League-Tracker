@@ -1,43 +1,51 @@
 .champion-class {
-    display: inline-block;
-    margin: 20px;
-    background-color: #01040a;
-    color: #c89b3c;
-    border-radius: 5px;
-    overflow: hidden;
-    width: 300px;
-    vertical-align: top; 
-    border-radius: 5%;
-  }
-  
-  .champion-img {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 250px;
-  }
-  
-  .champion-info {
-    position: relative;
-    background-color: #010A13;
-    color: #c89b3c;
-    padding: 15px;
-    height: auto;
-    overflow: auto;
-  }
-  
-  .champion-name {
-    font-size: 20px;
-    margin: 10px 0 5px;
-  }
-  
-  .champion-title {
-    font-size: 18px;
-    margin-bottom: 5px;
-  }
-  
-  .champion-lore {
-    font-size: 16px;
-    font-family: "Helvetica Neue", sans-serif;
-  }
-  
+  display: inline-block;
+  margin: 20px;
+  background-color: #0e0e13; /* Dark background color */
+  border-radius: 5px;
+  overflow: hidden;
+  width: 300px;
+  vertical-align: top; 
+  border-radius: 5%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.champion-class:hover {
+  transform: translateY(-5px);
+}
+
+.champion-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.champion-info {
+  background-color: #121219; /* Darker background color */
+  color: #e5e5e5; /* Light text color */
+  padding: 15px;
+  height: auto;
+  overflow: auto;
+}
+
+.champion-name {
+  font-size: 20px;
+  margin: 10px 0 5px;
+  color: #d9af36; 
+  font-family: 'League Gothic', sans-serif;
+}
+
+.champion-title {
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: #F0E6D2;
+}
+
+.champion-lore {
+  font-size: 16px;
+  font-family: "Helvetica Neue", sans-serif;
+}

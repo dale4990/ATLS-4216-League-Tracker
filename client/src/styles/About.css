@@ -25,6 +25,10 @@ body {
     text-align: center;
 }
 
+.pic:hover {
+    transform: translateY(-5px);
+}
+
 .pic {
     width: 100%; 
     border-radius: 50%;
@@ -33,6 +37,7 @@ body {
     box-sizing: border-box;
     border: 2px solid rgb(26, 140, 216);
     position: relative;
+    transition: transform 0.3s ease;
 }
 
 .pic img {
