@@ -15,7 +15,7 @@ export const getPUUID = async(riotId, tagline) => {
     }
 }
 
-export const getMatches = async(puuid, start, amount) => {
+export const getMatches = async(puuid) => {
     try {
       const findMatchesResponse = await Axios.post("http://localhost:5069/findMatches", {
           puuid: puuid,
@@ -23,7 +23,7 @@ export const getMatches = async(puuid, start, amount) => {
 
       const matchIds = findMatchesResponse.data;
 
-      return matchIds.slice(start, start + amount);
+      return matchIds;
 
     } catch(error){
         console.log(error.response.data.error);
@@ -74,9 +74,9 @@ const getRank = async(puuid, riotId, tagline, summonerId) => {
     }
 }
 
-export const getMatchDatas = async(matchIds) => {
+export const getMatchDatas = async(matchIds, start, amount) => {
     try {
-        const matchDataPromises = matchIds.map(async (matchId) => {
+        const matchDataPromises = matchIds.slice(start, start+amount).map(async (matchId) => {
             const response = await Axios.post("http://localhost:5069/findMatchData", {
                 matchId,
             });
