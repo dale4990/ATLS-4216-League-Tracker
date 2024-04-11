@@ -47,13 +47,11 @@ const riotUserSchema = new mongoose.Schema({
     },
     riotId: {
       type: String,
-      required: true,
     },
     tagline: {
       type: String,
-      required: true,
     },
-    rankedData: {
+    rank: {
       type: String
     },
   });

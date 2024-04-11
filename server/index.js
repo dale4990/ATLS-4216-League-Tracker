@@ -68,46 +68,61 @@ app.post("/deleteUser", async (req, res) => {
     }
 });
 
-// // POST request to find Riot user
-// app.post("/findRiotUser", async (req, res) => {
-//     const { riotId, tagline } = req.body;
+// GET request to find Riot user by puuid (this can be GET because we are assuming it's already there)
+app.get("/getRiotUser/:puuid", async (req, res) => {
+    const puuid = req.params.puuid;
+
+    try {
+        const existingRiotUser = await RiotUser.findOne({ puuid });
     
-//     try {
-//         // Check if the Riot user already exists in the database
-//         const existingRiotUser = await RiotUser.findOne({ riotId, tagline });
+        if (existingRiotUser) {
+            res.json(existingRiotUser);
+            return;
+        }
 
-//         if (existingRiotUser) {
-//             // If the user exists in the database, use their information directly
-//             res.json({ puuid: existingRiotUser.puuid, riotId, tagline });
-//             return;
-//         }
+        res.status(404).json({ error: "Riot user not found." });
+    } catch (error) {
+        console.error("Error finding Riot user:", error);
+        res.status(500).json({ error: "An error occurred while finding the Riot user." });
+    }
+});
 
-//         // If the user does not exist in the database, make the API call to Riot
-//         const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326"; 
-//         const url = `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${riotId}/${tagline}?api_key=${apiKey}`; // can customize region via dropdown later
-        
-//         const response = await axios.get(url);
-        
-//         const { puuid, gameName, tagLine } = response.data; 
-//         // Create a new RiotUser instance
-//         const newRiotUser = new RiotUser({
-//             puuid,
-//             riotId: gameName, 
-//             tagline: tagLine 
-//         });
-        
-//         await newRiotUser.save();
-        
-//         res.json({ puuid, riotId: gameName, tagline: tagLine }); 
-//     } catch (error) {
-//         if (error.response && error.response.data) {
-//             console.error("Error:", error.response.data);
-//         } else {
-//             console.error("Error:", error);
-//         }
-//         res.status(500).json({ error: "Failed to find Riot user" });
-//     }
-// });
+// POST request to update a user's Riot user given their puuid
+app.post("/updateRiotUser", async (req, res) => {
+    const { puuid, riotId, tagline, rank } = req.body;
+
+    try {
+        const user = await RiotUser.findOne({
+            puuid,
+        });
+
+        if (!user) {
+            // Add new Riot user if it doesn't exist
+            const newRiotUser = new RiotUser({
+                puuid,
+                riotId,
+                tagline,
+                rank,
+            });
+
+            await newRiotUser.save();
+            res.json(newRiotUser);
+            return;
+        }
+
+        // Update the fields if they are provided
+        if (riotId) user.riotId = riotId;
+        if (tagline) user.tagline = tagline;
+        if (rank) user.rank = rank;
+
+        await user.save();
+        res.json(user);
+    } catch (error) {
+        console.error("Error updating Riot user:", error);
+        res.status(500).json({ error: "An error occurred while updating the Riot user." });
+    }
+});     
+
 // POST request to find Riot user
 app.post("/findRiotUser", async (req, res) => {
     const { riotId, tagline } = req.body;

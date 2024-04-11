@@ -31,23 +31,44 @@ export const getMatches = async(puuid, start, amount) => {
     }
 }
 
-const getRank = async(summonerId) => {
+const getRank = async(puuid, summonerId) => {
     try {
-        const rankResponse = await Axios.post("http://localhost:5069/findRank", {
-            id: summonerId,
-        });
-
-        const rankData = rankResponse.data;
-
-        if (rankData.length === 0) {
-            return {};
-        }
-
-        return rankData[0];
-
+        // Try finding the user in the database
+        const response = await Axios.get(`http://localhost:5069/getRiotUser/${puuid}`);
+        const user = response.data;
+        if (user.rank) return user.rank;
+        return "unranked";
     } catch(error){
-        console.log(error.response.data.error);
-        return {};
+        // If the user is not found, we will continue to fetch the rank from the Riot API
+        try {
+            // Since we could not find a pre-stored rank, we will fetch it from the Riot API
+            const rankResponse = await Axios.post("http://localhost:5069/findRank", {
+                id: summonerId,
+            });
+
+            const romanToInt = {
+                "I": 1,
+                "II": 2,
+                "III": 3,
+                "IV": 4,
+            };
+
+            const rankData = rankResponse.data;
+    
+            const rankDict = rankData.length === 0 ? {} : rankData[0];
+            const rank = rankData.length === 0 ? "unranked" : rankDict.tier.toLowerCase() + " " + romanToInt[rankDict.rank];
+    
+            // Post the rank to the database
+            await Axios.post("http://localhost:5069/updateRiotUser", {
+                puuid: puuid,
+                rank: rank,
+            });
+            
+            return rank;
+        } catch(error) {
+            console.log(error.response.data.error);
+            return "unranked";
+        }
     }
 }
 
@@ -63,19 +84,10 @@ export const getMatchDatas = async(matchIds) => {
         // Wait for all requests to finish and retrieve their data
         const matchData = await Promise.all(matchDataPromises);
 
-        const romanToInt = {
-            "I": 1,
-            "II": 2,
-            "III": 3,
-            "IV": 4,
-        };
-
         // For each participant in each match, add the rank to the participant object
         for (const match of matchData) {
             for (const participant of match.participants) {
-                const rankData = await getRank(participant.summonerId);
-                participant.rank = rankData.rank ? romanToInt[rankData.rank] : undefined;
-                participant.tier = rankData.tier ? rankData.tier.toLowerCase() : undefined;
+                participant.rank = await getRank(participant.puuid, participant.summonerId);
             }
         }
         
