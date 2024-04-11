@@ -68,6 +68,46 @@ app.post("/deleteUser", async (req, res) => {
     }
 });
 
+// // POST request to find Riot user
+// app.post("/findRiotUser", async (req, res) => {
+//     const { riotId, tagline } = req.body;
+    
+//     try {
+//         // Check if the Riot user already exists in the database
+//         const existingRiotUser = await RiotUser.findOne({ riotId, tagline });
+
+//         if (existingRiotUser) {
+//             // If the user exists in the database, use their information directly
+//             res.json({ puuid: existingRiotUser.puuid, riotId, tagline });
+//             return;
+//         }
+
+//         // If the user does not exist in the database, make the API call to Riot
+//         const apiKey = "RGAPI-bf515fa8-79e7-45d5-8b05-12121e6c8326"; 
+//         const url = `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${riotId}/${tagline}?api_key=${apiKey}`; // can customize region via dropdown later
+        
+//         const response = await axios.get(url);
+        
+//         const { puuid, gameName, tagLine } = response.data; 
+//         // Create a new RiotUser instance
+//         const newRiotUser = new RiotUser({
+//             puuid,
+//             riotId: gameName, 
+//             tagline: tagLine 
+//         });
+        
+//         await newRiotUser.save();
+        
+//         res.json({ puuid, riotId: gameName, tagline: tagLine }); 
+//     } catch (error) {
+//         if (error.response && error.response.data) {
+//             console.error("Error:", error.response.data);
+//         } else {
+//             console.error("Error:", error);
+//         }
+//         res.status(500).json({ error: "Failed to find Riot user" });
+//     }
+// });
 // POST request to find Riot user
 app.post("/findRiotUser", async (req, res) => {
     const { riotId, tagline } = req.body;
@@ -77,8 +117,7 @@ app.post("/findRiotUser", async (req, res) => {
         const existingRiotUser = await RiotUser.findOne({ riotId, tagline });
 
         if (existingRiotUser) {
-            // If the user exists in the database, use their information directly
-            res.json({ puuid: existingRiotUser.puuid, riotId, tagline });
+            res.json(existingRiotUser);
             return;
         }
 
@@ -93,12 +132,13 @@ app.post("/findRiotUser", async (req, res) => {
         const newRiotUser = new RiotUser({
             puuid,
             riotId: gameName, 
-            tagline: tagLine 
+            tagline: tagLine,
+            rank: null 
         });
         
         await newRiotUser.save();
         
-        res.json({ puuid, riotId: gameName, tagline: tagLine }); 
+        res.json(newRiotUser); 
     } catch (error) {
         if (error.response && error.response.data) {
             console.error("Error:", error.response.data);
@@ -178,6 +218,24 @@ app.post("/findRank", async (req, res) => {
     }catch (error) {
         console.error("Error:", error.response.data);
         res.status(500).json({ error: "Failed to fetch ranked data" });
+    }
+});
+
+// POST request to find summoner Rank by puuid
+app.post("/findSummonerRank", async (req, res) => {
+    const { puuid } = req.body;
+
+    try {
+        const findIdResponse = await axios.post("http://localhost:5069/findId", { puuid });
+        const summonerId = findIdResponse.data.id;
+
+        const findRankResponse = await axios.post("http://localhost:5069/findRank", { id: summonerId });
+        const rankData = findRankResponse.data;
+
+        res.json(rankData);
+    } catch (error) {
+        console.error("Error:", error.response.data);
+        res.status(500).json({ error: "Failed to fetch summoner rank" });
     }
 });
 
