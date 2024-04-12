@@ -141,7 +141,7 @@ function Game({matchData, summoner, data}) {
     const isMe = matchData.participants.find(participant => participant.puuid === summoner);
     const { win, kills, deaths, assists, championLevel, championId, totalMinionsKilled, neutralMinionsKilled, kda, killParticipation, controlWardsPurchased,
     doubleKills, tripleKills, quadraKills, pentaKills} = isMe;
-
+    const remake = matchData.gameDuration < 209 ? true : false;    
     const averageRanks = matchData.participants.map(participant => participant.rank);
     const averageRank = calculateAverageRank(averageRanks);
 
@@ -182,10 +182,10 @@ function Game({matchData, summoner, data}) {
     const [ mySpells, myRunes ] = getMySummRunes();
     const itemList = getMyItems(isMe, win);
 
-    const winColor = win ? "#28344e" : "#59343b";
-    const gameColor = win ? "#5383e8" : "#e84057";
+    const winColor = remake ? "#1E2328" : (win ? "#28344e" : "#59343b");
+    const gameColor = remake ? "#bebebe" : (win ? "#5383e8" : "#e84057");
     const buttonColor = gameColor;
-    const actionsColor = win ? "#2f436e" : "#703c47";
+    const actionsColor = remake ? "#3C3C41" : (win ? "#2f436e" : "#703c47");
     
     // Calculated states
     const kdaString = kda.toFixed(2).replace(/\.0$/, '') + ":1 KDA";
@@ -210,7 +210,7 @@ function Game({matchData, summoner, data}) {
                         <div className= "divider" style={{backgroundColor: win ? '#2f436e' : '#703c47'}}></div>
 
                         <div className="head-group">
-                            <div className="result">{win ? "Victory" : "Defeat"}</div>
+                            <div className="result">{remake ? "Remake" : (win ? "Victory" : "Defeat")}</div>
                             <div className="duration">{gameDuration}</div>
                         </div> {/* head-group */}
                     </div> {/* timestamp-details */}
