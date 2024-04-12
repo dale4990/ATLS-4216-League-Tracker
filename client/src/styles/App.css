@@ -9,13 +9,15 @@ body {
 }
 
 .App {
+  color: #c89b3c; 
   max-height: 100vh; /* Ensure the background covers the entire viewport */
 }
 
-.App-name{
+.app-name h1{
   margin-top: 18%;
-  font-size: 40px;
+  font-size: 80px;
   margin-bottom: -30px;
+  color: #c89b3c; 
 }
 
 .App-header {

@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 function About() {
   return (
     <div className="About">
-      <header className="About-header">
+      <header className="about-header">
         <h1>The Team</h1>
       </header>
       <section className="Team">
