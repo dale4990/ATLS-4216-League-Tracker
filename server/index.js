@@ -334,6 +334,15 @@ app.post("/findMatchData", async (req, res) => {
                 info,
             });
 
+            // Sometimes challenges are not available so we need to calculat its values in this case
+            for (const participant of info.participants) {
+                if (!participant.challenges) {
+                    participant.challenges = {
+                        kda: (participant.kills + participant.assists) / participant.deaths,
+                        killParticipation: (participant.kills + participant.assists) / info.participants.filter((p) => p.teamId === participant.teamId).reduce((acc, cur) => acc + cur.kills, 0),
+                    }
+                }
+            }
 
             await newMatch.save();
 
