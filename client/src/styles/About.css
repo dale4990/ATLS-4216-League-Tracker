@@ -17,6 +17,7 @@ body {
     margin: 0 auto;
     max-width: 1200px;
     padding: 0 20px;
+    height: 100%;
 }
   
 .Team-member {
@@ -92,5 +93,9 @@ body {
 
 a {
     text-decoration: none;
+}
+
+.about-header h1{
+    color: #d9af36;
 }
   

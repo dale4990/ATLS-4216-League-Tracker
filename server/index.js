@@ -307,6 +307,7 @@ app.post("/findMatchData", async (req, res) => {
                 quadraKills: participant.quadraKills,
                 pentaKills: participant.pentaKills,
                 summonerId: participant.summonerId,
+                goldEarned: participant.goldEarned,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
@@ -315,8 +316,14 @@ app.post("/findMatchData", async (req, res) => {
                 },
                 win: participant.win,
             }));
+            const teams = existingMatch.info.teams.map((team) => ({
+                teamId: team.teamId,
+                  win: team.win,
+                  bans: team.bans,
+                  objectives: team.objectives,
+            }));
 
-            res.json({ matchId, endOfGameResult, gameDuration, gameEndTimestamp, gameMode, participants});
+            res.json({ matchId, endOfGameResult, gameDuration, gameEndTimestamp, gameMode, participants, teams});
             return;
         }
 
@@ -391,6 +398,7 @@ app.post("/findMatchData", async (req, res) => {
                 quadraKills: participant.quadraKills,
                 pentaKills: participant.pentaKills,
                 summonerId: participant.summonerId,
+                goldEarned: participant.goldEarned,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
@@ -400,7 +408,14 @@ app.post("/findMatchData", async (req, res) => {
                 win: participant.win,
             }));
 
-            res.json({ matchId, endOfGameResult, gameDuration, gameEndTimestamp, gameMode, participants});
+            const teams = info.teams.map((team) => ({
+                teamId: team.teamId,
+                  win: team.win,
+                  bans: team.bans,
+                  objectives: team.objectives,
+            }));
+
+            res.json({ matchId, endOfGameResult, gameDuration, gameEndTimestamp, gameMode, participants, teams});
         } catch (error) {
             console.error("Error saving match data:", error.message);
             res.status(500).json({ error: "Failed to save match data" });
