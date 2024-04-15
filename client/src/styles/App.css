@@ -20,6 +20,12 @@ body {
   color: #c89b3c; 
 }
 
+@media screen and (min-width: 1980px) {
+  .app-name h1 {
+    font-size: 128px; 
+  }
+}
+
 .App-header {
   background-color: #01040a; /* Dark gray header background */
   display: flex;
