@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../styles/Games.css';
+import GameStats from './GameStats';
 
 // Function to convert seconds to a string of the form "Xh Ym Zs"
 function secondsToHMS(seconds) {
@@ -148,6 +149,12 @@ function Game({matchData, summoner, data}) {
     const myChampionEntry = Object.entries(champDict).find(([key, champion]) => champion.key === championId);
     const myChampion = myChampionEntry ? myChampionEntry[1] : null;
 
+    const [isVisible, setIsVisible] = useState(false);
+
+    const toggleVisibility = () => {
+        setIsVisible(!isVisible);
+    };
+
     const getMySummRunes = () => {
         const { summonerSpell1, summonerSpell2, perks } = isMe;
         const { primaryRune, secondaryStyle } = perks;
@@ -195,6 +202,7 @@ function Game({matchData, summoner, data}) {
 
 
     return(
+        <div>
         <div className="outer" >
             <div className="deco" style={{ backgroundColor: gameColor }}></div>
             <div className="contents" style={{ backgroundColor: winColor }}>
@@ -302,7 +310,7 @@ function Game({matchData, summoner, data}) {
             <div className="actions">
                 <div></div>
                 
-                <button className="button" style={{backgroundColor: actionsColor}}>
+                <button className="button" style={{backgroundColor: actionsColor}} onClick={toggleVisibility}>
                     <span className="svg-icon svg-icon--arrow-down button-display" style={{color: buttonColor, width: "24px", height: "24px"}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <g fill="currentColor" fillRule="evenodd">
@@ -316,6 +324,8 @@ function Game({matchData, summoner, data}) {
                     </span>
                 </button> {/* button */}
             </div> {/* actions */}
+        </div>
+        {isVisible && <GameStats />}
         </div>
     )
 }
