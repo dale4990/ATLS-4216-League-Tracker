@@ -3,8 +3,6 @@ import '../styles/About.css';
 import rileyImage from '../images/riley.jpeg';
 import dorjeeImage from '../images/dorj.jpeg';
 import danImage from '../images/dan.jpeg';
-import Home from './Home';
-import { Link } from 'react-router-dom';
 
 function About() {
   return (

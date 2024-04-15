@@ -1,14 +1,13 @@
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-  
+
 .About {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
-  
+
 .Team {
     display: flex;
     justify-content: space-around;
@@ -17,28 +16,23 @@ body {
     margin: 0 auto;
     max-width: 1200px;
     padding: 0 20px;
-    height: 100%;
+    flex-grow: 1;
 }
-  
+
 .Team-member {
     width: 30%;
     margin: 0 10px;
     text-align: center;
 }
 
-.pic:hover {
-    transform: translateY(-5px);
-}
-
 .pic {
-    width: 100%; 
+    width: 100%;
     border-radius: 50%;
     height: auto;
     margin-bottom: 20px;
     box-sizing: border-box;
     border: 2px solid rgb(26, 140, 216);
     position: relative;
-    transition: transform 0.3s ease;
 }
 
 .pic img {
@@ -52,7 +46,7 @@ body {
     bottom: 12%;
     right: 18%;
     transform: translate(50%, 50%);
-    justify-content: center; 
+    justify-content: center;
     display: flex;
     align-items: center;
     width: 75px;
@@ -62,7 +56,7 @@ body {
 .circle {
     width: 75px;
     height: 75px;
-    background-color: #010A13; 
+    background-color: #010A13;
     color: white;
     font-size: 32px;
     border-radius: 50%;
@@ -75,20 +69,21 @@ body {
       width: 45%;
     }
 }
-  
+
 @media (max-width: 768px) {
     .Team-member {
       width: 90%;
       margin: 10px auto;
     }
 }
-  
+
 .About-footer {
     background-color: black;
     color: white;
     text-align: center;
     padding: 10px 0;
     font-family: "Trebuchet MS";
+    width: 100%;
 }
 
 a {
@@ -98,4 +93,3 @@ a {
 .about-header h1{
     color: #d9af36;
 }
-  

@@ -6,9 +6,9 @@ import { getMatches, getMatchDatas, getPUUID } from '../../helper/Fetcher';
 import styled from 'styled-components';
 
 const LoadMore = styled.button`
-    background-color: #4CAF50;
+    background-color: #C89B3C;
     border: none;
-    color: white;
+    color: #F0E6D2;
     text-align: center;
     text-decoration: none;
     display: inline-block;
