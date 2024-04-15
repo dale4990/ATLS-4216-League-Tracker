@@ -47,7 +47,7 @@ function LOLGGRouter() {
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/champions/all" element={<Champions champions={champions} />} />
-                    <Route path="/champions/:championId" element={<ChampionPage/>} />
+                    <Route path="/champions/:championName" element={<ChampionPage champions={champions}/>} />
                     <Route path="/modes" element={<Modes />} />
                     <Route path="/display/:riotId/:tagline" element={<Games data={data} />} />
                 </Routes>
