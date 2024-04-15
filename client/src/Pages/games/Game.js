@@ -50,7 +50,6 @@ function getMyItems(isMe, win) {
 
     // /item/{item}.png
     // If item is 0, return an empty item slot; item6 is className="trinket"
-    console.log(win);
     const itemDivs = items.map(item => {
         if (item === 0) return <dd className="items" style={{backgroundColor: win ? '#2f436e' : '#703c47'}}></dd>;
         return <dd><div className="item" style={{position: 'relative'}}><img src={`/item/${item}.png`} width="22" height="22" alt="Who cares right now" /></div></dd>;
@@ -78,6 +77,61 @@ function determineHighestKillType(doubleKills, tripleKills, quadraKills, pentaKi
     return highestKillType;
 }
 
+function calculateAverageRank(playerRanks) {
+    const rankValues = {
+      "iron 4": 0,
+      "iron 3": 100,
+      "iron 2": 200,
+      "iron 1": 300,
+      "bronze 4": 400,
+      "bronze 3": 500,
+      "bronze 2": 600,
+      "bronze 1": 700,
+      "silver 4": 800,
+      "silver 3": 900,
+      "silver 2": 1000,
+      "silver 1": 1100, 
+      "gold 4": 1200,
+      "gold 3": 1300,
+      "gold 2": 1400,
+      "gold 1": 1500,
+      "platinum 4": 1600,
+      "platinum 3": 1700,
+      "platinum 2": 1800,
+      "platinum 1": 1900,
+      "emerald 4": 2000,
+      "emerald 3": 2100,
+      "emerald 2": 2200,
+      "emerald 1": 2300,
+      "diamond 4": 2400,
+      "diamond 3": 2500,
+      "diamond 2": 2600,
+      "diamond 1": 2700,
+      "master 1": 2800,
+      "grandmaster 1": 2900,
+      "challenger 1": 3000
+    };
+
+    // Don't include unranked players in the average
+    const filteredRanks = playerRanks.filter(rank => rank !== "unranked");
+
+    if (filteredRanks.length === 0) return "unranked";
+  
+    const total = filteredRanks.reduce((acc, cur) => acc + rankValues[cur], 0);
+    const average = total / filteredRanks.length;
+    const roundedAverage = Math.round(average / 100) * 100;
+
+    // Find the rank that corresponds to the rounded average
+    const rankKeys = Object.keys(rankValues);
+    const averageRank = rankKeys.find(rank => rankValues[rank] === roundedAverage);
+
+    if (averageRank.includes("master") || averageRank.includes("grandmaster") || averageRank.includes("challenger")) {
+      return averageRank.slice(0, -2);
+    }
+
+    return averageRank;
+}
+
 function Game({matchData, summoner, data}) {
     const { champions: champDict, summoners: summDict, runes, championImageMap } = data;
     const gameMode = matchData.gameMode;
@@ -85,9 +139,12 @@ function Game({matchData, summoner, data}) {
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
 
     const isMe = matchData.participants.find(participant => participant.puuid === summoner);
-    const { win, kills, deaths, assists, teamId, championLevel, championId, totalMinionsKilled, rank, tier, 
+    const { win, kills, deaths, assists, championLevel, championId, totalMinionsKilled, neutralMinionsKilled, kda, killParticipation, controlWardsPurchased,
     doubleKills, tripleKills, quadraKills, pentaKills} = isMe;
-    const myRank = tier ? (tier + " " + rank) : "Unranked";
+    const remake = matchData.gameDuration < 209 ? true : false;    
+    const averageRanks = matchData.participants.map(participant => participant.rank);
+    const averageRank = calculateAverageRank(averageRanks);
+
     const myChampionEntry = Object.entries(champDict).find(([key, champion]) => champion.key === championId);
     const myChampion = myChampionEntry ? myChampionEntry[1] : null;
 
@@ -125,14 +182,16 @@ function Game({matchData, summoner, data}) {
     const [ mySpells, myRunes ] = getMySummRunes();
     const itemList = getMyItems(isMe, win);
 
-    const winColor = win ? "#28344e" : "#59343b";
-    const gameColor = win ? "#5383e8" : "#e84057";
-    const buttonColor = win ? "#2f436e" : "#703c47";
+    const winColor = remake ? "#1E2328" : (win ? "#28344e" : "#59343b");
+    const gameColor = remake ? "#bebebe" : (win ? "#5383e8" : "#e84057");
+    const buttonColor = gameColor;
+    const actionsColor = remake ? "#3C3C41" : (win ? "#2f436e" : "#703c47");
     
     // Calculated states
-    const kda = ((kills + assists) / deaths).toFixed(2) + ":1 KDA";
-    const killParticipation = ((kills + assists) / matchData.participants.filter(participant => participant.teamId === teamId).reduce((acc, cur) => acc + cur.kills, 0) * 100).toFixed(0);
-    const csm = (totalMinionsKilled / (matchData.gameDuration / 60)).toFixed(1).replace(/\.0$/, '');
+    const kdaString = kda.toFixed(2).replace(/\.0$/, '') + ":1 KDA";
+    const kp = Math.round(killParticipation*100);
+    const cs = totalMinionsKilled + neutralMinionsKilled;
+    const csm = (cs / (matchData.gameDuration / 60)).toFixed(1).replace(/\.0$/, '');
 
 
     return(
@@ -151,7 +210,7 @@ function Game({matchData, summoner, data}) {
                         <div className= "divider" style={{backgroundColor: win ? '#2f436e' : '#703c47'}}></div>
 
                         <div className="head-group">
-                            <div className="result">{win ? "Victory" : "Defeat"}</div>
+                            <div className="result">{remake ? "Remake" : (win ? "Victory" : "Defeat")}</div>
                             <div className="duration">{gameDuration}</div>
                         </div> {/* head-group */}
                     </div> {/* timestamp-details */}
@@ -159,10 +218,10 @@ function Game({matchData, summoner, data}) {
                     <div className="player-stats">
                         <div className="main">
                             <div className="info">
-                                <div className="champion">
+                                <a target="_blank" rel="noreferrer" className="champion" href="/champions">
                                     <img src={`/champion/${myChampion.id}.png`} width="48" height="48" alt={myChampion.name} />
                                     <span className="champion-level">{championLevel}</span>
-                                </div> {/* champion */}
+                                </a> {/* champion */}
 
                                 <div className="summ-runes-container">
                                     <div className="summ-runes">
@@ -184,20 +243,22 @@ function Game({matchData, summoner, data}) {
                                     <span>{assists}</span>
                                 </div> {/* kda */}
 
-                                <div className="kda-ratio">{kda}</div>
+                                <div className="kda-ratio">{kdaString}</div>
                             </div> {/* kda-stats */}
 
                             <div className="game-stats" style={{borderColor: win ? '#2f436e' : '#703c47'}}>
                                 <div className="p-kill">
-                                    <div className style={{position: 'relative'}}>P/Kill {killParticipation}%</div>
+                                    <div className style={{position: 'relative'}}>P/Kill {kp}%</div>
                                 </div> {/* p-kill */}
 
+                                <div className="ward">Control Ward {controlWardsPurchased}</div>
+
                                 <div className="cs">
-                                    <div className style={{position: 'relative'}}>CS {totalMinionsKilled} ({csm})</div>
+                                    <div className style={{position: 'relative'}}>CS {cs} ({csm})</div>
                                 </div> {/* cs */}
 
                                 <div className="avg-tier">
-                                    <div className style={{position: 'relative'}}>{myRank}</div> {/* Variable */}
+                                    <div className style={{position: 'relative'}}>{averageRank}</div>
                                 </div> {/* avg-tier */}
                             </div> {/* game-stats */}
                         </div> {/* main */}
@@ -225,9 +286,11 @@ function Game({matchData, summoner, data}) {
                                 </div>
                                 <div className="name">
                                     <div className="summoner-tooltip" style={{position: 'relative'}}>
-                                        <div className="teammate-name teammate-align" style={{color: (participant.puuid === summoner ? "#FFFFFF" : "#9e9eb1")}}>
-                                            <span className="team-name-font team-name-align">{(participant.riotIdGameName.length === 0 ? "??????????" : participant.riotIdGameName)}</span>
-                                        </div> {/* teammate-name */}
+                                        <a target="_blank" rel="noopener noreferrer" href={`/display/${participant.riotIdGameName}/${participant.riotIdTagline}`}>
+                                            <div className="teammate-name teammate-align" style={{color: (participant.puuid === summoner ? "#FFFFFF" : "#9e9eb1")}}>
+                                                <span className="team-name-font team-name-align">{(participant.riotIdGameName.length === 0 ? "??????????" : participant.riotIdGameName)}</span>
+                                            </div> {/* teammate-name */}
+                                        </a> {/* teammate-link */}
                                     </div> {/* summoner-tooltip */}
                                 </div> {/* name */}
                             </div> // player
@@ -236,9 +299,21 @@ function Game({matchData, summoner, data}) {
                 </div> {/* inner */}
             </div> {/* contents */}
             
-            <div className="actions" >
-                <button className="button" background-color={buttonColor}>
-                    <img src="/spell/SummonerCherryFlash.png" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" alt="Temp Button" />
+            <div className="actions">
+                <div></div>
+                
+                <button className="button" style={{backgroundColor: actionsColor}}>
+                    <span className="svg-icon svg-icon--arrow-down button-display" style={{color: buttonColor, width: "24px", height: "24px"}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <g fill="currentColor" fillRule="evenodd">
+                                <g fill="currentColor" fillRule="nonzero">
+                                    <g fill="currentColor">
+                                        <path d="M12 13.2L16.5 9 18 10.4 12 16 6 10.4 7.5 9z" transform="translate(-64 -228) translate(64 228)" fill="currentColor"></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </span>
                 </button> {/* button */}
             </div> {/* actions */}
         </div>

@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    align-items: center;
 }
 
 .outer {
@@ -105,7 +106,7 @@
     min-width: 48px;
 }
 
-.player-stats .main .info .champion > img {
+.player-stats .main .info .champion img {
     border-radius: 50%;
 }
 
@@ -320,7 +321,6 @@ img {
 
 .player .teammate-name {
     display: flex;
-    -webkit-box-align: center;
     align-items: center;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -356,14 +356,39 @@ img {
 }
 
 .outer .actions .button {
+    flex: 1 1 0%;
     display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
+    flex-direction: column;
     align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #2f436e;
+    justify-content: flex-end;
+    padding: 8px;
+}
+
+.outer .actions .button > .svg-icon {
+    width: 24px;
+    height: 24px;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.button-display {
+    display: inline-block;
+}
+
+.button-display svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+button {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+a {
     cursor: pointer;
 }
