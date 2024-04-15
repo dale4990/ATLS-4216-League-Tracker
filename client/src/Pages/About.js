@@ -13,7 +13,7 @@ function About() {
       <section className="Team">
         <div className="Team-member">
           <div className="pic">
-            <a href="https://www.linkedin.com/in/dorjeezhang/" target="_blank">
+            <a href="https://www.linkedin.com/in/dorjeezhang/" target="_blank" rel="noreferrer">
               <img src={dorjeeImage} alt="DorjeeZ"/>
             </a>
             <div class="circle-container">
@@ -30,7 +30,7 @@ function About() {
         </div>
         <div className="Team-member">
         <div className="pic">
-            <a href="https://www.linkedin.com/in/daniel-juhwan-lee/" target="_blank">
+            <a href="https://www.linkedin.com/in/daniel-juhwan-lee/" target="_blank" rel="noreferrer">
               <img src={danImage} alt="DanielL"/>
             </a>
             <div class="circle-container">
@@ -47,7 +47,7 @@ function About() {
         </div>
         <div className="Team-member">
           <div className="pic">
-              <a href="https://www.linkedin.com/in/riley-mei/" target="_blank">
+              <a href="https://www.linkedin.com/in/riley-mei/" target="_blank" rel="noreferrer">
                 <img src={rileyImage} alt="RileyM"/>
               </a>
               <div class="circle-container">
