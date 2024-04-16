@@ -5,18 +5,22 @@ body {
 }
 
 .modes-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    display: flex;
+    margin: auto;
     text-align: center;
+    width: fit-content;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .mode-box {
-    background-color: #ffffff00;
-    border-radius: 8px;
-    margin: 10px;
+    background-color:#121219;
+    margin: 50px;
     overflow: hidden;
+    min-width: 200px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease-in-out;
+    border-radius: 5%;
 }
 
 .mode-box:hover {
@@ -26,18 +30,20 @@ body {
 .mode-image {
     width: 200px;
     height: 200px;
+    border-radius: 5%;
 }
 
 .mode-header {
     font-size: 24px;
-    color: #333;
     padding: 20px;
+    font-family: 'Beaufort-Bold', sans-serif;
 }
 
 .mode-box p {
-    font-size: 16px;
-    color: #666;
+    font-size: 20px;
     padding: 0 20px 20px;
     margin: 0;
     line-height: 1.6;
+    color: #F0E6D2;
+    font-family: 'Spiegel', sans-serif;
 }
