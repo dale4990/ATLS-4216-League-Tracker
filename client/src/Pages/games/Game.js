@@ -187,6 +187,11 @@ function Game({matchData, summoner, data}) {
 
         return [ [firstSpellDiv, secondSpellDiv], [firstRuneDiv, secondRuneDiv] ];
     }
+
+    // Do not render Arena matches
+    if (gameMode === "CHERRY") {
+        return null;
+    }
     
     const [ mySpells, myRunes ] = getMySummRunes();
     const itemList = getMyItems(isMe, win);
@@ -201,7 +206,6 @@ function Game({matchData, summoner, data}) {
     const kp = Math.round(killParticipation*100);
     const cs = totalMinionsKilled + neutralMinionsKilled;
     const csm = (cs / (matchData.gameDuration / 60)).toFixed(1).replace(/\.0$/, '');
-
 
     return(
         <div>
