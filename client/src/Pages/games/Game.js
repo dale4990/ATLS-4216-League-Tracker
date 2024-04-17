@@ -57,7 +57,9 @@ function getMyItems(isMe, win) {
     });
 
     // Add trinket to the end of the list
-    itemDivs.push(<dd><div className="trinket" style={{position: 'relative'}}><img src={`/item/${item6}.png`} width="22" height="22" alt="Trinket" /></div></dd>);
+    if (item6 !== 0) {
+        itemDivs.push(<dd><div className="trinket" style={{position: 'relative'}}><img src={`/item/${item6}.png`} width="22" height="22" alt="Trinket" /></div></dd>);
+    }
 
     return itemDivs;
 }
@@ -178,10 +180,10 @@ function Game({matchData, summoner, data}) {
             }
         }
         const firstRune = findFirstRune();
-        const secondRune = runes.find(tree => tree.id === secondaryStyle);
+        const secondRune = secondaryStyle === 0 ? { icon: "./perk-images/black.png", name: "Blank" } : runes.find(tree => tree.id === secondaryStyle);
 
         const firstRuneDiv = <div className="rune rune-primary" style={{position: 'relative', backgroundColor: 'black', borderRadius: '50%'}}><img src={`/${firstRune.icon}`} width="22" height="22" alt={firstRune.name} /></div>;
-        const secondRuneDiv = <div className="rune" style={{position: 'relative'}}><img src={`/${secondRune.icon}`} width="22" height="22" alt={secondRune.name} /></div>;
+        const secondRuneDiv = <div className="rune" style={{position: 'relative', borderRadius: secondRune.name === "Blank" ? '50%' : 'none'}}><img src={`/${secondRune.icon}`} width="22" height="22" alt={secondRune.name} /></div>;
 
         return [ [firstSpellDiv, secondSpellDiv], [firstRuneDiv, secondRuneDiv] ];
     }
