@@ -1,13 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import '../styles/ChampPage.css';
 
 const ChampionPage = () => {
     const { championName } = useParams(); 
     console.log(championName);
   
     return (
-      <div>
-        <h1>Champion Page for {championName}</h1>
+      <div className='champion-page'>
+        <h1>{championName}</h1>
       </div>
     );
 };
