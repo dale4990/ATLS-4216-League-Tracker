@@ -20,11 +20,23 @@ const ChampionPage = () => {
         fetchChampionData();
     }, [championName]);
 
+    const backgroundStyle = {
+        backgroundImage: `url(${splaaash})`
+    };
+
     return (
-      <div className='champion-page'>
-        <h1>Champion Page for {championData?.name || championName}</h1>
-        <img src={splaaash} className="champion-img" alt={`${championName} Splash Art`} />
-        <p>{championData ? championData.lore : 'Loading lore...'}</p>
+      <div className='champion-page' style={backgroundStyle}>
+        {/* <div className="overlay"></div> */}
+        <div className="champion-content">
+            <h1>{championName}</h1>
+            <div className="champion-details">
+                <div className="Modes">Summoners Rift</div>
+                <div className="Modes">ARAM</div>
+            </div>
+            <div className="champion-lore">
+                <p>{championData ? championData.lore : 'Lore unavailable, champion is too recent...'}</p>
+            </div>
+        </div>
       </div>
     );
 };
