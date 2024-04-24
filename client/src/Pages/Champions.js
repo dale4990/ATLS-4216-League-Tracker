@@ -11,8 +11,8 @@ const Champions = ({ champions }) => {
             <div key={champion.id} className="champion-class">
               <img src={`/splash/${champion.id}_0.jpg`} className="champion-img" alt={champion.name} />
               <div className="champion-info">
-                <h2 className="champion-name">{champion.name}</h2>
-                <p className="champion-title">{champion.title}</p>
+                <h2 className="champion-name">{champion.name.toUpperCase()}</h2>
+                <p className="champion-title">{champion.title.toUpperCase()}</p>
                 {/* <p className="champion-lore">{champion.lore}</p> */}
               </div>
             </div>

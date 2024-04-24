@@ -8,6 +8,16 @@ body {
   text-align: center;
 }
 
+@font-face {
+  font-family: 'Beaufort-Bold';
+  src: url('../fonts/beaufort-for-lol/BeaufortforLOL-Bold.ttf') format('truetype'), 
+}
+
+@font-face {
+  font-family: 'Spiegel';
+  src: url('../fonts/beaufort-for-lol/spiegel.ttf') format('truetype'), 
+}
+
 .App {
   color: #c89b3c; 
   max-height: 100vh; /* Ensure the background covers the entire viewport */

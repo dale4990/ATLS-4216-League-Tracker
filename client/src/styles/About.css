@@ -25,6 +25,21 @@ body {
     text-align: center;
 }
 
+.Team-member h4 {
+    color: #F0E6D2;
+    font-family: 'Beaufort-Bold', sans-serif;
+    font-size: 20px;
+}
+
+.Team-member h3 {
+    font-family: 'Beaufort-Bold', sans-serif;
+    font-size: 28px;
+}
+
+.Team-member p{
+    font-family: 'Spiegel', sans-serif;
+}
+
 .pic {
     width: 100%;
     border-radius: 50%;
@@ -33,6 +48,7 @@ body {
     box-sizing: border-box;
     border: 2px solid rgb(26, 140, 216);
     position: relative;
+    transition: transform 0.3s ease;
 }
 
 .pic img {
@@ -40,6 +56,10 @@ body {
     width: 100%;
     height: auto;
 }
+
+.pic:hover {
+    transform: translateY(-5px);
+  }
 
 .circle-container {
     position: absolute;

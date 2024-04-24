@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../styles/Games.css';
+import GameStats from './GameStats';
 
 // Function to convert seconds to a string of the form "Xh Ym Zs"
 function secondsToHMS(seconds) {
@@ -56,7 +57,9 @@ function getMyItems(isMe, win) {
     });
 
     // Add trinket to the end of the list
-    itemDivs.push(<dd><div className="trinket" style={{position: 'relative'}}><img src={`/item/${item6}.png`} width="22" height="22" alt="Trinket" /></div></dd>);
+    if (item6 !== 0) {
+        itemDivs.push(<dd><div className="trinket" style={{position: 'relative'}}><img src={`/item/${item6}.png`} width="22" height="22" alt="Trinket" /></div></dd>);
+    }
 
     return itemDivs;
 }
@@ -148,6 +151,12 @@ function Game({matchData, summoner, data}) {
     const myChampionEntry = Object.entries(champDict).find(([key, champion]) => champion.key === championId);
     const myChampion = myChampionEntry ? myChampionEntry[1] : null;
 
+    const [isVisible, setIsVisible] = useState(false);
+
+    const toggleVisibility = () => {
+        setIsVisible(!isVisible);
+    };
+
     const getMySummRunes = () => {
         const { summonerSpell1, summonerSpell2, perks } = isMe;
         const { primaryRune, secondaryStyle } = perks;
@@ -171,12 +180,17 @@ function Game({matchData, summoner, data}) {
             }
         }
         const firstRune = findFirstRune();
-        const secondRune = runes.find(tree => tree.id === secondaryStyle);
+        const secondRune = secondaryStyle === 0 ? { icon: "./perk-images/black.png", name: "Blank" } : runes.find(tree => tree.id === secondaryStyle);
 
         const firstRuneDiv = <div className="rune rune-primary" style={{position: 'relative', backgroundColor: 'black', borderRadius: '50%'}}><img src={`/${firstRune.icon}`} width="22" height="22" alt={firstRune.name} /></div>;
-        const secondRuneDiv = <div className="rune" style={{position: 'relative'}}><img src={`/${secondRune.icon}`} width="22" height="22" alt={secondRune.name} /></div>;
+        const secondRuneDiv = <div className="rune" style={{position: 'relative', borderRadius: secondRune.name === "Blank" ? '50%' : 'none'}}><img src={`/${secondRune.icon}`} width="22" height="22" alt={secondRune.name} /></div>;
 
         return [ [firstSpellDiv, secondSpellDiv], [firstRuneDiv, secondRuneDiv] ];
+    }
+
+    // Do not render Arena matches
+    if (gameMode === "CHERRY") {
+        return null;
     }
     
     const [ mySpells, myRunes ] = getMySummRunes();
@@ -193,8 +207,8 @@ function Game({matchData, summoner, data}) {
     const cs = totalMinionsKilled + neutralMinionsKilled;
     const csm = (cs / (matchData.gameDuration / 60)).toFixed(1).replace(/\.0$/, '');
 
-
     return(
+        <div>
         <div className="outer" >
             <div className="deco" style={{ backgroundColor: gameColor }}></div>
             <div className="contents" style={{ backgroundColor: winColor }}>
@@ -302,7 +316,7 @@ function Game({matchData, summoner, data}) {
             <div className="actions">
                 <div></div>
                 
-                <button className="button" style={{backgroundColor: actionsColor}}>
+                <button className="button" style={{backgroundColor: actionsColor}} onClick={toggleVisibility}>
                     <span className="svg-icon svg-icon--arrow-down button-display" style={{color: buttonColor, width: "24px", height: "24px"}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <g fill="currentColor" fillRule="evenodd">
@@ -316,6 +330,8 @@ function Game({matchData, summoner, data}) {
                     </span>
                 </button> {/* button */}
             </div> {/* actions */}
+        </div>
+        {isVisible && <GameStats />}
         </div>
     )
 }
