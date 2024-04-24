@@ -46,6 +46,16 @@ const PerksSchema = new mongoose.Schema({
   styles: [PerkStyleSchema],
 });
 
+// Schema for Challenges
+const ChallengeSchema = new mongoose.Schema({
+  kda: {
+    type: Number,
+  },
+  killParticipation: {
+    type: Number,
+  },
+});
+
 // Sub-schema for participants
 const ParticipantSchema = new mongoose.Schema({
   summonerName: {
@@ -135,6 +145,13 @@ const ParticipantSchema = new mongoose.Schema({
   totalMinionsKilled: {
     type: Number,
   },
+  neutralMinionsKilled: {
+    type: Number,
+  },
+  challenges: ChallengeSchema,
+  visionWardsBoughtInGame: {
+    type: Number,
+  },
   doubleKills: {
     type: Number,
   },
@@ -156,6 +173,9 @@ const ParticipantSchema = new mongoose.Schema({
   role: {
     type: String,
   },
+  goldEarned: {
+    type: Number,
+  },
   perks: PerksSchema,
   win: {
     type: Boolean,
@@ -173,6 +193,66 @@ const BanSchema = new mongoose.Schema({
   },
 });
 
+const ObjSchema = new mongoose.Schema({
+  baron: {
+    first: {
+      type: Boolean,
+    },
+    kills: {
+      type: Number,
+    },
+  },
+  champion: {
+    first: {
+      type: Boolean,
+    },
+    kills: {
+      type: Number,
+    },
+  },
+  dragon: {
+    first: {
+      type: Boolean,
+    },
+    kills: {
+      type: Number,
+    },
+  },
+  horde: {
+    first: {
+      type: Boolean,
+    },
+    kills: {
+      type: Number,
+    },
+  },
+  inhibitor: {
+    first: {
+      type: Boolean,
+    },
+    kills: {
+      type: Number,
+    },
+  },
+  riftHerald: {
+    first: {
+      type: Boolean,
+    },
+    kills: {
+      type: Number,
+    },
+  },
+  tower: {
+    first: {
+      type: Boolean,
+    },
+    kills: {
+      type: Number,
+    },
+  },
+});
+
+
 // Schema for teams
 const TeamSchema = new mongoose.Schema({
   teamId: {
@@ -184,6 +264,7 @@ const TeamSchema = new mongoose.Schema({
     required: true,
   },
   bans: [BanSchema],
+  objectives: [ObjSchema],
 });
 
 // Info schema

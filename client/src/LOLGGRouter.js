@@ -4,6 +4,9 @@ import Home from './Pages/Home';
 import About from './Pages/About';
 import Champions from './Pages/Champions'
 import Navbar from './Navbar';
+import Modes from './Pages/Modes';
+import ChampionPage from './Pages/ChampionPage';
+import ModePage from './Pages/ModePage';
 
 const championDict = require('./assets/data/en_US/championFull.json');
 const champions = championDict.data; // dictionary of champions
@@ -44,8 +47,10 @@ function LOLGGRouter() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/champions" element={<Champions champions={champions}/>} />
-                    <Route path="/modes" element={<></>} />
+                    <Route path="/champions/all" element={<Champions champions={champions} />} />
+                    <Route path="/champions/:championName" element={<ChampionPage champions={champions}/>} />
+                    <Route path="/modes/all" element={<Modes />} />
+                    <Route path="/modes/:modeName" element={<ModePage/>} />
                     <Route path="/display/:riotId/:tagline" element={<Games data={data} />} />
                 </Routes>
             </div>

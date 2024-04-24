@@ -1,5 +1,44 @@
 const mongoose = require("mongoose");
 
+const rankedDataSchema = new mongoose.Schema({
+  leagueId: {
+      type: String,
+  },
+  queueType: {
+      type: String,
+  },
+  tier: {
+      type: String,
+  },
+  rank: {
+      type: String,
+  },
+  summonerId: {
+      type: String,
+  },
+  leaguePoints: {
+      type: Number,
+  },
+  wins: {
+      type: Number,
+  },
+  losses: {
+      type: Number,
+  },
+  veteran: {
+      type: Boolean,
+  },
+  inactive: {
+      type: Boolean,
+  },
+  freshBlood: {
+      type: Boolean,
+  },
+  hotStreak: {
+      type: Boolean,
+  }
+});
+
 const riotUserSchema = new mongoose.Schema({
     puuid : {
         type: String,
@@ -9,11 +48,13 @@ const riotUserSchema = new mongoose.Schema({
     riotId: {
       type: String,
       required: true,
-      //unique: true, 
     },
     tagline: {
       type: String,
       required: true,
+    },
+    rank: {
+      type: String
     },
   });
 

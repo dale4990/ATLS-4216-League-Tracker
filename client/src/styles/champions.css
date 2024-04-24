@@ -1,47 +1,52 @@
-.championInfo{
-    display: flex;
-    margin: 5px;
-    border: 15px solid #c89b3c;
-    height: 200px;
-    border-width: 5px;
-    
+.champion-class {
+  display: inline-block;
+  margin: 20px;
+  background-color: #0e0e13; 
+  border-radius: 5px;
+  overflow: hidden;
+  width: 300px;
+  vertical-align: top; 
+  border-radius: 5%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
-.champ{
-    display: flex;
-    flex-direction: column;
-    border: 15px solid yellow;
-    height: 125px;
-    padding-left: 150px;
-    width: 1500px;
-    text-align: center;
-}
-.img{
-    display: flex;
-    border: #c89b3c;
-    height: 180px;
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-bottom: 5px;
-
+.champion-class:hover {
+  transform: translateY(-5px);
 }
 
-.nameTitle{
-    text-align: left;
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-    width: 500px;
+.champion-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
-.title{
-    margin-bottom: 25px;
+.champion-info {
+  background-color: #121219; 
+  color: #e5e5e5; 
+  padding: 15px;
+  height: auto;
+  overflow: auto;
 }
 
-.lore{
-    display:flex;
-    text-align: center;
-    padding-top: 50px;
-    padding-right: 25px;
+.champion-name {
+  font-size: 20px;
+  margin: 10px 0 5px;
+  color: #d9af36; 
+  font-family: 'Beaufort-Bold', sans-serif;
+}
+
+.champion-title {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #F0E6D2;
+  font-family: 'Beaufort-Bold', sans-serif;
+}
+
+.champion-lore {
+  font-size: 16px;
+  font-family: "Helvetica Neue", sans-serif;
 }

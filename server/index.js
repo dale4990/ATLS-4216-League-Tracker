@@ -68,6 +68,61 @@ app.post("/deleteUser", async (req, res) => {
     }
 });
 
+// GET request to find Riot user by puuid (this can be GET because we are assuming it's already there)
+app.get("/getRiotUser/:puuid", async (req, res) => {
+    const puuid = req.params.puuid;
+
+    try {
+        const existingRiotUser = await RiotUser.findOne({ puuid });
+    
+        if (existingRiotUser) {
+            res.json(existingRiotUser);
+            return;
+        }
+
+        res.status(404).json({ error: "Riot user not found." });
+    } catch (error) {
+        console.error("Error finding Riot user:", error);
+        res.status(500).json({ error: "An error occurred while finding the Riot user." });
+    }
+});
+
+// POST request to update a user's Riot user given their puuid
+app.post("/updateRiotUser", async (req, res) => {
+    const { puuid, riotId, tagline, rank } = req.body;
+
+    try {
+        const user = await RiotUser.findOne({
+            puuid,
+        });
+
+        if (!user) {
+            // Add new Riot user if it doesn't exist
+            const newRiotUser = new RiotUser({
+                puuid,
+                riotId,
+                tagline,
+                rank,
+            });
+
+            await newRiotUser.save();
+            res.json(newRiotUser);
+            return;
+        }
+
+        // Update the fields if they are provided
+        if (riotId) user.riotId = riotId;
+        if (tagline) user.tagline = tagline;
+        if (rank) user.rank = rank;
+
+        await user.save();
+        res.json(user);
+    } catch (error) {
+        console.error("Error updating Riot user:", error);
+        res.status(500).json({ error: "An error occurred while updating the Riot user." });
+    }
+});     
+
 // POST request to find Riot user
 app.post("/findRiotUser", async (req, res) => {
     const { riotId, tagline } = req.body;
@@ -77,8 +132,7 @@ app.post("/findRiotUser", async (req, res) => {
         const existingRiotUser = await RiotUser.findOne({ riotId, tagline });
 
         if (existingRiotUser) {
-            // If the user exists in the database, use their information directly
-            res.json({ puuid: existingRiotUser.puuid, riotId, tagline });
+            res.json(existingRiotUser);
             return;
         }
 
@@ -93,12 +147,13 @@ app.post("/findRiotUser", async (req, res) => {
         const newRiotUser = new RiotUser({
             puuid,
             riotId: gameName, 
-            tagline: tagLine 
+            tagline: tagLine,
+            rank: null 
         });
         
         await newRiotUser.save();
         
-        res.json({ puuid, riotId: gameName, tagline: tagLine }); 
+        res.json(newRiotUser); 
     } catch (error) {
         if (error.response && error.response.data) {
             console.error("Error:", error.response.data);
@@ -181,6 +236,24 @@ app.post("/findRank", async (req, res) => {
     }
 });
 
+// POST request to find summoner Rank by puuid
+app.post("/findSummonerRank", async (req, res) => {
+    const { puuid } = req.body;
+
+    try {
+        const findIdResponse = await axios.post("http://localhost:5069/findId", { puuid });
+        const summonerId = findIdResponse.data.id;
+
+        const findRankResponse = await axios.post("http://localhost:5069/findRank", { id: summonerId });
+        const rankData = findRankResponse.data;
+
+        res.json(rankData);
+    } catch (error) {
+        console.error("Error:", error.response.data);
+        res.status(500).json({ error: "Failed to fetch summoner rank" });
+    }
+});
+
 // POST request to find individual match data based on matchId
 app.post("/findMatchData", async (req, res) => {
     const { matchId } = req.body;
@@ -225,11 +298,16 @@ app.post("/findMatchData", async (req, res) => {
                 wardsDestroyed: participant.wardsDestroyed,
                 visionScore: participant.visionScore,
                 totalMinionsKilled: participant.totalMinionsKilled,
+                neutralMinionsKilled: participant.neutralMinionsKilled,
+                kda: participant.challenges.kda,
+                killParticipation: participant.challenges.killParticipation,
+                controlWardsPurchased: participant.visionWardsBoughtInGame,
                 doubleKills: participant.doubleKills,
                 tripleKills: participant.tripleKills,
                 quadraKills: participant.quadraKills,
                 pentaKills: participant.pentaKills,
                 summonerId: participant.summonerId,
+                goldEarned: participant.goldEarned,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
@@ -238,8 +316,14 @@ app.post("/findMatchData", async (req, res) => {
                 },
                 win: participant.win,
             }));
+            const teams = existingMatch.info.teams.map((team) => ({
+                teamId: team.teamId,
+                  win: team.win,
+                  bans: team.bans,
+                  objectives: team.objectives,
+            }));
 
-            res.json({ matchId, endOfGameResult, gameDuration, gameEndTimestamp, gameMode, participants});
+            res.json({ matchId, endOfGameResult, gameDuration, gameEndTimestamp, gameMode, participants, teams});
             return;
         }
 
@@ -257,6 +341,15 @@ app.post("/findMatchData", async (req, res) => {
                 info,
             });
 
+            // Sometimes challenges are not available so we need to calculat its values in this case
+            for (const participant of info.participants) {
+                if (!participant.challenges) {
+                    participant.challenges = {
+                        kda: (participant.kills + participant.assists) / participant.deaths,
+                        killParticipation: (participant.kills + participant.assists) / info.participants.filter((p) => p.teamId === participant.teamId).reduce((acc, cur) => acc + cur.kills, 0),
+                    }
+                }
+            }
 
             await newMatch.save();
 
@@ -296,11 +389,16 @@ app.post("/findMatchData", async (req, res) => {
                 wardsDestroyed: participant.wardsDestroyed,
                 visionScore: participant.visionScore,
                 totalMinionsKilled: participant.totalMinionsKilled,
+                neutralMinionsKilled: participant.neutralMinionsKilled,
+                kda: participant.challenges.kda,
+                killParticipation: participant.challenges.killParticipation,
+                controlWardsPurchased: participant.visionWardsBoughtInGame,
                 doubleKills: participant.doubleKills,
                 tripleKills: participant.tripleKills,
                 quadraKills: participant.quadraKills,
                 pentaKills: participant.pentaKills,
                 summonerId: participant.summonerId,
+                goldEarned: participant.goldEarned,
                 teamId: participant.teamId,
                 role: participant.role,
                 perks: {
@@ -310,7 +408,14 @@ app.post("/findMatchData", async (req, res) => {
                 win: participant.win,
             }));
 
-            res.json({ matchId, endOfGameResult, gameDuration, gameEndTimestamp, gameMode, participants});
+            const teams = info.teams.map((team) => ({
+                teamId: team.teamId,
+                  win: team.win,
+                  bans: team.bans,
+                  objectives: team.objectives,
+            }));
+
+            res.json({ matchId, endOfGameResult, gameDuration, gameEndTimestamp, gameMode, participants, teams});
         } catch (error) {
             console.error("Error saving match data:", error.message);
             res.status(500).json({ error: "Failed to save match data" });
