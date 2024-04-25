@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/ChampPage.css';
 
+
 const ChampionPage = () => {
     const { championName } = useParams();
     const [championData, setChampionData] = useState(null);
@@ -28,7 +29,7 @@ const ChampionPage = () => {
       <div className='champion-page' style={backgroundStyle}>
         <div className="champion-content-container">
             <div className="champion-content">
-                <h1>{championName.toUpperCase()}</h1>
+                <h1>{championData ? championData.name.toUpperCase() : 'Name unavailable, champion is too recent...'}</h1>
                 <div className='champion-title'>
                     <h2>{championData ? championData.title.toUpperCase() : 'Title unavailable, champion is too recent...'}</h2>
                 </div>
