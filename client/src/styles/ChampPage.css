@@ -59,7 +59,7 @@
 }
 
 .champion-page p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.5;
     background: rgba(0, 0, 0, 0);
     margin: 2rem auto;
@@ -91,9 +91,3 @@
     font-family: 'Spiegel', sans-serif;
     text-shadow: 2px 2px 4px rgba(0,0,0,1);
 }
-
-/* .champion-content h1 {
-    font-family: 'Beaufort-Bold', sans-serif;
-    color: #d9af36;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.69); 
-} */
