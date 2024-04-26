@@ -47,7 +47,7 @@ const ModePage = () => {
             <img src={aramMap} alt="ARAM Map" className="mode-map" />
           </div>
           <div>
-            <h2 className="mode-subtitle-1">
+            <h2 className="mode-subtitle-3">
               All Random All Mid
             </h2>
             <p className="mode-description">
@@ -66,7 +66,7 @@ const ModePage = () => {
           <div>
             <img src={tftGameplay} alt="TFT Gameplay" className="mode-gameplay" />
           </div>
-          <h2 className="mode-subtitle-1">
+          <h2 className="mode-subtitle-3">
             TeamFight Tactics
           </h2>
           <p className="mode-description">
