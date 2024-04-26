@@ -1,0 +1,28 @@
+.mode-map {
+    float: left;
+    padding-left: 4%;
+    padding-top: 5%;
+    width: 30%; /* Set the width to 100% of its container */
+    height: auto; /* Allow the height to adjust proportionally */
+    max-width: 100%; /* Ensure the image doesn't exceed its original size */
+}
+
+.mode-subtitle-1 {
+    font-size: 30px;
+    font-family: 'beaufort-standard', sans-serif;
+    padding-top: 5%;
+    padding-left: 5%;
+}
+
+.mode-subtitle-2 {
+    font-size: 30px;
+    font-family: 'beaufort-standard', sans-serif;
+    padding-top: 3%;
+    padding-left: 5%;
+}
+
+.mode-description {
+    font-family: 'Beaufort-standard', sans-serif;
+    font-size: 16px;
+}
+
