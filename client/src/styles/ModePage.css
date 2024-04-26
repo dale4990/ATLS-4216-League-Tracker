@@ -18,22 +18,22 @@
 
 .mode-subtitle-1 {
     font-size: 36px;
-    font-family: 'beaufort-standard', sans-serif;
+    font-family: 'Beaufort-Bold', sans-serif;
     padding-top: 7%;
     padding-left: 5%;
 }
 
 .mode-subtitle-2 {
     font-size: 36px;
-    font-family: 'beaufort-standard', sans-serif;
+    font-family: 'Beaufort-Bold', sans-serif;
     padding-top: 3%;
     padding-left: 5%;
 }
 
 .mode-description {
-    font-family: 'Beaufort-standard', sans-serif;
+    font-family: 'Spiegel', sans-serif;
     font-size: 20px;
     padding-left: 35%;
     margin: 2%;
+    color: antiquewhite;
 }
-
