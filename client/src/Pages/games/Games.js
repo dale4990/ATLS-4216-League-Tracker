@@ -4,6 +4,8 @@ import MemoizedGame from './Game';
 import { useParams } from 'react-router-dom';
 import { getMatches, getMatchDatas, getPUUID } from '../../helper/Fetcher';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const LoadMore = styled.button`
     background-color: #C89B3C;
@@ -93,8 +95,8 @@ function Games({data}) {
         <div className="game-list">
             {/* {games.length === 0 ? "Invalid Input or Loading" : games} */}
             {/* We have changed games to be a 2d array */}
-            {games.length === 0 ? "Invalid Input or Loading" : games.map((game, index) => {
-                return game.length === 0 ? "Loading" : game.map((game, index) => {
+            {games.length === 0 ? <FontAwesomeIcon icon={faSpinner} size="2x" spin /> : games.map((game, index) => {
+                return game.length === 0 ? <FontAwesomeIcon icon={faSpinner} spin /> : game.map((game, index) => {
                     return game;
                 });
             })}
