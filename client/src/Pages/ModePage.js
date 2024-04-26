@@ -52,10 +52,15 @@ const ModePage = () => {
             <img src={aramMap} alt="ARAM Map" className="mode-map" />
           </div>
           <div>
-            <p className="mode-description">
-              All Random All Mid is a team-based strategy where 5 players pick their 5 on their team and the other 5 players pick their 5 on their opponents. 
-              The team that picks the most 5s wins.
-            </p>
+            <h2 className="mode-subtitle-1">
+              All Random All Mid
+            </h2>
+            <h3 className="mode-description">
+            ARAM, abbreviation of All Random, All Mid, is a game mode in League of Legends in a 5v5 format on the Howling Abyss icon Howling Abyss, 
+            where the objective is to destroy the opposing team's Nexus. The game includes an Reroll All random draft type, and a game that takes place only on one long lane 
+            (specifically referencing its resemblance to Summoner's Rift icon Summoner's Rift's middle lane).
+            In ARAM, players are given random champions from the available champion pool and are able to trade or reroll their picks.
+            </h3>
           </div>
         </div>
       );
