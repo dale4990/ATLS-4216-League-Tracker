@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import '../styles/ModePage.css';
 import srMap from '../images/srMap.png';
 import aramMap from '../images/aramMap.png';
+import tftGameplay from '../images/tftGameplay.jpeg';
 
 const ModePage = () => {
     const { modeName } = useParams(); 
@@ -10,9 +11,6 @@ const ModePage = () => {
     if (modeName === "Summoner's Rift") {
       return (
         <div id="mode-page">
-          <div>
-            <h1>{modeName}</h1>
-          </div>
           <div>
             <img src={srMap} alt="Summoners Rift Map" className="mode-map" />
           </div>
@@ -46,9 +44,6 @@ const ModePage = () => {
       return (
         <div>
           <div>
-            <h1>{modeName}</h1>
-          </div>
-          <div>
             <img src={aramMap} alt="ARAM Map" className="mode-map" />
           </div>
           <div>
@@ -69,14 +64,18 @@ const ModePage = () => {
       return (
         <div>
           <div>
-            <h1>{modeName}</h1>
+            <img src={tftGameplay} alt="TFT Gameplay" className="mode-gameplay" />
           </div>
-          <div>
-            <img src={srMap} alt="Summoners Rift" className="mode-map" />
-          </div>
-          <p className="mode-description">
-            TeamFight Tactics is a team-based strategy where 5 players pick their 5 on their team and the other 5 players pick their 5 on their opponents.
-          </p>
+          <h2 className="mode-subtitle-1">
+            TeamFight Tactics
+          </h2>
+          <h3 className="mode-description">
+            Draft, deploy, and dominate with a revolving roster of League of Legends champions in a round-based battle for supremacy.
+            Put your team-building skills to the test in Teamfight Tactics, the multiplayer PvP auto battler from the studio behind League of Legends.
+            Cross-platform support means you can play with your friends (and crush your enemies) across PC, Mac and mobile.
+            Bust out the big-brain strats as you draft, position, and fight your way to victory in an 8-way free-for-all battle. 
+            With hundreds of team combinations and an ever-evolving meta, any strategy goes—but only one can win. 
+          </h3>
         </div>
       );
     }
