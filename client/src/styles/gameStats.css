@@ -1,0 +1,214 @@
+.game-stats {
+    width: 740px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-stats > ul {
+    display: flex;
+    height: 36px;
+    margin: 4px 0px;
+    padding: 4px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #31313c;
+}
+
+.selected-container {
+    width: 50%;
+    margin-left: 4px;
+}
+
+.unselected-container {
+    width: 50%;
+    margin-left: 4px;
+}
+
+.unselected-container button {
+    display: block;
+    width: 100%;
+    height: 28px;
+    padding: 0px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: normal;
+    border-radius: 4px;
+    background-image: initial;
+    background-position: initial;
+    background-size: initial;
+    background-repeat: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #31313c;
+    color: #ffffff;
+}
+
+.selected-container button {
+    display: block;
+    width: 100%;
+    height: 28px;
+    padding: 0px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    background: #515163;
+    color: #ffffff;
+}
+
+.team-stats {
+    background-color: #282830;
+    /* add bottom padding */
+    padding-bottom: 24px;
+}
+
+.team-stats .legend {
+    text-align: center;
+    padding: 12px 0px 10px;
+}
+
+.team-stats .legend ul {
+    font-size: 0px;
+}
+
+.team-stats .legend ul li {
+    margin-left: 0px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 0px 8px;
+}
+
+.team-stats .legend ul li .team-key {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.team-stats > ul {
+    padding-bottom: 24px;
+}
+
+.stats-container {
+    float: left;
+    width: 50%;
+}
+
+.stats-container > div {
+    margin: 0px 20px;
+}
+
+.stats-container > div h4 {
+    font-size: 12px;
+    line-height: 16px;
+    color: #ffffff;
+    font-weight: normal;
+    text-align: center;
+}
+
+.stats-container > div .table {
+    margin-top: 12px;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    font-family: Roboto, sans-serif;
+}
+
+.stats-container > div .table .team {
+    display: table-cell;
+}
+
+.stats-container > div .table .graph {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.stats-container > div .table .team li {
+    margin-top: 5px;
+}
+
+.stats-container > div .table .team li .icon {
+    float: left;
+    width: 16px;
+    height: 16px;
+}
+
+.stats-container > div .table .team li .icon img {
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.stats-container > div .table .team li .progress {
+    margin-left: 20px;
+    width: 80px;
+    height: 16px;
+    position: relative;
+    background: #424254;
+}
+
+.stats-container > div .table .team li .progress .bar {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    border: none;
+}
+
+.stats-container > div .table .team li .progress span {
+    position: absolute;
+    top: 1px;
+    right: 5px;
+    font-size: 11px;
+    line-height: 16px;
+    color: var(--gray900);
+}
+
+.stats-container > div .table .graph {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.stats-container > div .table .graph > div {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin: 0px auto;
+}
+
+.stats-container > div .table .graph > div .value {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    width: 100%;
+    margin-top: -20px;
+    text-align: center;
+}
+
+.stats-container > div .table .graph > div .value div {
+    display: block;
+    margin: 0px auto;
+    line-height: 17px;
+    font-size: 12px;
+    font-weight: bold;
+    width: 60px;
+}
+
+.stats-container > div .table .graph > div .value div .split-line {
+    content: "";
+    display: block;
+    margin: 2px auto;
+    width: 40px;
+    height: 1px;
+    background: #424254;
+}

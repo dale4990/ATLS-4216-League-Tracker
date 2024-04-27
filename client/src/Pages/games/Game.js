@@ -331,10 +331,20 @@ function Game({matchData, summoner, data}) {
                 </button> {/* button */}
             </div> {/* actions */}
         </div>
-        {isVisible && <GameStats />}
+        {isVisible && <MemoizedGameStats matchData={matchData} summoner={summoner} data={data} result={win} />}
         </div>
     )
 }
+
+// Memoize the GameStats component to prevent unnecessary re-renders
+const MemoizedGameStats = React.memo(GameStats, (prevProps, nextProps) => {
+    // Compare the props to determine if re-render is needed
+    // Return true if props are equal, false otherwise
+    return (
+        prevProps.matchData === nextProps.matchData &&
+        prevProps.summoner === nextProps.summoner
+    );
+});
 
 // Memoize the Game component to prevent unnecessary re-renders
 const MemoizedGame = React.memo(Game, (prevProps, nextProps) => {
