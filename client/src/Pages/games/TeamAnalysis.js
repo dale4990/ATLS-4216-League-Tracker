@@ -4,6 +4,8 @@ import { PieChart, Pie, Cell } from 'recharts';
 
 function TeamAnalysis ({matchData, data}) {
 
+    const numFormatter = new Intl.NumberFormat('en-US');
+
     const { champions } = data;
 
     // For all participants, calculate and add their CS
@@ -94,7 +96,7 @@ function TeamAnalysis ({matchData, data}) {
                                             <div className="progress">
                                                 {/* width will be kills / max kills rounded to the nearest percent */}
                                                 <div className="bar" style={{backgroundColor:"#5383e8", width:`${Math.round(value[statName] / max * 100)}%`}}></div>
-                                                <span style={{color:"#fff"}}>{value[statName]}</span>
+                                                <span style={{color:"#fff"}}>{numFormatter.format(value[statName])}</span>
                                             </div>
                                         </li>
                                     );
@@ -109,11 +111,11 @@ function TeamAnalysis ({matchData, data}) {
                                 </div>
                                 <div className="value">
                                     <div className="win" style={{color: "#5383e8"}}>
-                                        {totalWin}
+                                        {numFormatter.format(totalWin)}
                                         <div className="split-line"></div>
                                     </div>
                                     <div className="lose" style={{color: "#e84057"}}>
-                                        {totalLose}
+                                        {numFormatter.format(totalLose)}
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +133,7 @@ function TeamAnalysis ({matchData, data}) {
                                             <div className="progress">
                                                 {/* width will be kills / max kills rounded to the nearest percent */}
                                                 <div className="bar" style={{backgroundColor:"#e84057", width:`${Math.round(value[statName] / max * 100)}%`}}></div>
-                                                <span style={{color:"#fff"}}>{value[statName]}</span>
+                                                <span style={{color:"#fff"}}>{numFormatter.format(value[statName])}</span>
                                             </div>
                                         </li>
                                     );
