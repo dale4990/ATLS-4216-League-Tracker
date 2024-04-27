@@ -1,8 +1,8 @@
 .game-stats {
     width: 740px;
-    overflow: auto;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .game-stats > ul {

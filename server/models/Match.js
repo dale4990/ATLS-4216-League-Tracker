@@ -133,6 +133,9 @@ const ParticipantSchema = new mongoose.Schema({
   totalDamageTaken: {
     type: Number,
   },
+  wardsKilled: {
+    type: Number,
+  },
   wardsPlaced: {
     type: Number,
   },

@@ -232,7 +232,7 @@ function Game({matchData, summoner, data}) {
                     <div className="player-stats">
                         <div className="main">
                             <div className="info">
-                                <a target="_blank" rel="noreferrer" className="champion" href="/champions">
+                                <a target="_blank" rel="noreferrer" className="champion" href={`/champions/${myChampion.id}`}>
                                     <img src={`/champion/${myChampion.id}.png`} width="48" height="48" alt={myChampion.name} />
                                     <span className="champion-level">{championLevel}</span>
                                 </a> {/* champion */}
