@@ -1,0 +1,299 @@
+.player-container {
+    width: 740px;
+    table-layout: fixed;
+    background-color: #31313c;
+}
+
+.player-stats table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+.bottom-container {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-color: #1c1c1f;
+    overflow: hidden;
+}
+
+.top-container {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.player-container thead th {
+    height: 32px;
+    color: #7b7a8e;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.player-container thead th .result {
+    margin-right: 4px;
+    font-weight: bold;
+}
+
+.player-container thead th span {
+    font-size: 12px;
+}
+
+.player-container thead th.result-th {
+    padding-left: 15px;
+    text-align: left;
+}
+
+.player-container tbody.loss {
+    background-color: #59343b;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-color: #703c47;
+}
+
+.player-container tbody.win {
+    background-color: #28344e;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-color: #2f436e;
+}
+
+.overview-player td.champion {
+    padding-left: 10px;
+    padding-right: 4px;
+    padding-top: 4px;
+}
+
+.overview-player td {
+    padding: 4px 0px 3px;
+    vertical-align: middle;
+}
+
+.isme td.loss {
+    background-color: #703c47 !important;
+}
+
+.isme td.win {
+    background-color: #2f436e !important;
+}
+
+.overview-player td.name {
+    padding-left: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.overview-player td.op-score-wrapper {
+    text-align: center;
+    white-space: nowrap;
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td.kda {
+    text-align: center;
+    white-space: nowrap;
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td.damage {
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td.ward {
+    text-align: center;
+    color: #9e9eb1;
+    font-size: 11px;
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td.cs {
+    text-align: center;
+    color: #9e9eb1;
+    font-size: 11px;
+}
+
+.overview-player td.items {
+    text-align: center;
+    font-size: 0px;
+}
+
+.overview-player td.champion a > div {
+    width: 32px;
+}
+
+.overview-player td.champion a img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.overview-player td.spells div {
+    width: 16px;
+    height: 16px;
+}
+
+.overview-player td.spells .top-spell {
+    margin-bottom: 2px;
+}
+
+.overview-player td.spells div img {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.overview-player td.runes .top-rune {
+    margin-bottom: 2px;
+    background: #000000;
+    border-radius: 50%;
+}
+
+.overview-player td.runes div img {
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.overview-player td.name .summoner-tooltip {
+    line-height: 16px;
+    color: var(--gray900);
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.summoner-name {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    box-sizing: border-box;
+    gap: 4px;
+}
+
+.summoner-name-wrapper {
+    color: #ffffff;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.overview-player td.name .tier {
+    color: #7b7a8e;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.overview-player td.name .tier div {
+    position: relative;
+    text-transform: capitalize;
+    display: flex;
+}
+
+.overview-player td.kda .k-d-a {
+    color: #9e9eb1;
+    line-height: 14px;
+    font-size: 11px;
+}
+
+.overview-player td.kda .ratio {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.overview-player td.damage > div {
+    display: flex;
+    justify-content: center;
+}
+
+.overview-player td.damage .dealt {
+    text-align: center;
+    color: #9e9eb1;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.overview-player td.damage .taken {
+    text-align: center;
+    color: #9e9eb1;
+    font-size: 11px;
+    line-height: 14px;
+    margin-left: 8px;
+}
+
+.overview-player td.damage .progress {
+    width: 50px;
+    height: 6px;
+    margin: 4px auto 0px;
+    background-color: #31313c;
+}
+
+.overview-player td.damage .progress--taken {
+    width: 50px;
+    height: 6px;
+    margin: 4px auto 0px 8px;
+    background-color: #31313c;
+}
+
+.overview-player td.damage .progress .fill {
+    height: 100%;
+    background-color: #e84057;
+}
+
+.overview-player td.damage .progress--taken .fill {
+    height: 100%;
+    background-color: #7b7a8e;
+}
+
+.overview-player td.items .item {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin-left: 1px;
+    vertical-align: middle;
+}
+
+.overview-player td.items .first-item {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin-left: 0px;
+    vertical-align: middle;
+}
+
+.overview-player td.items .item img {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+}
+
+.overview-player td.win .item .no-item {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #2f436e;
+}
+
+.overview-player td.loss .item .no-item {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #703c47;
+}
+
+.player-stats .summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #282830;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #1c1c1f;
+    font-family: Roboto, sans-serif;
+    padding: 8px 16px;
+}
