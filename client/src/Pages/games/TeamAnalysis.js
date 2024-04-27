@@ -46,7 +46,7 @@ function TeamAnalysis ({matchData, data}) {
 
         return (
             <PieChart width={90} height={90}>
-                <Pie data={[{name: "Winning Team", value: stat1}, {name: "Losing Team", value: stat2}]} dataKey="value" cx="50%" cy="50%" innerRadius={30} outerRadius={40} startAngle={90} endAngle={450} isAnimationActive={false}>
+                <Pie data={[{name: "Winning Team", value: stat1, stroke: "none"}, {name: "Losing Team", value: stat2, stroke: "none"}]} dataKey="value" cx="50%" cy="50%" innerRadius={30} outerRadius={40} startAngle={90} endAngle={450} isAnimationActive={false}>
                     {
                         [{name: "Winning Team", value: stat1}, {name: "Losing Team", value: stat2}].map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
                     }
@@ -94,7 +94,7 @@ function TeamAnalysis ({matchData, data}) {
                                             <div className="progress">
                                                 {/* width will be kills / max kills rounded to the nearest percent */}
                                                 <div className="bar" style={{backgroundColor:"#5383e8", width:`${Math.round(value[statName] / max * 100)}%`}}></div>
-                                                <span>{value[statName]}</span>
+                                                <span style={{color:"#fff"}}>{value[statName]}</span>
                                             </div>
                                         </li>
                                     );
@@ -131,7 +131,7 @@ function TeamAnalysis ({matchData, data}) {
                                             <div className="progress">
                                                 {/* width will be kills / max kills rounded to the nearest percent */}
                                                 <div className="bar" style={{backgroundColor:"#e84057", width:`${Math.round(value[statName] / max * 100)}%`}}></div>
-                                                <span>{value[statName]}</span>
+                                                <span style={{color:"#fff"}}>{value[statName]}</span>
                                             </div>
                                         </li>
                                     );
@@ -150,11 +150,11 @@ function TeamAnalysis ({matchData, data}) {
                 <ul>
                     <li>
                         <div className="team-key" style={{backgroundColor: "#5383e8"}}></div>
-                        <span>Winning Team</span>
+                        <span style={{color:"#fff"}}>Winning Team</span>
                     </li>
                     <li>
                         <div className="team-key" style={{backgroundColor: "#e84057"}}></div>
-                        <span>Losing Team</span>
+                        <span style={{color:"#fff"}}>Losing Team</span>
                     </li>
                 </ul>
             </div>
