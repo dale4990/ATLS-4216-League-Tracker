@@ -14,7 +14,7 @@ const summonerDict = require('./assets/data/en_US/summoner.json');
 const summoners = summonerDict.data; // dictionary of summoner spells
 const runesDict = require('./assets/data/en_US/runesReforged.json'); // array of runes
 
-const parseChampionData = () => {
+const parseChampionImageData = () => {
     const championImageMap = {};
   
     for (const championKey in champions) {
@@ -29,7 +29,23 @@ const parseChampionData = () => {
     return championImageMap;
 };
 
-const championImageMap = parseChampionData();
+const parseChampionData = () => {
+    const championIdMap = {};
+  
+    for (const championKey in champions) {
+      if (Object.hasOwnProperty.call(champions, championKey)) {
+        const champion = champions[championKey];
+        const championId = champion.key;
+        const championIdName = champion.id;
+        championIdMap[championId] = championIdName;
+      }
+    }
+  
+    return championIdMap;
+};
+
+const championImageMap = parseChampionImageData();
+const championIdMap = parseChampionData();
 
 // Pack them together
 export const data = {
@@ -37,6 +53,7 @@ export const data = {
     summoners: summoners,
     runes: runesDict,
     championImageMap: championImageMap,
+    championIdMap: championIdMap,
 };
 
 function LOLGGRouter() {

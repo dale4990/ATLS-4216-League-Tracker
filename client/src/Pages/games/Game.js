@@ -136,7 +136,7 @@ function calculateAverageRank(playerRanks) {
 }
 
 function Game({matchData, summoner, data}) {
-    const { champions: champDict, summoners: summDict, runes, championImageMap } = data;
+    const { champions: champDict, summoners: summDict, runes, championImageMap, championIdMap } = data;
     const gameMode = matchData.gameMode;
     const gameDuration = secondsToHMS(matchData.gameDuration);
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
@@ -232,7 +232,7 @@ function Game({matchData, summoner, data}) {
                     <div className="player-stats">
                         <div className="main">
                             <div className="info">
-                                <a target="_blank" rel="noreferrer" className="champion" href="/champions">
+                                <a target="_blank" rel="noreferrer" className="champion" href={`/champions/${myChampion.id}`}>
                                     <img src={`/champion/${myChampion.id}.png`} width="48" height="48" alt={myChampion.name} />
                                     <span className="champion-level">{championLevel}</span>
                                 </a> {/* champion */}
@@ -296,7 +296,9 @@ function Game({matchData, summoner, data}) {
                         {matchData.participants.map(participant => (
                             <div className="player">
                                 <div className="icon" style={{position: 'relative'}}>
-                                    <img src={`/champion/${championImageMap[participant.championId]}`} style={{borderRadius: "3px", border: "none", height: "16px", width: "16px"}} alt={`"${participant.championName}"`} />
+                                    <a target="_blank" rel="noreferrer" className="champion" href={`/champions/${championIdMap[participant.championId]}`}>
+                                        <img src={`/champion/${championImageMap[participant.championId]}`} style={{borderRadius: "3px", border: "none", height: "16px", width: "16px"}} alt={`"${participant.championName}"`} />
+                                    </a>
                                 </div>
                                 <div className="name">
                                     <div className="summoner-tooltip" style={{position: 'relative'}}>
@@ -331,10 +333,20 @@ function Game({matchData, summoner, data}) {
                 </button> {/* button */}
             </div> {/* actions */}
         </div>
-        {isVisible && <GameStats />}
+        {isVisible && <MemoizedGameStats matchData={matchData} summoner={summoner} data={data} result={win} />}
         </div>
     )
 }
+
+// Memoize the GameStats component to prevent unnecessary re-renders
+const MemoizedGameStats = React.memo(GameStats, (prevProps, nextProps) => {
+    // Compare the props to determine if re-render is needed
+    // Return true if props are equal, false otherwise
+    return (
+        prevProps.matchData === nextProps.matchData &&
+        prevProps.summoner === nextProps.summoner
+    );
+});
 
 // Memoize the Game component to prevent unnecessary re-renders
 const MemoizedGame = React.memo(Game, (prevProps, nextProps) => {

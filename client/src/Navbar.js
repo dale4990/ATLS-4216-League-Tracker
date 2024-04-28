@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const Container = styled.div`
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 3;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;

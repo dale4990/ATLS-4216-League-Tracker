@@ -1,4 +1,93 @@
-.champion-page h1{
+/* ChampPage.css */
+.champion-page {
+    position: relative;
+    height: 100vh;
+    overflow: auto; 
+}
+
+.champion-content-container {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    width: 80%;
+    transform: translate(-50%, -50%); 
+    z-index: 3;
+    padding: 20px; 
+}
+
+.champion-page {
+    text-align: center;
+    padding-top: 100px;
+    background-size: cover;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1; 
+}
+
+.champion-page::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.42);
+    z-index: -1;
+}
+
+.champion-page h1 {
     font-family: 'Beaufort-Bold', sans-serif;
-    font-size: 36px;
+    color: #d9af36;
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    z-index: 2;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+}
+
+.champion-page h2 {
+    font-family: 'Beaufort-Bold', sans-serif;
+    color: #ffffff;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    z-index: 2;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+}
+
+.champion-page p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    background: rgba(0, 0, 0, 0);
+    margin: 2rem auto;
+    padding: 19px;
+    width: 60%;
+    border-radius: 8px;
+    z-index: 2;
+    color: #d9af36;
+    text-shadow: 2px 2px 4px rgba(0,0,0,1);
+}
+
+@media (max-width: 768px) {
+    .champion-page h1 {
+        font-size: 2.5rem;
+    }
+
+    .champion-page p {
+        font-size: 0.9rem;
+        width: 80%;
+    }
+}
+
+.champion-details{
+    font-family: 'Beaufort-Bold', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0,0,0,1);
+}
+
+.champion-lore{
+    font-family: 'Spiegel', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0,0,0,1);
 }
