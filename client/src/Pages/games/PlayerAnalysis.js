@@ -164,6 +164,7 @@ function PlayerAnalysis ({matchData, data, summoner, result}) {
                                     <a target="_blank" rel="noreferrer" href={`/champions/${participantChampions[player.puuid]}`}>
                                         <div style={{position: "relative"}}>
                                             <img src={`/champion/${participantChampions[player.puuid]}.png`} width="32" alt={participantChampions[player.puuid]} />
+                                            <div className="level">{player.championLevel}</div>
                                         </div>
                                     </a>
                                 </td>
