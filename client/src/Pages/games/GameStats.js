@@ -6,7 +6,7 @@ import MemoizedPlayerAnalysis from './PlayerAnalysis';
 function GameStats ({matchData, summoner, data, result}) {
     const [selection, setSelection] = useState(true);
 
-    const isMe = matchData.participants.find(participant => participant.puuid === summoner);
+    //const isMe = matchData.participants.find(participant => participant.puuid === summoner);
 
     return (
         <div className="game-stats">

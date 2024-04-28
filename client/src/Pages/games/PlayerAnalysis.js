@@ -25,7 +25,7 @@ function PlayerAnalysis ({matchData, data, summoner, result}) {
     const { champions, summoners: summDict, runes } = data;
     const participantChampions = {};
     matchData.participants.forEach(participant => {
-        const champName = Object.keys(champions).find(key => champions[key].key == participant.championId);
+        const champName = Object.keys(champions).find(key => champions[key].key === participant.championId);
         participantChampions[participant.puuid] = champName;
     });
 

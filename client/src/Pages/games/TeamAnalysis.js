@@ -32,13 +32,13 @@ function TeamAnalysis ({matchData, data}) {
 
     // For each partcipant add their champion to their respective team
     winningTeam.forEach(player => {
-        const champName = Object.keys(champions).find(key => champions[key].key == player.championId);
+        const champName = Object.keys(champions).find(key => champions[key].key === player.championId);
         
         statsWin[player.puuid] = {champion: champName};
     });
 
     losingTeam.forEach(player => {
-        const champName = Object.keys(champions).find(key => champions[key].key == player.championId);
+        const champName = Object.keys(champions).find(key => champions[key].key === player.championId);
 
         statsLose[player.puuid] = {champion: champName};
     });

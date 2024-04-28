@@ -136,7 +136,7 @@ function calculateAverageRank(playerRanks) {
 }
 
 function Game({matchData, summoner, data}) {
-    const { champions: champDict, summoners: summDict, runes, championImageMap } = data;
+    const { champions: champDict, summoners: summDict, runes, championImageMap, championIdMap } = data;
     const gameMode = matchData.gameMode;
     const gameDuration = secondsToHMS(matchData.gameDuration);
     const timestampString = timestampToAgo(matchData.gameEndTimestamp);
@@ -296,7 +296,9 @@ function Game({matchData, summoner, data}) {
                         {matchData.participants.map(participant => (
                             <div className="player">
                                 <div className="icon" style={{position: 'relative'}}>
-                                    <img src={`/champion/${championImageMap[participant.championId]}`} style={{borderRadius: "3px", border: "none", height: "16px", width: "16px"}} alt={`"${participant.championName}"`} />
+                                    <a target="_blank" rel="noreferrer" className="champion" href={`/champions/${championIdMap[participant.championId]}`}>
+                                        <img src={`/champion/${championImageMap[participant.championId]}`} style={{borderRadius: "3px", border: "none", height: "16px", width: "16px"}} alt={`"${participant.championName}"`} />
+                                    </a>
                                 </div>
                                 <div className="name">
                                     <div className="summoner-tooltip" style={{position: 'relative'}}>
