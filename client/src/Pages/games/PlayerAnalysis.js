@@ -1,6 +1,22 @@
 import React from 'react';
 import '../../styles/PlayerStats.css';
 
+function determineHighestKillType(doubleKills, tripleKills, quadraKills, pentaKills) {
+    let highestKillType = '';
+
+    if (pentaKills > 0) {
+        highestKillType = 'Penta Kill';
+    } else if (quadraKills > 0) {
+        highestKillType = 'Quadra Kill';
+    } else if (tripleKills > 0) {
+        highestKillType = 'Triple Kill';
+    } else if (doubleKills > 0) {
+        highestKillType = 'Double Kill';
+    }
+
+    return highestKillType;
+}
+
 function PlayerAnalysis ({matchData, data, summoner, result}) {
 
     const numFormatter = new Intl.NumberFormat('en-US');
@@ -79,7 +95,7 @@ function PlayerAnalysis ({matchData, data, summoner, result}) {
                             <span class="result" style={{color: result ? "#5383e8" : "#e84057"}}>{textResult}</span>
                             {`(${isTeamBlue ? "Blue" : "Red"} Team)`}
                         </th>
-                        <th style={{borderBottomColor: result ? "#2f436e" : "#703c47"}}></th>
+                        <th style={{borderBottomColor: result ? "#2f436e" : "#703c47"}}>Multikill</th>
                         <th style={{borderBottomColor: result ? "#2f436e" : "#703c47"}}>KDA</th>
                         <th style={{borderBottomColor: result ? "#2f436e" : "#703c47"}}>Damage</th>
                         <th style={{borderBottomColor: result ? "#2f436e" : "#703c47"}}>Wards</th>
@@ -139,6 +155,8 @@ function PlayerAnalysis ({matchData, data, summoner, result}) {
                             return itemDivs;
                         };
 
+                        const highestKill = determineHighestKillType(player.doubleKills, player.tripleKills, player.quadraKills, player.pentaKills);
+
 
                         return (
                             <tr result={textResult} class={`overview-player overview-player--${result ? "WIN" : "LOSE"}${player.puuid === summoner ? " isme" : ""}`}>
@@ -180,7 +198,11 @@ function PlayerAnalysis ({matchData, data, summoner, result}) {
                                     <div className="tier" style={{position: "relative"}}><div>{player.rank}</div></div>
                                 </td>
 
-                                <td className={`op-score-wrapper ${tdClass}`}></td>
+                                <td className={`multikill-wrapper ${tdClass}`}>
+                                    <div className="multikill">
+                                        {highestKill !== "" ? <div className="multikill-bubble">{highestKill}</div> : null}
+                                    </div>
+                                </td>
 
                                 <td className={`kda ${tdClass}`}>
                                     <div className="k-d-a">{`${player.kills}/${player.deaths}/${player.assists} (${kp}%)`}</div>

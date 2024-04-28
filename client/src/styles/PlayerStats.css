@@ -85,10 +85,29 @@
     overflow: hidden;
 }
 
-.overview-player td.op-score-wrapper {
+.overview-player td.multikill-wrapper {
     text-align: center;
     white-space: nowrap;
     font-family: Roboto, sans-serif;
+}
+
+.overview-player td.multikill-wrapper .multikill {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.multikill-bubble {
+    font-family: Roboto, sans-serif;
+    background-color: #e84057;
+    color: #ffffff;
+    border-radius: 9px;
+    margin-left: 4px;
+    padding: 0px 8px;
+    height: 18px;
+    line-height: 18px;
+    font-size: 11px;
+    font-weight: normal;
 }
 
 .overview-player td.kda {
