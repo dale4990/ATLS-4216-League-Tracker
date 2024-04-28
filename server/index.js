@@ -336,21 +336,23 @@ app.post("/findMatchData", async (req, res) => {
         try {
             const { data: { metadata, info } } = response; // Destructure response data
 
+            // Sometimes challenges are not available so we need to calculat its values in this case
+            for (const participant of info.participants) {
+                if (!participant.challenges) {
+                    let deaths = participant.deaths === 0 ? 1 : participant.deaths;
+
+                    participant.challenges = {
+                        kda: (participant.kills + participant.assists) / deaths,
+                        killParticipation: (participant.kills + participant.assists) / info.participants.filter((p) => p.teamId === participant.teamId).reduce((acc, cur) => acc + cur.kills, 0),
+                    }
+                }
+            }
+
             const newMatch = new MatchData({
                 matchId,
                 metadata,
                 info,
             });
-
-            // Sometimes challenges are not available so we need to calculat its values in this case
-            for (const participant of info.participants) {
-                if (!participant.challenges) {
-                    participant.challenges = {
-                        kda: (participant.kills + participant.assists) / participant.deaths,
-                        killParticipation: (participant.kills + participant.assists) / info.participants.filter((p) => p.teamId === participant.teamId).reduce((acc, cur) => acc + cur.kills, 0),
-                    }
-                }
-            }
 
             await newMatch.save();
 
