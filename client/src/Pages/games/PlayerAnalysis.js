@@ -338,8 +338,8 @@ function PlayerAnalysis ({matchData, data, summoner, result}) {
 
     // Blue objectives is the team in matchData with teamId 100
     // Red objectives is the team in matchData with teamId 200
-    const blueObjectives = matchData.teams.find(team => team.teamId === 100).objectives[0];
-    const redObjectives = matchData.teams.find(team => team.teamId === 200).objectives[0];
+    const blueObjectives = matchData.teams.find(team => team.teamId === 100).objectives;
+    const redObjectives = matchData.teams.find(team => team.teamId === 200).objectives;
 
     return (
         <div className="player-stats">
