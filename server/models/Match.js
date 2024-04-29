@@ -267,7 +267,7 @@ const TeamSchema = new mongoose.Schema({
     required: true,
   },
   bans: [BanSchema],
-  objectives: [ObjSchema],
+  objectives: ObjSchema,
 });
 
 // Info schema

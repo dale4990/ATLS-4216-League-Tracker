@@ -100,8 +100,8 @@ app.post("/updateRiotUser", async (req, res) => {
             // Add new Riot user if it doesn't exist
             const newRiotUser = new RiotUser({
                 puuid,
-                riotId,
-                tagline,
+                riotId: riotId.toLowerCase().trim(),
+                tagline: tagline.toLowerCase().trim(),
                 rank,
             });
 
@@ -110,9 +110,9 @@ app.post("/updateRiotUser", async (req, res) => {
             return;
         }
 
-        // Update the fields if they are provided
-        if (riotId) user.riotId = riotId;
-        if (tagline) user.tagline = tagline;
+        // Update the fields if they are provided (enter the lowercase version of the riotId and tagline)
+        if (riotId) user.riotId = riotId.toLowerCase().trim();
+        if (tagline) user.tagline = tagline.toLowerCase().trim();
         if (rank) user.rank = rank;
 
         await user.save();
@@ -125,8 +125,11 @@ app.post("/updateRiotUser", async (req, res) => {
 
 // POST request to find Riot user
 app.post("/findRiotUser", async (req, res) => {
-    const { riotId, tagline } = req.body;
-    
+    const { riotId: riotIdCase, tagline: taglineCase } = req.body;
+
+    const riotId = riotIdCase.toLowerCase().trim();
+    const tagline = taglineCase.toLowerCase().trim();
+
     try {
         // Check if the Riot user already exists in the database
         const existingRiotUser = await RiotUser.findOne({ riotId, tagline });
@@ -142,7 +145,10 @@ app.post("/findRiotUser", async (req, res) => {
         
         const response = await axios.get(url);
         
-        const { puuid, gameName, tagLine } = response.data; 
+        const { puuid, gameName: gameNameCase, tagLine: tagLineCase} = response.data; 
+        const gameName = gameNameCase.toLowerCase().trim();
+        const tagLine = tagLineCase.toLowerCase().trim();
+        
         // Create a new RiotUser instance
         const newRiotUser = new RiotUser({
             puuid,
@@ -336,21 +342,42 @@ app.post("/findMatchData", async (req, res) => {
         try {
             const { data: { metadata, info } } = response; // Destructure response data
 
+            let blueKills = info.participants.filter((participant) => participant.teamId === 100).reduce((acc, cur) => acc + cur.kills, 0);
+            let redKills = info.participants.filter((participant) => participant.teamId === 200).reduce((acc, cur) => acc + cur.kills, 0);
+
+            // Sometimes challenges are not available so we need to calculat its values in this case
+            for (const participant of info.participants) {
+                if (!participant.challenges) {
+                    let deaths = participant.deaths === 0 ? 1 : participant.deaths;
+                    // let kp = (participant.kills + participant.assists) / info.participants.filter((p) => p.teamId === participant.teamId).reduce((acc, cur) => acc + cur.kills, 0);
+                    let teamKills = participant.teamId === 100 ? blueKills : redKills; 
+                    let kills = teamKills === 0 ? Infinity : teamKills;
+
+                    participant.challenges = {
+                        kda: (participant.kills + participant.assists) / deaths,
+                        killParticipation: (participant.kills + participant.assists) / kills,
+                    }
+
+                    continue;
+                }
+
+                const challenges = participant.challenges;
+                if (!challenges.kda) {
+                    let deaths = participant.deaths === 0 ? 1 : participant.deaths;
+                    challenges.kda = (participant.kills + participant.assists) / deaths;
+                }
+                if (!challenges.killParticipation) {
+                    let teamKills = participant.teamId === 100 ? blueKills : redKills; 
+                    let kills = teamKills === 0 ? Infinity : teamKills;
+                    challenges.killParticipation = (participant.kills + participant.assists) / kills;
+                }
+            }
+
             const newMatch = new MatchData({
                 matchId,
                 metadata,
                 info,
             });
-
-            // Sometimes challenges are not available so we need to calculat its values in this case
-            for (const participant of info.participants) {
-                if (!participant.challenges) {
-                    participant.challenges = {
-                        kda: (participant.kills + participant.assists) / participant.deaths,
-                        killParticipation: (participant.kills + participant.assists) / info.participants.filter((p) => p.teamId === participant.teamId).reduce((acc, cur) => acc + cur.kills, 0),
-                    }
-                }
-            }
 
             await newMatch.save();
 
