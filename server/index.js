@@ -100,8 +100,8 @@ app.post("/updateRiotUser", async (req, res) => {
             // Add new Riot user if it doesn't exist
             const newRiotUser = new RiotUser({
                 puuid,
-                riotId: riotId.toLowerCase(),
-                tagline: tagline.toLowerCase(),
+                riotId: riotId.toLowerCase().trim(),
+                tagline: tagline.toLowerCase().trim(),
                 rank,
             });
 
@@ -111,8 +111,8 @@ app.post("/updateRiotUser", async (req, res) => {
         }
 
         // Update the fields if they are provided (enter the lowercase version of the riotId and tagline)
-        if (riotId) user.riotId = riotId.toLowerCase();
-        if (tagline) user.tagline = tagline.toLowerCase();
+        if (riotId) user.riotId = riotId.toLowerCase().trim();
+        if (tagline) user.tagline = tagline.toLowerCase().trim();
         if (rank) user.rank = rank;
 
         await user.save();
@@ -127,8 +127,8 @@ app.post("/updateRiotUser", async (req, res) => {
 app.post("/findRiotUser", async (req, res) => {
     const { riotId: riotIdCase, tagline: taglineCase } = req.body;
 
-    const riotId = riotIdCase.toLowerCase();
-    const tagline = taglineCase.toLowerCase();
+    const riotId = riotIdCase.toLowerCase().trim();
+    const tagline = taglineCase.toLowerCase().trim();
 
     try {
         // Check if the Riot user already exists in the database
@@ -146,8 +146,8 @@ app.post("/findRiotUser", async (req, res) => {
         const response = await axios.get(url);
         
         const { puuid, gameName: gameNameCase, tagLine: tagLineCase} = response.data; 
-        const gameName = gameNameCase.toLowerCase();
-        const tagLine = tagLineCase.toLowerCase();
+        const gameName = gameNameCase.toLowerCase().trim();
+        const tagLine = tagLineCase.toLowerCase().trim();
         
         // Create a new RiotUser instance
         const newRiotUser = new RiotUser({
