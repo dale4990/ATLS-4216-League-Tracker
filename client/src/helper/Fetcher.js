@@ -31,17 +31,17 @@ export const getMatches = async(puuid) => {
     }
 }
 
-const getRank = async(puuid, riotId, tagline, summonerId) => {
+const getRank = async (puuid, riotId, tagline, summonerId) => {
     try {
         // Try finding the user in the database
         const response = await Axios.get(`http://localhost:5069/getRiotUser/${puuid}`);
         const user = response.data;
         if (user.rank) return user.rank;
         throw new Error("User rank not found in database.");
-    } catch(error){
+    } catch (error) {
         // If the user is not found, we will continue to fetch the rank from the Riot API
         try {
-            // Since we could not find a pre-stored rank, we will fetch it from the Riot API
+            // Fetch rank data from the Riot API
             const rankResponse = await Axios.post("http://localhost:5069/findRank", {
                 id: summonerId,
             });
@@ -54,20 +54,37 @@ const getRank = async(puuid, riotId, tagline, summonerId) => {
             };
 
             const rankData = rankResponse.data;
-    
-            const rankDict = rankData.length === 0 ? {} : rankData[0];
-            const rank = rankData.length === 0 ? "unranked" : rankDict.tier.toLowerCase() + " " + romanToInt[rankDict.rank];
-    
-            // Post the rank to the database
-            await Axios.post("http://localhost:5069/updateRiotUser", {
-                puuid: puuid,
-                riotId: riotId,
-                tagline: tagline,
-                rank: rank,
-            });
-            
-            return rank;
-        } catch(error) {
+
+            // Find the entry for "RANKED_SOLO_5x5" queue type
+            const soloQueueRank = rankData.find(rank => rank.queueType === "RANKED_SOLO_5x5");
+
+            if (soloQueueRank) {
+                const rank = soloQueueRank.tier.toLowerCase() + " " + romanToInt[soloQueueRank.rank];
+ 
+                await Axios.post("http://localhost:5069/updateRiotUser", {
+                    puuid: puuid,
+                    riotId: riotId,
+                    tagline: tagline,
+                    rank: rank,
+                });
+                return rank;
+            }
+
+            // If solo queue rank is not found, pick the first entry and construct the rank string
+            if (rankData.length > 0) {
+                const firstRank = rankData[0];
+                const rank = firstRank.tier.toLowerCase() + " " + romanToInt[firstRank.rank];
+                await Axios.post("http://localhost:5069/updateRiotUser", {
+                    puuid: puuid,
+                    riotId: riotId,
+                    tagline: tagline,
+                    rank: rank,
+                });
+                return rank;
+            }
+
+            return "unranked";
+        } catch (error) {
             if (error.response) console.log(error.response.data.error);
             return "unranked";
         }
