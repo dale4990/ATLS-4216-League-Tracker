@@ -196,7 +196,7 @@ function Game({matchData, summoner, data}) {
     const [ mySpells, myRunes ] = getMySummRunes();
     const itemList = getMyItems(isMe, win);
 
-    const winColor = remake ? "#1E2328" : (win ? "#28344e" : "#59343b");
+    const winColor = remake ? "#1E2328" : (win ? "#283469" : "#70343b");
     const gameColor = remake ? "#bebebe" : (win ? "#5383e8" : "#e84057");
     const buttonColor = gameColor;
     const actionsColor = remake ? "#3C3C41" : (win ? "#2f436e" : "#703c47");
@@ -318,19 +318,22 @@ function Game({matchData, summoner, data}) {
             <div className="actions">
                 <div></div>
                 
-                <button className="button" style={{backgroundColor: actionsColor}} onClick={toggleVisibility}>
-                    <span className="svg-icon svg-icon--arrow-down button-display" style={{color: buttonColor, width: "24px", height: "24px"}}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <g fill="currentColor" fillRule="evenodd">
-                                <g fill="currentColor" fillRule="nonzero">
-                                    <g fill="currentColor">
-                                        <path d="M12 13.2L16.5 9 18 10.4 12 16 6 10.4 7.5 9z" transform="translate(-64 -228) translate(64 228)" fill="currentColor"></path>
+                <button className="button" style={{ backgroundColor: actionsColor }} onClick={toggleVisibility}>
+                    <div className="button-container" style={{ backgroundColor: win ? '#2f43b6' : '#913c47', borderColor: buttonColor}}>
+                        <span className="svg-icon svg-icon--arrow-down button-display" style={{ color: buttonColor, width: "24px", height: "24px" }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <g fill="currentColor" fillRule="evenodd">
+                                    <g fill="currentColor" fillRule="nonzero">
+                                        <g fill="currentColor">
+                                            <path d="M12 13.2L16.5 9 18 10.4 12 16 6 10.4 7.5 9z" transform="translate(-64 -228) translate(64 228)" fill="currentColor"></path>
+                                        </g>
                                     </g>
                                 </g>
-                            </g>
-                        </svg>
-                    </span>
+                            </svg>
+                        </span>
+                    </div>
                 </button> {/* button */}
+
             </div> {/* actions */}
         </div>
         {isVisible && <MemoizedGameStats matchData={matchData} summoner={summoner} data={data} result={win} />}
