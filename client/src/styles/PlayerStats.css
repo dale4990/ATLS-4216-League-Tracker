@@ -53,14 +53,14 @@
 }
 
 .player-container tbody.loss {
-    background-color: #59343b;
+    background-color: #70343b;
     border-top-width: 0px;
     border-top-style: solid;
     border-color: #703c47;
 }
 
 .player-container tbody.win {
-    background-color: #28344e;
+    background-color: #283469;
     border-top-width: 0px;
     border-top-style: solid;
     border-color: #2f436e;
@@ -78,11 +78,11 @@
 }
 
 .isme td.loss {
-    background-color: #703c47 !important;
+    background-color: #8d3b4d !important;
 }
 
 .isme td.win {
-    background-color: #2f436e !important;
+    background-color: #2d467b !important;
 }
 
 .overview-player td.name {
